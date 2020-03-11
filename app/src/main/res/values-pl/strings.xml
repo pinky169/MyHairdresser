@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mój fryzjer</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Hasło</string>
+    <string name="email_hint">Podaj swój adres email</string>
+    <string name="password_hint">Podaj swoje hasło</string>
+    <string name="sign_in">Zaloguj się</string>
+    <string name="sign_up">Zarejestruj się</string>
+    <string name="login_welcome_label">Witaj!\nZaloguj się!</string>
+    <string name="create_new_account_label">Nie masz jeszcze konta? Zarejestruj się <u>tutaj</u>.</string>
+    <string name="register_a_new_account_label">Zarejestruj\nnowe konto</string>
+    <string name="already_have_an_account_label">Masz juz konto? Zaloguj się <u>tutaj</u>.</string>
+    <string name="enter_valid_email_and_password_toast">Podaj prawidłowy adres email oraz hasło</string>
+    <string name="this_user_already_exists_toast">Konto dla podanego adresu już istnieje.</string>
+    <string name="bad_email_format_toast">Podany adres email ma zły format.</string>
+    <string name="password_too_weak_toast">To hasło jest za słabe (minimum 6 znaków).</string>
+    <string name="log_out">Wyloguj się</string>
+    <string name="make_an_appointment">Umów wizytę</string>
+    <string name="your_name_and_surname_label">Imię i nazwisko</string>
+    <string name="dashboard_welcome_label">Witaj!\nZarządzaj swoimi danymi oraz rejestruj wizyty</string>
+</resources>
