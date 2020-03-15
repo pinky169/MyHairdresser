@@ -2,6 +2,7 @@ package pl.patryk.myhairdresser.ui.dashboard
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.data.repository.UserRepository
 import pl.patryk.myhairdresser.utils.startLoginActivity
 
@@ -11,12 +12,18 @@ class DashboardViewModel(private val repository: UserRepository) : ViewModel() {
         repository.currentUser()
     }
 
-    fun logout() {
-        repository.logout()
+    fun getUserId(): String? {
+        return repository.currentUser()?.uid
     }
 
-    fun logout(view: View){
+    fun logout() = repository.logout()
+
+    fun logout(view: View) {
         repository.logout()
         view.context.startLoginActivity()
     }
+
+    fun updateUser(uid: String, user: User) = repository.updateUser(uid, user)
+
+    fun verifyEmail() = repository.verifyEmail()
 }

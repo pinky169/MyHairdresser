@@ -1,6 +1,5 @@
 package pl.patryk.myhairdresser.ui.auth
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -13,7 +12,6 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.databinding.SignupLayoutBinding
-import pl.patryk.myhairdresser.ui.dashboard.DashboardActivity
 import pl.patryk.myhairdresser.utils.startDashboardActivity
 
 class SignUpActivity : AppCompatActivity(), AuthListener, KodeinAware {
@@ -27,9 +25,9 @@ class SignUpActivity : AppCompatActivity(), AuthListener, KodeinAware {
         super.onCreate(savedInstanceState)
 
         val binding: SignupLayoutBinding =
-            DataBindingUtil.setContentView(this,
-                R.layout.signup_layout
-            )
+                DataBindingUtil.setContentView(this,
+                        R.layout.signup_layout
+                )
         viewModel = ViewModelProvider(this, factory).get(AuthViewModel::class.java)
         binding.viewmodel = viewModel
 
@@ -48,5 +46,17 @@ class SignUpActivity : AppCompatActivity(), AuthListener, KodeinAware {
     override fun onFailure(message: String) {
         progress_bar.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onIncorrectEmail(message: String) {
+        edittext_email_input.error = message
+    }
+
+    override fun onIncorrectPassword(message: String) {
+        edittext_password_input.error = message
+    }
+
+    override fun onIncorrect2ndPassword(message: String) {
+        edittext_2nd_password_input.error = message
     }
 }

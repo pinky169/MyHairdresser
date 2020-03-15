@@ -50,7 +50,7 @@
             app:layout_constraintTop_toTopOf="@+id/guideline" />
 
         <EditText
-            android:id="@+id/exittext_email_input"
+            android:id="@+id/edittext_email_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -68,10 +68,10 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/exittext_email_input" />
+            app:layout_constraintTop_toBottomOf="@+id/edittext_email_input" />
 
         <EditText
-            android:id="@+id/exittext_password_input"
+            android:id="@+id/edittext_password_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password_hint"
@@ -81,9 +81,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_password_label" />
 
+        <TextView
+            android:id="@+id/textview_2nd_password_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/repeat_password"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edittext_password_input" />
+
+        <EditText
+            android:id="@+id/edittext_2nd_password_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/confirm_your_new_password"
+            android:inputType="textPassword"
+            android:text="@={viewmodel.password2nd}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textview_2nd_password_label" />
+
         <Button
             android:id="@+id/button_sign_up"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:onClick="@{() -> viewmodel.signup()}"
@@ -92,7 +113,7 @@
             app:layout_constraintBottom_toTopOf="@+id/textview_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/exittext_password_input" />
+            app:layout_constraintTop_toBottomOf="@+id/edittext_2nd_password_input" />
 
         <TextView
             android:id="@+id/textview_sign_in"

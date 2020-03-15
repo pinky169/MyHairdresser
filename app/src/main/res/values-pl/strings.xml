@@ -19,4 +19,7 @@
     <string name="make_an_appointment">Umów wizytę</string>
     <string name="your_name_and_surname_label">Imię i nazwisko</string>
     <string name="dashboard_welcome_label">Witaj!\nZarządzaj swoimi danymi oraz rejestruj wizyty</string>
+    <string name="save_data">Zapisz</string>
+    <string name="confirm_your_new_password">Potwierdź swoje nowe hasło</string>
+    <string name="repeat_password">Powtórz hasło</string>
 </resources>

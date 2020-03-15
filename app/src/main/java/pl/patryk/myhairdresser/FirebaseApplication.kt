@@ -8,6 +8,7 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
+import pl.patryk.myhairdresser.data.firebase.FirebaseDatabase
 import pl.patryk.myhairdresser.data.firebase.FirebaseSource
 import pl.patryk.myhairdresser.data.repository.UserRepository
 import pl.patryk.myhairdresser.ui.auth.AuthViewModelFactory
@@ -19,7 +20,8 @@ class FirebaseApplication : Application(), KodeinAware {
         import(androidXModule(this@FirebaseApplication))
 
         bind() from singleton { FirebaseSource() }
-        bind() from singleton { UserRepository(instance()) }
+        bind() from singleton { FirebaseDatabase() }
+        bind() from singleton { UserRepository(instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { DashboardViewModelFactory(instance()) }
 

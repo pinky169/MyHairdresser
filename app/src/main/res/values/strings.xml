@@ -3,7 +3,7 @@
     <string name="email_label">Email</string>
     <string name="password_label">Password</string>
     <string name="email_hint">Enter your email</string>
-    <string name="password_hint">Enter your password</string>
+    <string name="password_hint">Enter your new password</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
     <string name="login_welcome_label">Hello!\nSign in please!</string>
@@ -18,4 +18,7 @@
     <string name="make_an_appointment">Make an appointment</string>
     <string name="your_name_and_surname_label">Name and surname</string>
     <string name="dashboard_welcome_label">Welcome!\nManage your personal data and register your next visit</string>
+    <string name="save_data">Save</string>
+    <string name="confirm_your_new_password">Confirm your new password</string>
+    <string name="repeat_password">Repeat password</string>
 </resources>

@@ -6,7 +6,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.login_layout.*
+import kotlinx.android.synthetic.main.login_layout.edittext_email_input
+import kotlinx.android.synthetic.main.login_layout.edittext_password_input
+import kotlinx.android.synthetic.main.login_layout.progress_bar
+import kotlinx.android.synthetic.main.signup_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
@@ -47,6 +50,18 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
     override fun onFailure(message: String) {
         progress_bar.visibility = View.GONE
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onIncorrectEmail(message: String) {
+        edittext_email_input.error = message
+    }
+
+    override fun onIncorrectPassword(message: String) {
+        edittext_password_input.error = message
+    }
+
+    override fun onIncorrect2ndPassword(message: String) {
+        edittext_2nd_password_input.error = message
     }
 
     public override fun onStart() {

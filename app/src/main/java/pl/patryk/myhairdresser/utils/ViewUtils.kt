@@ -20,6 +20,5 @@ fun Context.startLoginActivity() =
 
 fun Context.startSignUpActivity() =
     Intent(this, SignUpActivity::class.java).also {
-        it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(it)
     }
