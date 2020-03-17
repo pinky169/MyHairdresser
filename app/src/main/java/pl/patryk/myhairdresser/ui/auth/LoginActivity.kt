@@ -42,7 +42,7 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         progress_bar.visibility = View.VISIBLE
     }
 
-    override fun onSuccess() {
+    override fun onSuccess(code: Int) {
         progress_bar.visibility = View.GONE
         startDashboardActivity()
     }
@@ -52,16 +52,25 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onIncorrectEmail(message: String) {
-        edittext_email_input.error = message
+    override fun onIncorrectEmail(errorCode: Int) {
+        if (errorCode == AuthViewModel.ERROR_EMPTY_FIELD)
+            edittext_email_input.error = this.getString(R.string.filed_can_not_be_empty)
     }
 
-    override fun onIncorrectPassword(message: String) {
-        edittext_password_input.error = message
+    override fun onIncorrectPassword(errorCode: Int) {
+        when (errorCode) {
+            AuthViewModel.ERROR_EMPTY_FIELD -> edittext_password_input.error = this.getString(R.string.filed_can_not_be_empty)
+            AuthViewModel.ERROR_PASSWORD_LENGTH -> edittext_password_input.error = this.getString(R.string.password_must_be_minimum_six_characters)
+            AuthViewModel.ERROR_PASSWORDS_DO_NOT_MATCH -> edittext_password_input.error = this.getString(R.string.passwords_dont_match)
+        }
     }
 
-    override fun onIncorrect2ndPassword(message: String) {
-        edittext_2nd_password_input.error = message
+    override fun onIncorrect2ndPassword(errorCode: Int) {
+        when (errorCode) {
+            AuthViewModel.ERROR_EMPTY_FIELD -> edittext_2nd_password_input.error = this.getString(R.string.filed_can_not_be_empty)
+            AuthViewModel.ERROR_PASSWORD_LENGTH -> edittext_2nd_password_input.error = this.getString(R.string.password_must_be_minimum_six_characters)
+            AuthViewModel.ERROR_PASSWORDS_DO_NOT_MATCH -> edittext_2nd_password_input.error = this.getString(R.string.passwords_dont_match)
+        }
     }
 
     public override fun onStart() {

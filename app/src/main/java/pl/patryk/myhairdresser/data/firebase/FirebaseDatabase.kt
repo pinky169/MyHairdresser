@@ -2,12 +2,11 @@ package pl.patryk.myhairdresser.data.firebase
 
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import pl.patryk.myhairdresser.data.model.Photo
 import pl.patryk.myhairdresser.data.model.User
 
 
 class FirebaseDatabase {
-
-    var userInfo = arrayListOf<User>()
 
     val databaseReference: DatabaseReference by lazy {
         FirebaseDatabase.getInstance().getReference("users")
@@ -19,5 +18,9 @@ class FirebaseDatabase {
 
     fun updateUser(uid: String, user: User) {
         databaseReference.child(uid).updateChildren(user.toMap()!!)
+    }
+
+    fun insertPhoto(uid: String, photo: Photo) {
+        databaseReference.child(uid).child("photo").setValue(photo)
     }
 }

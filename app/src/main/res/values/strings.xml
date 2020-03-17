@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MyHairdresser</string>
+    <string name="app_name">My Hairdresser</string>
     <string name="email_label">Email</string>
     <string name="password_label">Password</string>
     <string name="email_hint">Enter your email</string>
@@ -12,7 +12,7 @@
     <string name="already_have_an_account_label">Do you have an account already? Login here.</string>
     <string name="enter_valid_email_and_password_toast">You must enter valid email and password</string>
     <string name="this_user_already_exists_toast">This user already exists.</string>
-    <string name="bad_email_format_toast">The email address is badly formatted.</string>
+    <string name="bad_email_format_toast">The email address is badly formatted</string>
     <string name="password_too_weak_toast">Your password is too weak (minimum 6 characters).</string>
     <string name="log_out">Log out</string>
     <string name="make_an_appointment">Make an appointment</string>
@@ -21,4 +21,36 @@
     <string name="save_data">Save</string>
     <string name="confirm_your_new_password">Confirm your new password</string>
     <string name="repeat_password">Repeat password</string>
+    <string name="verify_your_email">Email - send verification →</string>
+    <string name="account_settings">Account Settings</string>
+    <string name="nav_menu_profile">Profile</string>
+    <string name="nav_menu_dashboard">Schedule a visit</string>
+    <string name="nav_menu_contact">Contact</string>
+    <string name="nav_menu_update_profile">Update profile</string>
+    <string name="nav_menu_sign_out">Sign out</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="age_label">Age</string>
+    <string name="surname_label">Surname</string>
+    <string name="name_label">Name</string>
+    <string name="update_profile">Update profile</string>
+    <string name="phone_label">Phone</string>
+    <string name="pick_a_photo">Pick a photo to upload</string>
+    <string name="profile_updated_successfully">Profile updated successfully</string>
+    <string name="photo_uploaded_successfully">Photo has been successfully uploaded</string>
+    <string name="no_file_selected">No file selected</string>
+    <string name="log_out_confirmation">You have successfully logged out</string>
+    <string name="photo_loading_error">Ups, couldn\'t load profile photo</string>
+    <string name="action_bar_title_edit">Edit</string>
+    <string name="email_already_verified">Email already verified</string>
+    <string name="failed_to_send_verification_email">Failed to send verification email</string>
+    <string name="verification_send_to">Verification email sent to %1$s</string>
+    <string name="email_badly_formatted">The email address is badly formatted.</string>
+    <string name="password_too_weak">The given password is too weak. (Minimum 6 characters)</string>
+    <string name="password_invalid_or_not_existing">The password is invalid</string>
+    <string name="filed_can_not_be_empty">Field can\'t be empty</string>
+    <string name="password_must_be_minimum_six_characters">Password is too weak. (Minimum 6 characters)</string>
+    <string name="passwords_dont_match">Passwords don\'t match</string>
+    <string name="email_already_registered">This email is already in use</string>
+    <string name="account_successfully_registered">Account has been successfully registered</string>
 </resources>

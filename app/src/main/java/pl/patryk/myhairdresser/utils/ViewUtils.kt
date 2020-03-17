@@ -4,10 +4,10 @@ import android.content.Context
 import android.content.Intent
 import pl.patryk.myhairdresser.ui.auth.LoginActivity
 import pl.patryk.myhairdresser.ui.auth.SignUpActivity
-import pl.patryk.myhairdresser.ui.dashboard.DashboardActivity
+import pl.patryk.myhairdresser.ui.profile.UserProfileActivity
 
 fun Context.startDashboardActivity() =
-    Intent(this, DashboardActivity::class.java).also {
+        Intent(this, UserProfileActivity::class.java).also {
         it.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(it)
     }

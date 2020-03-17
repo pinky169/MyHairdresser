@@ -16,6 +16,8 @@ class UserRepository(private val firebase: FirebaseSource, private val firebaseD
 
     fun verifyEmail() = firebase.verifyEmail()
 
+    fun reloadUser() = firebase.reloadUser()
+
     fun updateUser(uid: String, user: User) = firebaseDB.updateUser(uid, user)
 
 }

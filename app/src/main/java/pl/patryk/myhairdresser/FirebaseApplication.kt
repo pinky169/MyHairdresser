@@ -12,7 +12,7 @@ import pl.patryk.myhairdresser.data.firebase.FirebaseDatabase
 import pl.patryk.myhairdresser.data.firebase.FirebaseSource
 import pl.patryk.myhairdresser.data.repository.UserRepository
 import pl.patryk.myhairdresser.ui.auth.AuthViewModelFactory
-import pl.patryk.myhairdresser.ui.dashboard.DashboardViewModelFactory
+import pl.patryk.myhairdresser.ui.profile.UserProfileViewModelFactory
 
 class FirebaseApplication : Application(), KodeinAware {
 
@@ -23,7 +23,7 @@ class FirebaseApplication : Application(), KodeinAware {
         bind() from singleton { FirebaseDatabase() }
         bind() from singleton { UserRepository(instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
-        bind() from provider { DashboardViewModelFactory(instance()) }
+        bind() from provider { UserProfileViewModelFactory(instance()) }
 
     }
 }

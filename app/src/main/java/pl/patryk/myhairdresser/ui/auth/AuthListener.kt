@@ -3,9 +3,9 @@ package pl.patryk.myhairdresser.ui.auth
 interface AuthListener {
 
     fun onStarted()
-    fun onSuccess()
+    fun onSuccess(code: Int)
     fun onFailure(message: String)
-    fun onIncorrectEmail(message: String)
-    fun onIncorrectPassword(message: String)
-    fun onIncorrect2ndPassword(message: String)
+    fun onIncorrectEmail(errorCode: Int)
+    fun onIncorrectPassword(errorCode: Int)
+    fun onIncorrect2ndPassword(errorCode: Int)
 }

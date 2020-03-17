@@ -11,6 +11,13 @@ import pl.patryk.myhairdresser.utils.startSignUpActivity
 
 class AuthViewModel(private val repository: UserRepository) : ViewModel() {
 
+    companion object {
+        const val CODE_OK = 111
+        const val ERROR_EMPTY_FIELD = 100
+        const val ERROR_PASSWORD_LENGTH = 101
+        const val ERROR_PASSWORDS_DO_NOT_MATCH = 123
+    }
+
     //email and password for the input
     var email: String? = null
     var password: String? = null
@@ -32,11 +39,11 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
 
         //validating email and password
         if (email.isNullOrBlank() || password.isNullOrBlank()) {
-            authListener?.onIncorrectEmail("Please enter valid email adress")
-            authListener?.onIncorrectPassword("Please enter valid password")
+            authListener?.onIncorrectEmail(ERROR_EMPTY_FIELD)
+            authListener?.onIncorrectPassword(ERROR_EMPTY_FIELD)
             return
         } else if (password!!.length < 6) {
-            authListener?.onIncorrectPassword("Minimum password length is 6")
+            authListener?.onIncorrectPassword(ERROR_PASSWORD_LENGTH)
             return
         }
 
@@ -49,7 +56,7 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     //sending a success callback
-                    authListener?.onSuccess()
+                    authListener?.onSuccess(CODE_OK)
                 }, {
                     //sending a failure callback
                     authListener?.onFailure(it.message!!)
@@ -62,17 +69,17 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
 
         //validating email and password
         if (email.isNullOrBlank() || password.isNullOrBlank() || password2nd.isNullOrBlank()) {
-            authListener?.onIncorrectEmail("Please enter valid email adress")
-            authListener?.onIncorrectPassword("Please enter valid password")
-            authListener?.onIncorrect2ndPassword("Please enter valid password")
+            authListener?.onIncorrectEmail(ERROR_EMPTY_FIELD)
+            authListener?.onIncorrectPassword(ERROR_EMPTY_FIELD)
+            authListener?.onIncorrect2ndPassword(ERROR_EMPTY_FIELD)
             return
         } else if (!password.equals(password2nd)) {
-            authListener?.onIncorrectPassword("Passwords do not match")
-            authListener?.onIncorrect2ndPassword("Passwords do not match")
+            authListener?.onIncorrectPassword(ERROR_PASSWORDS_DO_NOT_MATCH)
+            authListener?.onIncorrect2ndPassword(ERROR_PASSWORDS_DO_NOT_MATCH)
             return
         } else if (password!!.length < 6 || password2nd!!.length < 6) {
-            authListener?.onIncorrectPassword("Minimum password length is 6")
-            authListener?.onIncorrect2ndPassword("Minimum password length is 6")
+            authListener?.onIncorrectPassword(ERROR_PASSWORD_LENGTH)
+            authListener?.onIncorrect2ndPassword(ERROR_PASSWORD_LENGTH)
             return
         }
 
@@ -81,7 +88,7 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    authListener?.onSuccess()
+                    authListener?.onSuccess(CODE_OK)
                 }, {
                     authListener?.onFailure(it.message!!)
                 })
