@@ -11,6 +11,7 @@
         android:id="@+id/email_label_textview"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:labelFor="@id/email_textview"
         android:text="@string/email_label"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline1"
@@ -31,6 +32,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:labelFor="@id/name_editext"
         android:text="@string/name_label"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline1"
@@ -41,15 +43,18 @@
         android:id="@+id/name_editext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:inputType="textCapWords"
         app:layout_constraintEnd_toStartOf="@+id/guideline1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_label" />
+        app:layout_constraintTop_toBottomOf="@+id/name_label"
+        tools:ignore="Autofill" />
 
     <TextView
         android:id="@+id/surname_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:labelFor="@id/surname_edittext"
         android:text="@string/surname_label"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -60,14 +65,17 @@
         android:id="@+id/surname_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:inputType="textCapWords"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/name_editext"
-        app:layout_constraintTop_toBottomOf="@+id/surname_label" />
+        app:layout_constraintTop_toBottomOf="@+id/surname_label"
+        tools:ignore="Autofill" />
 
     <TextView
         android:id="@+id/age_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:labelFor="@id/age_editext"
         android:text="@string/age_label"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/guideline1"
@@ -81,12 +89,14 @@
         android:inputType="number"
         app:layout_constraintEnd_toStartOf="@+id/guideline1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/age_label" />
+        app:layout_constraintTop_toBottomOf="@+id/age_label"
+        tools:ignore="Autofill" />
 
     <TextView
         android:id="@+id/phone_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:labelFor="@id/phone_editext"
         android:text="@string/phone_label"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -100,13 +110,16 @@
         android:inputType="phone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/phone_label" />
+        app:layout_constraintTop_toBottomOf="@+id/phone_label"
+        tools:ignore="Autofill" />
 
     <Button
         android:id="@+id/button_save_data"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
+        android:padding="8dp"
         android:text="@string/save_data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

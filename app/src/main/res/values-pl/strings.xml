@@ -3,55 +3,61 @@
     <string name="app_name">Mój fryzjer</string>
     <string name="email_label">Email</string>
     <string name="password_label">Hasło</string>
-    <string name="email_hint">Podaj swój adres email</string>
-    <string name="password_hint">Podaj swoje hasło</string>
+    <string name="email_hint">Podaj adres email</string>
+    <string name="password_hint">Podaj hasło</string>
     <string name="sign_in">Zaloguj się</string>
     <string name="sign_up">Zarejestruj się</string>
     <string name="login_welcome_label">Witaj!\nZaloguj się!</string>
     <string name="create_new_account_label">Nie masz jeszcze konta? Zarejestruj się <u>tutaj</u>.</string>
     <string name="register_a_new_account_label">Zarejestruj\nnowe konto</string>
     <string name="already_have_an_account_label">Masz juz konto? Zaloguj się <u>tutaj</u>.</string>
-    <string name="enter_valid_email_and_password_toast">Podaj prawidłowy adres email oraz hasło</string>
-    <string name="this_user_already_exists_toast">Konto dla podanego adresu już istnieje.</string>
-    <string name="bad_email_format_toast">Podany adres email ma zły format</string>
-    <string name="password_too_weak_toast">To hasło jest za słabe (minimum 6 znaków).</string>
+    <string name="this_user_already_exists_toast">Konto dla podanego adresu już istnieje</string>
     <string name="log_out">Wyloguj się</string>
-    <string name="make_an_appointment">Umów wizytę</string>
-    <string name="your_name_and_surname_label">Imię i nazwisko</string>
-    <string name="dashboard_welcome_label">Witaj!\nZarządzaj swoimi danymi oraz rejestruj wizyty</string>
     <string name="save_data">Zapisz</string>
-    <string name="confirm_your_new_password">Potwierdź swoje nowe hasło</string>
+    <string name="confirm_your_new_password">Potwierdź nowe hasło</string>
     <string name="repeat_password">Powtórz hasło</string>
     <string name="verify_your_email">Email - wyślij weryfikację →</string>
-    <string name="account_settings">Ustawienia konta</string>
-    <string name="nav_menu_profile">Profil</string>
-    <string name="nav_menu_dashboard">Zaplanuj wizytę</string>
-    <string name="nav_menu_contact">Kontakt</string>
-    <string name="nav_menu_update_profile">Aktualizuj profil</string>
-    <string name="nav_menu_sign_out">Wyloguj</string>
-    <string name="navigation_drawer_open">Otwórz menu</string>
-    <string name="navigation_drawer_close">Zamknij menu</string>
     <string name="age_label">Wiek</string>
     <string name="surname_label">Nazwisko</string>
     <string name="name_label">Imię</string>
-    <string name="update_profile">Zaktualizuj profil</string>
     <string name="phone_label">Telefon</string>
     <string name="pick_a_photo">Wybierz zdjęcie, które chcesz przesłać</string>
     <string name="profile_updated_successfully">Pomyślnie zaktualizowano profil</string>
     <string name="photo_uploaded_successfully">Pomyślnie przesłano zdjęcie</string>
     <string name="no_file_selected">Nie wybrano żadnego pliku</string>
     <string name="log_out_confirmation">Pomyślnie wylogowano</string>
-    <string name="photo_loading_error">Ups, nie udało załadować się zdjęcia</string>
     <string name="action_bar_title_edit">Edytuj</string>
-    <string name="email_already_verified">Email został już zweryfikowany</string>
+    <string name="email_already_verified">Ten email został już zweryfikowany</string>
     <string name="failed_to_send_verification_email">Nie udało się wysłać weryfikacji</string>
     <string name="verification_send_to">Wysłano email na adres %1$s</string>
     <string name="email_badly_formatted">Ten email ma zły format</string>
-    <string name="password_too_weak">Podane hasło jest za słabe. (Minimum 6 znaków)</string>
+    <string name="password_too_weak">Podane hasło jest za słabe (minimum 6 znaków)</string>
     <string name="password_invalid_or_not_existing">Podane hasło jest nieprawidłowe</string>
-    <string name="password_must_be_minimum_six_characters">Hasło jest za słabe. (Minimum 6 znaków)</string>
     <string name="passwords_dont_match">Hasła nie pasują do siebie</string>
     <string name="filed_can_not_be_empty">Pole nie może być puste</string>
-    <string name="email_already_registered">Then adres email jest już zarejestrowany</string>
     <string name="account_successfully_registered">Konto zostało pomyślnie zarejestrowane</string>
+    <string name="welcome_message">Witaj! &#128521;</string>
+    <string name="user_not_found">Podane konto nie istnieje</string>
+    <string name="user_disabled">To konto zostało wyłączone</string>
+    <string name="no_internet_connection">Brak połączenia z internetem</string>
+    <string name="register">Umów wizytę</string>
+    <string name="estimated_price">Szacowana cena:</string>
+    <string name="dialog_text_button_positive">Umów</string>
+    <string name="dialog_text_button_negative">Anuluj</string>
+    <string name="appointment_registered_successfully">Zostałeś umówiony na %1$s w dniu %2$s</string>
+    <string name="appointment_dialog_message">Wybierz rodzaj usługi. W kolejnym kroku zostaniesz poproszony/a o podanie terminu planowanej wizyty.</string>
+    <string name="type_of_service_label">Rodzaj planowanej usługi:</string>
+
+    <string-array name="services">
+        <item>Strzyżenie</item>
+        <item>Farbowanie</item>
+        <item>Stylizacja</item>
+    </string-array>
+
+    <string-array name="services_prices">
+        <item>30 zł</item>
+        <item>100 zł</item>
+        <item>80 zł</item>
+    </string-array>
+
 </resources>

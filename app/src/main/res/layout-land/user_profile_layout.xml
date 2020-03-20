@@ -46,7 +46,9 @@
             android:id="@+id/edit_profile_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:src="@drawable/ic_update"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -209,6 +211,17 @@
             app:layout_constraintEnd_toEndOf="@+id/name_label"
             app:layout_constraintStart_toStartOf="@+id/name_label"
             app:layout_constraintTop_toBottomOf="@+id/phone_label" />
+
+        <Button
+            android:id="@+id/register_appointment_button"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:padding="8dp"
+            android:text="@string/register"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

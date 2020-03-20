@@ -19,27 +19,29 @@
         tools:context=".ui.auth.SignUpActivity">
 
         <TextView
-            android:id="@+id/signup_welcome_label"
+            android:id="@+id/signup_welcome_text"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:gravity="center"
             android:text="@string/register_a_new_account_label"
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/textview_email_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
             android:text="@string/email_label"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
+            app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/signup_welcome_label" />
+            app:layout_constraintTop_toTopOf="@+id/signup_welcome_text" />
 
         <EditText
             android:id="@+id/edittext_email_input"
@@ -47,19 +49,21 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
             android:text="@={viewmodel.email}"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_email_label" />
+            app:layout_constraintEnd_toEndOf="@+id/textview_email_label"
+            app:layout_constraintStart_toStartOf="@+id/textview_email_label"
+            app:layout_constraintTop_toBottomOf="@+id/textview_email_label"
+            tools:ignore="Autofill" />
 
         <TextView
             android:id="@+id/textview_password_label"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
             android:text="@string/password_label"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textview_email_label"
+            app:layout_constraintStart_toStartOf="@+id/textview_email_label"
             app:layout_constraintTop_toBottomOf="@+id/edittext_email_input" />
 
         <EditText
@@ -69,9 +73,10 @@
             android:hint="@string/password_hint"
             android:inputType="textPassword"
             android:text="@={viewmodel.password}"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_password_label" />
+            app:layout_constraintEnd_toEndOf="@+id/textview_email_label"
+            app:layout_constraintStart_toStartOf="@+id/textview_email_label"
+            app:layout_constraintTop_toBottomOf="@+id/textview_password_label"
+            tools:ignore="Autofill" />
 
         <TextView
             android:id="@+id/textview_2nd_password_label"
@@ -79,8 +84,8 @@
             android:layout_height="wrap_content"
             android:text="@string/repeat_password"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/textview_email_label"
+            app:layout_constraintStart_toStartOf="@+id/textview_email_label"
             app:layout_constraintTop_toBottomOf="@+id/edittext_password_input" />
 
         <EditText
@@ -90,34 +95,36 @@
             android:hint="@string/confirm_your_new_password"
             android:inputType="textPassword"
             android:text="@={viewmodel.password2nd}"
-            app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_2nd_password_label" />
+            app:layout_constraintEnd_toEndOf="@+id/textview_email_label"
+            app:layout_constraintStart_toStartOf="@+id/textview_email_label"
+            app:layout_constraintTop_toBottomOf="@+id/textview_2nd_password_label"
+            tools:ignore="Autofill" />
 
         <Button
             android:id="@+id/button_sign_up"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+            android:layout_marginStart="16dp"
             android:background="@color/colorPrimary"
-            android:onClick="@{() -> viewmodel.signup()}"
+            android:onClick="@{(v) -> viewmodel.signup(v)}"
             android:padding="8dp"
             android:text="@string/sign_up"
             app:layout_constraintBottom_toTopOf="@+id/textview_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/progress_bar"
-            app:layout_constraintTop_toBottomOf="@+id/signup_welcome_label" />
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@+id/signup_welcome_text" />
 
         <TextView
             android:id="@+id/textview_sign_in"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:onClick="@{(v) -> viewmodel.goToLogin(v)}"
             android:text="@string/already_have_an_account_label"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/guideline2" />
+            app:layout_constraintStart_toStartOf="@+id/guideline" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -130,7 +137,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline2"
+            android:id="@+id/guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"

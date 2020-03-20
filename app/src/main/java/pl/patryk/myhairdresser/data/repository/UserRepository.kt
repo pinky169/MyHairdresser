@@ -1,10 +1,10 @@
 package pl.patryk.myhairdresser.data.repository
 
-import pl.patryk.myhairdresser.data.firebase.FirebaseDatabase
-import pl.patryk.myhairdresser.data.firebase.FirebaseSource
+import pl.patryk.myhairdresser.data.firebase.FirebaseAuthHelper
+import pl.patryk.myhairdresser.data.firebase.FirebaseDatabaseHelper
 import pl.patryk.myhairdresser.data.model.User
 
-class UserRepository(private val firebase: FirebaseSource, private val firebaseDB: FirebaseDatabase) {
+class UserRepository(private val firebase: FirebaseAuthHelper, private val firebaseDB: FirebaseDatabaseHelper) {
 
     fun currentUser() = firebase.currentUser()
 

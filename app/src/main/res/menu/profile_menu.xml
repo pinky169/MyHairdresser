@@ -2,12 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <!--
     <item
         android:id="@+id/menu_edit_profile"
         android:icon="@drawable/ic_update"
         android:orderInCategory="100"
         android:title="@string/update_profile"
         app:showAsAction="ifRoom" />
+    -->
 
     <item
         android:id="@+id/menu_logout"

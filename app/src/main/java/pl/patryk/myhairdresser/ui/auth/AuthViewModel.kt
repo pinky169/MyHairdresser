@@ -6,6 +6,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import pl.patryk.myhairdresser.data.repository.UserRepository
+import pl.patryk.myhairdresser.utils.ConnectionUtils
 import pl.patryk.myhairdresser.utils.startLoginActivity
 import pl.patryk.myhairdresser.utils.startSignUpActivity
 
@@ -35,64 +36,74 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
     }
 
     //function to perform login
-    fun login() {
+    fun login(view: View) {
 
-        //validating email and password
-        if (email.isNullOrBlank() || password.isNullOrBlank()) {
-            authListener?.onIncorrectEmail(ERROR_EMPTY_FIELD)
-            authListener?.onIncorrectPassword(ERROR_EMPTY_FIELD)
-            return
-        } else if (password!!.length < 6) {
-            authListener?.onIncorrectPassword(ERROR_PASSWORD_LENGTH)
-            return
+        if (ConnectionUtils(view.context).isConnected) {
+
+            //validating email and password
+            if (email.isNullOrBlank() || password.isNullOrBlank()) {
+                authListener?.onIncorrectEmail(ERROR_EMPTY_FIELD)
+                authListener?.onIncorrectPassword(ERROR_EMPTY_FIELD)
+                return
+            } else if (password!!.length < 6) {
+                authListener?.onIncorrectPassword(ERROR_PASSWORD_LENGTH)
+                return
+            }
+
+            //authentication started
+            authListener?.onStarted()
+
+            //calling login from repository to perform the actual authentication
+            val disposable = repository.login(email!!, password!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        //sending a success callback
+                        authListener?.onSuccess(CODE_OK)
+                    }, {
+                        //sending a failure callback
+                        authListener?.onFailure(it.message!!)
+                    })
+            disposables.add(disposable)
+        } else {
+            authListener?.onNoConnectionAvailable()
         }
-
-        //authentication started
-        authListener?.onStarted()
-
-        //calling login from repository to perform the actual authentication
-        val disposable = repository.login(email!!, password!!)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    //sending a success callback
-                    authListener?.onSuccess(CODE_OK)
-                }, {
-                    //sending a failure callback
-                    authListener?.onFailure(it.message!!)
-                })
-        disposables.add(disposable)
     }
 
     //function to perform sign up
-    fun signup() {
+    fun signup(view: View) {
 
-        //validating email and password
-        if (email.isNullOrBlank() || password.isNullOrBlank() || password2nd.isNullOrBlank()) {
-            authListener?.onIncorrectEmail(ERROR_EMPTY_FIELD)
-            authListener?.onIncorrectPassword(ERROR_EMPTY_FIELD)
-            authListener?.onIncorrect2ndPassword(ERROR_EMPTY_FIELD)
-            return
-        } else if (!password.equals(password2nd)) {
-            authListener?.onIncorrectPassword(ERROR_PASSWORDS_DO_NOT_MATCH)
-            authListener?.onIncorrect2ndPassword(ERROR_PASSWORDS_DO_NOT_MATCH)
-            return
-        } else if (password!!.length < 6 || password2nd!!.length < 6) {
-            authListener?.onIncorrectPassword(ERROR_PASSWORD_LENGTH)
-            authListener?.onIncorrect2ndPassword(ERROR_PASSWORD_LENGTH)
-            return
+        if (ConnectionUtils(view.context).isConnected) {
+
+            //validating email and password
+            if (email.isNullOrBlank() || password.isNullOrBlank() || password2nd.isNullOrBlank()) {
+                authListener?.onIncorrectEmail(ERROR_EMPTY_FIELD)
+                authListener?.onIncorrectPassword(ERROR_EMPTY_FIELD)
+                authListener?.onIncorrect2ndPassword(ERROR_EMPTY_FIELD)
+                return
+            } else if (!password.equals(password2nd)) {
+                authListener?.onIncorrectPassword(ERROR_PASSWORDS_DO_NOT_MATCH)
+                authListener?.onIncorrect2ndPassword(ERROR_PASSWORDS_DO_NOT_MATCH)
+                return
+            } else if (password!!.length < 6 || password2nd!!.length < 6) {
+                authListener?.onIncorrectPassword(ERROR_PASSWORD_LENGTH)
+                authListener?.onIncorrect2ndPassword(ERROR_PASSWORD_LENGTH)
+                return
+            }
+
+            authListener?.onStarted()
+            val disposable = repository.register(email!!, password!!)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        authListener?.onSuccess(CODE_OK)
+                    }, {
+                        authListener?.onFailure(it.message!!)
+                    })
+            disposables.add(disposable)
+        } else {
+            authListener?.onNoConnectionAvailable()
         }
-
-        authListener?.onStarted()
-        val disposable = repository.register(email!!, password!!)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    authListener?.onSuccess(CODE_OK)
-                }, {
-                    authListener?.onFailure(it.message!!)
-                })
-        disposables.add(disposable)
     }
 
     fun goToSignup(view: View) {

@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="pl.patryk.myhairdresser">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".FirebaseApplication"
@@ -21,7 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.auth.SignUpActivity"
+        <activity
+            android:name=".ui.auth.SignUpActivity"
             android:parentActivityName=".ui.auth.LoginActivity" />
         <activity android:name=".ui.profile.UserProfileActivity" />
         <activity

@@ -1,31 +1,25 @@
 package pl.patryk.myhairdresser.data.model
 
-class User {
+data class User(var name: String = "",
+                var surname: String = "",
+                var email: String = "",
+                var age: String = "",
+                var phone: String = "",
+                var photo: Photo? = null,
+                var admin: Boolean = false) {
 
-    var name: String = ""
-    var surname: String = ""
-    var email: String = ""
-    var age: String = ""
-    var phone: String = ""
-    var photo: Photo = Photo()
-    var isAdmin: Boolean = false
-
-    constructor(name: String, surname: String, email: String, age: String, phone: String, photo: Photo, isAdmin: Boolean) {
+    constructor(name: String, surname: String, email: String, age: String, phone: String, admin: Boolean) : this() {
         this.name = name
         this.surname = surname
         this.email = email
         this.age = age
         this.phone = phone
-        this.photo = photo
-        this.isAdmin = isAdmin
+        this.admin = admin
     }
 
-    constructor(email: String) {
+    constructor(email: String) : this() {
         this.email = email
     }
-
-    // Empty constructor for Firebase DB
-    constructor()
 
     fun toMap(): Map<String, Any>? {
         val result: HashMap<String, Any> = HashMap()
@@ -34,8 +28,7 @@ class User {
         result["email"] = email
         result["age"] = age
         result["phone"] = phone
-        result["photo"] = photo
-        result["isAdmin"] = isAdmin
+        result["admin"] = admin
         return result
     }
 }
