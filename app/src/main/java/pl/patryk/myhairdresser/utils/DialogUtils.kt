@@ -15,12 +15,16 @@ import androidx.fragment.app.DialogFragment
 import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.datetime.dateTimePicker
 import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.appointment_dialog.view.*
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.firebase.FirebaseAuthHelper
 import pl.patryk.myhairdresser.data.firebase.FirebaseDatabaseHelper
 import pl.patryk.myhairdresser.data.model.Appointment
+import pl.patryk.myhairdresser.data.model.User
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,12 +33,15 @@ class DialogUtils : DialogFragment() {
 
     private val dbHelper: FirebaseDatabaseHelper = FirebaseDatabaseHelper()
     private val authHelper: FirebaseAuthHelper = FirebaseAuthHelper()
-    private lateinit var selectedService: String
     private lateinit var inflatedView: View
     private lateinit var mSpinner: Spinner
     private lateinit var mPriceTextView: TextView
-    private lateinit var selectedDateTime: String
     private lateinit var appointment: Appointment
+    private var selectedDateTime: String? = null
+    private var selectedService: String? = null
+    private var name: String? = null
+    private var user: User? = null
+    private var phoneNumber: String? = null
 
     fun newInstance(): DialogUtils? {
         return DialogUtils()
@@ -44,6 +51,7 @@ class DialogUtils : DialogFragment() {
 
         initViews()
         setupSpinnerListener()
+        loadUser()
 
         val builder = AlertDialog.Builder(activity!!)
                 .setView(inflatedView)
@@ -60,6 +68,24 @@ class DialogUtils : DialogFragment() {
         inflatedView = inflater.inflate(R.layout.appointment_dialog, null)
         mSpinner = inflatedView.spinner
         mPriceTextView = inflatedView.service_price
+    }
+
+    // Loads user realtime data from firebase database into views
+    private fun loadUser() {
+
+        // If any value in db for the user changes, load new content
+        dbHelper.databaseReference.child(authHelper.currentUserId()!!).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                if (dataSnapshot.exists()) {
+                    user = dataSnapshot.getValue(User::class.java)
+                    name = inflatedView.context.getString(R.string.name_and_surname, user?.name, user?.surname)
+                    phoneNumber = user?.phone
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
     }
 
     private val dialogListener = DialogInterface.OnClickListener { dialog, whichButton ->
@@ -91,9 +117,13 @@ class DialogUtils : DialogFragment() {
                 message(R.string.appointment_dialog_message)
                 selectedDateTime = formatter.format(dateTime.time)
             }.positiveButton(R.string.dialog_text_button_positive) {
-                appointment = Appointment(selectedService, selectedDateTime)
-                dbHelper.registerAppointment(authHelper.currentUserId()!!, appointment)
-                Toasty.success(it.context, it.context.getString(R.string.appointment_registered_successfully, appointment.service, appointment.date), Toast.LENGTH_LONG).show()
+                if (name != null && selectedService != null && selectedDateTime != null) {
+                    appointment = Appointment(name!!, selectedService!!, selectedDateTime!!, phoneNumber!!)
+                    dbHelper.registerAppointment(authHelper.currentUserId()!!, appointment)
+                    Toasty.success(it.context, it.context.getString(R.string.appointment_registered_successfully, appointment.service, appointment.date), Toast.LENGTH_LONG).show()
+                } else {
+                    Toasty.success(it.context, it.context.getString(R.string.sth_went_wrong_try_again), Toast.LENGTH_LONG).show()
+                }
             }.negativeButton(R.string.dialog_text_button_negative)
             lifecycleOwner(activity)
         }

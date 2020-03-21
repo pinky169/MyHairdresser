@@ -59,5 +59,8 @@
         <item>100 zł</item>
         <item>80 zł</item>
     </string-array>
+    <string name="name_and_surname">%1$s %2$s</string>
+    <string name="sth_went_wrong_try_again">Coś poszło nie tak. Spróbuj ponownie.</string>
+    <string name="confirm_button">Zatwierdź</string>
 
 </resources>

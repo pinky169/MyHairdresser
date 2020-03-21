@@ -17,19 +17,17 @@ class FirebaseDatabaseHelper {
         database.getReference("users")
     }
 
-    fun insertUser(uid: String, user: User) {
-        databaseReference.child(uid).setValue(user)
+    fun getPermissionReference(uid: String): DatabaseReference {
+        return databaseReference.child(uid).child("admin")
     }
 
-    fun updateUser(uid: String, user: User) {
-        databaseReference.child(uid).updateChildren(user.toMap()!!)
-    }
+    fun insertUser(uid: String, user: User) = databaseReference.child(uid).setValue(user)
 
-    fun insertPhoto(uid: String, photo: Photo) {
-        databaseReference.child(uid).child("photo").setValue(photo)
-    }
+    fun insertPhoto(uid: String, photo: Photo) = databaseReference.child(uid).child("photo").setValue(photo)
 
-    fun registerAppointment(uid: String, appointment: Appointment) {
-        databaseReference.child(uid).child("appointment").setValue(appointment)
-    }
+    fun updateUser(uid: String, user: User) = databaseReference.child(uid).updateChildren(user.toMap()!!)
+
+    fun updateAppointment(uid: String, appointment: Appointment) = databaseReference.child(uid).child("appointment").updateChildren(appointment.toMap()!!)
+
+    fun registerAppointment(uid: String, appointment: Appointment) = databaseReference.child(uid).child("appointment").setValue(appointment)
 }

@@ -35,6 +35,10 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
         repository.currentUser()
     }
 
+    val userId by lazy {
+        repository.currentUserId()
+    }
+
     //function to perform login
     fun login(view: View) {
 
@@ -105,6 +109,8 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
             authListener?.onNoConnectionAvailable()
         }
     }
+
+    fun logout() = repository.logout()
 
     fun goToSignup(view: View) {
         view.context.startSignUpActivity()

@@ -66,4 +66,10 @@ dependencies {
     // Material dialogs lib
     implementation 'com.afollestad.material-dialogs:datetime:3.3.0'
     implementation 'com.afollestad.material-dialogs:lifecycle:3.2.1'
+
+    // CardView
+    implementation "androidx.cardview:cardview:1.0.0"
+
+    // RecyclerView
+    implementation "androidx.recyclerview:recyclerview:1.1.0"
 }

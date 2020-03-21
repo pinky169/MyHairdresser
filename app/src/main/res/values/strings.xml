@@ -46,6 +46,8 @@
     <string name="appointment_registered_successfully">You have been appointed for %1$s at %2$s</string>
     <string name="appointment_dialog_message">Please select type of a service. In the next step you will be asked for the date of your appointment.</string>
     <string name="type_of_service_label">Type of service:</string>
+    <string name="name_and_surname">%1$s %2$s</string>
+    <string name="sth_went_wrong_try_again">Something went wrong. Try again.</string>
 
     <string-array name="services">
         <item>Haircut</item>
@@ -58,5 +60,6 @@
         <item>20 €</item>
         <item>18 €</item>
     </string-array>
+    <string name="confirm_button">Confirm</string>
 
 </resources>

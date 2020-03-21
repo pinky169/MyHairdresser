@@ -28,6 +28,7 @@
         <activity
             android:name=".ui.profile.EditProfileActivity"
             android:parentActivityName=".ui.profile.UserProfileActivity" />
+        <activity android:name=".ui.admin.AdminActivity" />
     </application>
 
 </manifest>
