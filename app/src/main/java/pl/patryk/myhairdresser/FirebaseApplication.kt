@@ -12,6 +12,7 @@ import pl.patryk.myhairdresser.data.firebase.FirebaseAuthHelper
 import pl.patryk.myhairdresser.data.firebase.FirebaseDatabaseHelper
 import pl.patryk.myhairdresser.data.firebase.FirebaseStorageHelper
 import pl.patryk.myhairdresser.data.repository.UserRepository
+import pl.patryk.myhairdresser.ui.admin.AdminViewModelFactory
 import pl.patryk.myhairdresser.ui.auth.AuthViewModelFactory
 import pl.patryk.myhairdresser.ui.profile.UserProfileViewModelFactory
 
@@ -26,8 +27,9 @@ class FirebaseApplication : Application(), KodeinAware {
         bind() from singleton { FirebaseAuthHelper() }
         bind() from singleton { FirebaseDatabaseHelper() }
         bind() from singleton { FirebaseStorageHelper() }
-        bind() from singleton { UserRepository(instance(), instance()) }
+        bind() from singleton { UserRepository(instance(), instance(), instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
+        bind() from provider { AdminViewModelFactory(instance()) }
         bind() from provider { UserProfileViewModelFactory(instance()) }
 
     }

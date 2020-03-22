@@ -41,12 +41,9 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
     override fun getItemCount() = itemList.size
 
     fun setItems(items: List<Appointment>) {
-        this.itemList = items as MutableList<Appointment>
-        notifyDataSetChanged()
-    }
-
-    fun clear() {
-        this.itemList.clear()
-        notifyDataSetChanged()
+        if (itemList != items) {
+            this.itemList = items as MutableList<Appointment>
+            notifyDataSetChanged()
+        }
     }
 }

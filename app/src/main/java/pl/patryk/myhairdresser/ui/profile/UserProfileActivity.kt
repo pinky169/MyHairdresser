@@ -16,6 +16,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -23,38 +24,24 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.storage.StorageReference
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.user_profile_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
-import pl.patryk.myhairdresser.data.firebase.FirebaseDatabaseHelper
-import pl.patryk.myhairdresser.data.firebase.FirebaseStorageHelper
-import pl.patryk.myhairdresser.data.model.Photo
 import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.databinding.UserProfileLayoutBinding
 import pl.patryk.myhairdresser.utils.DialogUtils
 import pl.patryk.myhairdresser.utils.startLoginActivity
 
 
-class UserProfileActivity : AppCompatActivity(), KodeinAware {
+class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
 
     override val kodein by kodein()
     private val factory: UserProfileViewModelFactory by instance()
-    private lateinit var dbHelper: FirebaseDatabaseHelper
-    private lateinit var storageHelper: FirebaseStorageHelper
-    private lateinit var storageReference: StorageReference
-    private lateinit var databaseReference: DatabaseReference
-    private lateinit var userID: String
-    private var user: User? = null
-
     private lateinit var viewModel: UserProfileViewModel
+    private var user: User? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,56 +49,30 @@ class UserProfileActivity : AppCompatActivity(), KodeinAware {
         val binding: UserProfileLayoutBinding = DataBindingUtil.setContentView(this, R.layout.user_profile_layout)
         viewModel = ViewModelProvider(this, factory).get(UserProfileViewModel::class.java)
         binding.viewmodel = viewModel
+        viewModel.userListener = this
 
-        init()
+        observeUser()
         setupListeners()
-        loadUser(databaseReference.child(userID))
         setupBackgroundAnimation()
     }
 
-    private fun init() {
-
-        userID = viewModel.getUserId()!!
-
-        dbHelper = FirebaseDatabaseHelper()
-        databaseReference = dbHelper.databaseReference
-
-        storageHelper = FirebaseStorageHelper()
-        storageReference = storageHelper.storageReference
-    }
-
     // Loads user realtime data from firebase database into views
-    private fun loadUser(userReference: DatabaseReference) {
+    private fun observeUser() {
+        viewModel.loadUser().observe(this, Observer { data ->
 
-        // Loading started, show progress bar
-        progress_bar.visibility = View.VISIBLE
+            // Kotlin creates copy() function
+            // for every data class
+            user = data.copy()
 
-        // If any value in db for the user changes, load new content
-        userReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+            // If user uploaded any photo before just load it
+            // else don't load anything and hide progress bar
+            if (user?.photo != null)
+                loadPhoto(user?.photo!!.photoUrl)
+            else
+                photo_progress_bar.visibility = View.GONE
 
-                if (dataSnapshot.exists()) {
-
-                    user = dataSnapshot.getValue(User::class.java)
-
-                    // If user uploaded any photo before just load it
-                    // else don't load anything and hide progress bar
-                    if (dataSnapshot.child("photo").exists())
-                        loadPhoto(user?.photo!!.photoUrl)
-                    else
-                        photo_progress_bar.visibility = View.GONE
-
-                    // Load user data into views
-                    setupContent()
-
-                    //Done loading, hide progress bar
-                    progress_bar.visibility = View.GONE
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {
-                progress_bar.visibility = View.GONE
-            }
+            // Load user data into views
+            setupContent(user!!)
         })
     }
 
@@ -139,7 +100,7 @@ class UserProfileActivity : AppCompatActivity(), KodeinAware {
                 .into(profile_photo)
     }
 
-    private fun setupContent() {
+    private fun setupContent(user: User) {
 
         if (viewModel.user!!.isEmailVerified) {
             textview_email_label.text = getString(R.string.email_label)
@@ -152,17 +113,17 @@ class UserProfileActivity : AppCompatActivity(), KodeinAware {
 
         verified_icon.visibility = View.VISIBLE
         edit_profile_button.visibility = View.VISIBLE
-        name_textview.text = user?.name
-        surname_textview.text = user?.surname
-        email_textview.text = user?.email
-        age_textview.text = user?.age
-        phone_textview.text = user?.phone
+        name_textview.text = user.name
+        surname_textview.text = user.surname
+        email_textview.text = user.email
+        age_textview.text = user.age
+        phone_textview.text = user.phone
     }
 
     private fun setupListeners() {
         profile_photo.setOnClickListener { openFileChooser() }
         edit_profile_button.setOnClickListener { startEditProfileActivity() }
-        register_appointment_button.setOnClickListener { startAppointmentActivity() }
+        register_appointment_button.setOnClickListener { showAppointmentDialog() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -194,7 +155,7 @@ class UserProfileActivity : AppCompatActivity(), KodeinAware {
         }
     }
 
-    private fun startAppointmentActivity() {
+    private fun showAppointmentDialog() {
         // DialogFragment.show() will take care of adding the fragment
         // in a transaction.  We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
@@ -223,7 +184,8 @@ class UserProfileActivity : AppCompatActivity(), KodeinAware {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK
                 && data != null && data.data != null) {
-            uploadPhoto(data.data)
+            val fileExtension = getFileExtension(data.data)
+            uploadPhoto(data.data, fileExtension)
         }
 
         if (requestCode == UPDATE_PROFILE_REQUEST && resultCode == Activity.RESULT_OK) {
@@ -231,29 +193,13 @@ class UserProfileActivity : AppCompatActivity(), KodeinAware {
         }
     }
 
-    private fun getFileExtension(uri: Uri): String? {
+    private fun getFileExtension(uri: Uri?): String? {
         val mime = MimeTypeMap.getSingleton()
-        return mime.getExtensionFromMimeType(contentResolver.getType(uri))
+        return mime.getExtensionFromMimeType(contentResolver.getType(uri!!))
     }
 
-    private fun uploadPhoto(imgUri: Uri?) {
-
-        photo_progress_bar.visibility = View.VISIBLE
-
-        if (imgUri != null) {
-            val imgReference = storageReference.child(userID).child("$userID.${getFileExtension(imgUri)}")
-            imgReference.putFile(imgUri).addOnSuccessListener {
-                imgReference.downloadUrl.addOnSuccessListener {
-                    val imgURL = it.toString()
-                    val photo = Photo(userID, imgURL)
-                    dbHelper.insertPhoto(userID, photo)
-                    photo_progress_bar.visibility = View.GONE
-                    Toasty.success(this, getString(R.string.photo_uploaded_successfully), Toast.LENGTH_LONG).show()
-                }
-            }
-        } else {
-            Toasty.warning(this, getString(R.string.no_file_selected), Toast.LENGTH_LONG).show()
-        }
+    private fun uploadPhoto(imgUri: Uri?, fileExtension: String?) {
+        viewModel.uploadPhoto(imgUri, fileExtension)
     }
 
     private fun setupBackgroundAnimation() {
@@ -261,6 +207,34 @@ class UserProfileActivity : AppCompatActivity(), KodeinAware {
         animationDrawable?.setEnterFadeDuration(2000)
         animationDrawable?.setExitFadeDuration(4000)
         animationDrawable?.start()
+    }
+
+    override fun onStarted() {
+        // Loading started, show progress bar
+        progress_bar.visibility = View.VISIBLE
+    }
+
+    override fun onSuccess() {
+        //Done loading, hide progress bar
+        progress_bar.visibility = View.GONE
+    }
+
+    override fun onCanceled() {
+        progress_bar.visibility = View.GONE
+    }
+
+    override fun onUploadStarted() {
+        photo_progress_bar.visibility = View.VISIBLE
+    }
+
+    override fun onUploadSuccessful() {
+        photo_progress_bar.visibility = View.GONE
+        Toasty.success(this, getString(R.string.photo_uploaded_successfully), Toast.LENGTH_LONG).show()
+    }
+
+    override fun onUploadFailed() {
+        photo_progress_bar.visibility = View.GONE
+        Toasty.warning(this, getString(R.string.no_file_selected), Toast.LENGTH_LONG).show()
     }
 
     companion object {

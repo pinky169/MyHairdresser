@@ -2,10 +2,12 @@ package pl.patryk.myhairdresser.data.repository
 
 import pl.patryk.myhairdresser.data.firebase.FirebaseAuthHelper
 import pl.patryk.myhairdresser.data.firebase.FirebaseDatabaseHelper
+import pl.patryk.myhairdresser.data.firebase.FirebaseStorageHelper
 import pl.patryk.myhairdresser.data.model.Appointment
+import pl.patryk.myhairdresser.data.model.Photo
 import pl.patryk.myhairdresser.data.model.User
 
-class UserRepository(private val firebase: FirebaseAuthHelper, private val firebaseDB: FirebaseDatabaseHelper) {
+class UserRepository(private val firebase: FirebaseAuthHelper, private val firebaseDB: FirebaseDatabaseHelper, private val storage: FirebaseStorageHelper) {
 
     fun currentUser() = firebase.currentUser()
 
@@ -25,4 +27,13 @@ class UserRepository(private val firebase: FirebaseAuthHelper, private val fireb
 
     fun updateAppointment(uid: String, appointment: Appointment) = firebaseDB.updateAppointment(uid, appointment)
 
+    fun insertPhoto(uid: String, photo: Photo) = firebaseDB.insertPhoto(uid, photo)
+
+    fun getUserReference(uid: String) = firebaseDB.getUserReference(uid)
+
+    fun getUsersReference() = firebaseDB.databaseReference
+
+    fun getPermissionsReference(uid: String) = firebaseDB.getPermissionReference(uid)
+
+    fun getStorageReference() = storage.storageReference
 }

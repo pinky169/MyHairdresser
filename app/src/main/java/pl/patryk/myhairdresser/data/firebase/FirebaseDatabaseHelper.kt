@@ -17,6 +17,10 @@ class FirebaseDatabaseHelper {
         database.getReference("users")
     }
 
+    fun getUserReference(uid: String): DatabaseReference {
+        return databaseReference.child(uid)
+    }
+
     fun getPermissionReference(uid: String): DatabaseReference {
         return databaseReference.child(uid).child("admin")
     }

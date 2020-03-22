@@ -27,6 +27,9 @@ class EditProfileActivity : AppCompatActivity(), KodeinAware {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.edit_profile_layout)
 
+        // Toolbar title
+        title = getString(R.string.action_bar_title_edit)
+
         viewModel = ViewModelProvider(this, factory).get(UserProfileViewModel::class.java)
 
         loadUserData()
@@ -34,8 +37,6 @@ class EditProfileActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun loadUserData() {
-
-        title = getString(R.string.action_bar_title_edit)
 
         name = intent.getStringExtra(UserProfileActivity.TAG_USER_NAME)
         surname = intent.getStringExtra(UserProfileActivity.TAG_USER_SURNAME)
@@ -52,7 +53,7 @@ class EditProfileActivity : AppCompatActivity(), KodeinAware {
 
     private fun saveData() {
 
-        val userId = viewModel.getUserId()
+        val userId = viewModel.userId
         val newName = name_editext.text.toString().trim()
         val newSurname = surname_edittext.text.toString().trim()
         val newAge = age_editext.text.toString().trim()

@@ -2,6 +2,9 @@ package pl.patryk.myhairdresser.ui.auth
 
 import android.view.View
 import androidx.lifecycle.ViewModel
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -27,16 +30,24 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
     //auth listener
     var authListener: AuthListener? = null
 
-
     //disposable to dispose the Completable
     private val disposables = CompositeDisposable()
 
-    val user by lazy {
-        repository.currentUser()
-    }
+    val user by lazy { repository.currentUser() }
 
-    val userId by lazy {
-        repository.currentUserId()
+    val userId by lazy { repository.currentUserId() }
+
+    fun getPermissionsReference(uid: String) = repository.getPermissionsReference(uid)
+
+    fun getUserPermissionLevel(uid: String) {
+        repository.getPermissionsReference(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+            override fun onDataChange(datasnapshot: DataSnapshot) {
+                // This contains User's admin filed
+                val isAdmin = datasnapshot.value as Boolean
+                authListener?.onPermissionGranted(isAdmin)
+            }
+        })
     }
 
     //function to perform login

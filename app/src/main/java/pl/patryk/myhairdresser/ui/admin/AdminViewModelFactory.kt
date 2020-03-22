@@ -1,14 +1,14 @@
-package pl.patryk.myhairdresser.ui.auth
+package pl.patryk.myhairdresser.ui.admin
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import pl.patryk.myhairdresser.data.repository.UserRepository
 
 @Suppress("UNCHECKED_CAST")
-class AuthViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
+class AdminViewModelFactory(private val repository: UserRepository) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        return AuthViewModel(repository) as T
+        return AdminViewModel(repository) as T
     }
 
 }
