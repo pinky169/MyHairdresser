@@ -21,8 +21,6 @@ class UserRepository(private val firebase: FirebaseAuthHelper, private val fireb
 
     fun verifyEmail() = firebase.verifyEmail()
 
-    fun reloadUser() = firebase.reloadUser()
-
     fun updateUser(uid: String, user: User) = firebaseDB.updateUser(uid, user)
 
     fun updateAppointment(uid: String, appointment: Appointment) = firebaseDB.updateAppointment(uid, appointment)
@@ -36,4 +34,8 @@ class UserRepository(private val firebase: FirebaseAuthHelper, private val fireb
     fun getPermissionsReference(uid: String) = firebaseDB.getPermissionReference(uid)
 
     fun getStorageReference() = storage.storageReference
+
+    fun getAppointmentReference(uid: String) = firebaseDB.getAppointmentReference(uid)
+
+    fun setAppointmentState(uid: String, verificationState: String) = firebaseDB.setAppointmentState(uid, verificationState)
 }

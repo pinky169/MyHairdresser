@@ -41,6 +41,7 @@ class DialogUtils : DialogFragment() {
     private var selectedService: String? = null
     private var name: String? = null
     private var user: User? = null
+    private var userID: String? = null
     private var phoneNumber: String? = null
 
     fun newInstance(): DialogUtils? {
@@ -79,6 +80,7 @@ class DialogUtils : DialogFragment() {
 
                 if (dataSnapshot.exists()) {
                     user = dataSnapshot.getValue(User::class.java)
+                    userID = authHelper.currentUserId()
                     name = inflatedView.context.getString(R.string.name_and_surname, user?.name, user?.surname)
                     phoneNumber = user?.phone
                 }
@@ -118,7 +120,7 @@ class DialogUtils : DialogFragment() {
                 selectedDateTime = formatter.format(dateTime.time)
             }.positiveButton(R.string.dialog_text_button_positive) {
                 if (name != null && selectedService != null && selectedDateTime != null) {
-                    appointment = Appointment(name!!, selectedService!!, selectedDateTime!!, phoneNumber!!)
+                    appointment = Appointment(userID!!, name!!, selectedService!!, selectedDateTime!!, phoneNumber!!, Appointment.VERIFICATION_STATE_PENDING)
                     dbHelper.registerAppointment(authHelper.currentUserId()!!, appointment)
                     Toasty.success(it.context, it.context.getString(R.string.appointment_registered_successfully, appointment.service, appointment.date), Toast.LENGTH_LONG).show()
                 } else {

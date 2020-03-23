@@ -40,7 +40,7 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
     fun getPermissionsReference(uid: String) = repository.getPermissionsReference(uid)
 
     fun getUserPermissionLevel(uid: String) {
-        repository.getPermissionsReference(uid).addListenerForSingleValueEvent(object : ValueEventListener {
+        repository.getPermissionsReference(uid).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
             override fun onDataChange(datasnapshot: DataSnapshot) {
                 // This contains User's admin filed

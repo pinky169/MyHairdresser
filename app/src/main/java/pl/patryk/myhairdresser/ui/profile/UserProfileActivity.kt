@@ -30,6 +30,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
+import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.databinding.UserProfileLayoutBinding
 import pl.patryk.myhairdresser.utils.DialogUtils
@@ -51,28 +52,28 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         binding.viewmodel = viewModel
         viewModel.userListener = this
 
-        observeUser()
+        observeUser(viewModel)
+        observeAppointmentState(viewModel)
         setupListeners()
         setupBackgroundAnimation()
     }
 
     // Loads user realtime data from firebase database into views
-    private fun observeUser() {
+    private fun observeUser(viewModel: UserProfileViewModel) {
         viewModel.loadUser().observe(this, Observer { data ->
 
             // Kotlin creates copy() function
             // for every data class
             user = data.copy()
 
-            // If user uploaded any photo before just load it
-            // else don't load anything and hide progress bar
-            if (user?.photo != null)
-                loadPhoto(user?.photo!!.photoUrl)
-            else
-                photo_progress_bar.visibility = View.GONE
-
             // Load user data into views
             setupContent(user!!)
+        })
+    }
+
+    private fun observeAppointmentState(viewModel: UserProfileViewModel) {
+        viewModel.appointmentObserver().observe(this, Observer { appointment ->
+            setupNotification(appointment)
         })
     }
 
@@ -102,6 +103,11 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
 
     private fun setupContent(user: User) {
 
+        // If user uploaded any photo before just load it
+        // else don't load anything and hide progress bar
+        if (user.photo != null)
+            loadPhoto(user.photo!!.photoUrl)
+
         if (viewModel.user!!.isEmailVerified) {
             textview_email_label.text = getString(R.string.email_label)
             verified_icon.setImageResource(R.drawable.ic_user_verified)
@@ -119,6 +125,40 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         age_textview.text = user.age
         phone_textview.text = user.phone
     }
+
+    private fun setupNotification(appointment: Appointment) {
+
+        // Appointment verified
+        when (appointment.verification_state) {
+            Appointment.VERIFICATION_STATE_APPROVED -> {
+                notification_message.text = getString(R.string.notification_appointment_approved)
+                notification_date.text = getString(R.string.notification_appointment_date_accepted, appointment.date)
+                notification.setCardBackgroundColor(getColor(R.color.successColor))
+                notification.visibility = View.VISIBLE
+                notification_close.visibility = View.VISIBLE
+                notification_close.setOnClickListener { viewModel.setAppointmentState(viewModel.userId!!, Appointment.VERIFICATION_STATE_IDLE) }
+            }
+            Appointment.VERIFICATION_STATE_PENDING -> {
+                notification_message.text = getString(R.string.notification_appointment_pending)
+                notification_date.text = getString(R.string.notification_appointment_date, appointment.date)
+                notification.setCardBackgroundColor(getColor(R.color.warningColor))
+                notification.visibility = View.VISIBLE
+                notification_close.visibility = View.GONE
+            }
+            Appointment.VERIFICATION_STATE_REJECTED -> {
+                notification_message.text = getString(R.string.notification_appointment_rejected)
+                notification_date.text = getString(R.string.notification_appointment_date, appointment.date)
+                notification.setCardBackgroundColor(getColor(R.color.errorColor))
+                notification.visibility = View.VISIBLE
+                notification_close.visibility = View.VISIBLE
+                notification_close.setOnClickListener { viewModel.setAppointmentState(viewModel.userId!!, Appointment.VERIFICATION_STATE_IDLE) }
+            }
+            else -> notification.visibility = View.GONE
+        }
+
+        notification_service.text = getString(R.string.notification_appointment_service, appointment.service)
+    }
+
 
     private fun setupListeners() {
         profile_photo.setOnClickListener { openFileChooser() }
@@ -203,7 +243,7 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
     }
 
     private fun setupBackgroundAnimation() {
-        val animationDrawable = constraintLayout.background as? AnimationDrawable
+        val animationDrawable = profile_layout.background as? AnimationDrawable
         animationDrawable?.setEnterFadeDuration(2000)
         animationDrawable?.setExitFadeDuration(4000)
         animationDrawable?.start()
@@ -245,6 +285,5 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         const val TAG_USER_EMAIL = "email"
         const val TAG_USER_AGE = "age"
         const val TAG_USER_PHONE = "phone"
-
     }
 }

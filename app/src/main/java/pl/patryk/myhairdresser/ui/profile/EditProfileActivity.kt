@@ -60,7 +60,7 @@ class EditProfileActivity : AppCompatActivity(), KodeinAware {
         val newPhone = phone_editext.text.toString().trim()
         val appointment = Appointment()
         appointment.person = "$newName $newSurname"
-        appointment.contactPhone = newPhone
+        appointment.contact_phone = newPhone
 
         val updatedUser = User(newName, newSurname, newAge, newPhone)
         viewModel.updateUser(userId!!, updatedUser)

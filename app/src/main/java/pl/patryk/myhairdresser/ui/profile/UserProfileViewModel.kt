@@ -21,7 +21,9 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
     val userId by lazy { repository.currentUserId() }
     val userReference by lazy { repository.getUserReference(userId!!) }
     val storageReference by lazy { repository.getStorageReference() }
+    val appointmentReference by lazy { repository.getAppointmentReference(userId!!) }
     var userLiveData: MutableLiveData<User> = MutableLiveData()
+    var appointmentLiveData: MutableLiveData<Appointment> = MutableLiveData()
 
     fun logout() = repository.logout()
 
@@ -35,10 +37,6 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
     fun updateAppointment(uid: String, appointment: Appointment) = repository.updateAppointment(uid, appointment)
 
     fun verifyEmail() = repository.verifyEmail()
-
-    fun reloadUser() = repository.reloadUser()
-
-    fun getUserReference(uid: String) = repository.getUserReference(uid)
 
     fun loadUser(): LiveData<User> {
         userListener?.onStarted()
@@ -77,4 +75,21 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
             userListener?.onUploadFailed()
         }
     }
+
+    fun appointmentObserver(): LiveData<Appointment> {
+
+        appointmentReference.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists() && dataSnapshot.hasChild("userID")) {
+                    val appointment = dataSnapshot.getValue(Appointment::class.java)
+                    appointmentLiveData.postValue(appointment)
+                }
+            }
+        })
+        return appointmentLiveData
+    }
+
+    fun setAppointmentState(uid: String, verificationState: String) = repository.setAppointmentState(uid, verificationState)
 }

@@ -17,9 +17,10 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
         repository.getUsersReference()
     }
 
+    val userId by lazy { repository.currentUserId() }
+
     private lateinit var appointments: ArrayList<Appointment>
     var liveAppointments: MutableLiveData<List<Appointment>> = MutableLiveData()
-
 
     fun getAppointments(): LiveData<List<Appointment>> {
 
@@ -32,7 +33,7 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
                     if (dataSnapshot.exists()) {
                         for (userSnapshot in dataSnapshot.children) {
                             val currentUser = userSnapshot.getValue(User::class.java)
-                            if (currentUser?.appointment != null)
+                            if (currentUser?.appointment != null && currentUser.appointment!!.verification_state == Appointment.VERIFICATION_STATE_PENDING)
                                 appointments.add(currentUser.appointment!!)
                         }
                         liveAppointments.postValue(appointments)
@@ -43,7 +44,7 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
         return liveAppointments
     }
 
-    fun logout() {
-        repository.logout()
-    }
+    fun setAppointmentState(uid: String, verificationState: String) = repository.setAppointmentState(uid, verificationState)
+
+    fun logout() = repository.logout()
 }

@@ -83,6 +83,4 @@ class FirebaseAuthHelper {
     fun currentUser() = firebaseAuth.currentUser
 
     fun currentUserId() = firebaseAuth.uid
-
-    fun reloadUser() = firebaseAuth.currentUser?.reload()
 }

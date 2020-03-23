@@ -25,6 +25,12 @@ class FirebaseDatabaseHelper {
         return databaseReference.child(uid).child("admin")
     }
 
+    fun getAppointmentReference(uid: String): DatabaseReference {
+        return databaseReference.child(uid).child("appointment")
+    }
+
+    fun setAppointmentState(uid: String, verificationState: String) = databaseReference.child(uid).child("appointment").child("verification_state").setValue(verificationState)
+
     fun insertUser(uid: String, user: User) = databaseReference.child(uid).setValue(user)
 
     fun insertPhoto(uid: String, photo: Photo) = databaseReference.child(uid).child("photo").setValue(photo)

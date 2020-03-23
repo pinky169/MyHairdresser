@@ -11,219 +11,293 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout"
+        android:id="@+id/profile_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_list"
-        android:padding="16dp"
-        tools:context=".ui.profile.UserProfileActivity">
+        android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/profile_photo"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:src="@drawable/ic_profile_picture"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/photo_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/colorPrimary"
-            android:indeterminateTintMode="src_atop"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/profile_photo"
-            app:layout_constraintEnd_toEndOf="@+id/profile_photo"
-            app:layout_constraintStart_toStartOf="@+id/profile_photo"
-            app:layout_constraintTop_toTopOf="@+id/profile_photo" />
-
-        <View
-            android:id="@+id/divider_top"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/notification"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/colorPrimaryDark"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profile_photo" />
-
-        <ImageView
-            android:id="@+id/edit_profile_button"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:src="@drawable/ic_update"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/name_label" />
-
-        <ImageView
-            android:id="@+id/icon_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_identity"
-            app:layout_constraintBottom_toBottomOf="@+id/name_textview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/name_label" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/name_label"
+            <ImageView
+                android:id="@+id/notification_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:src="@drawable/ic_close"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/notification_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/notification_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/notification_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <ScrollView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/name_label"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/edit_profile_button"
-            app:layout_constraintStart_toEndOf="@id/icon_name"
-            app:layout_constraintTop_toBottomOf="@+id/divider_top" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/register_appointment_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/notification">
 
-        <TextView
-            android:id="@+id/name_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toStartOf="@+id/name_label"
-            app:layout_constraintTop_toBottomOf="@+id/name_label" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:context=".ui.profile.UserProfileActivity">
 
-        <ImageView
-            android:id="@+id/icon_surname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_identity"
-            app:layout_constraintBottom_toBottomOf="@+id/surname_textview"
-            app:layout_constraintStart_toStartOf="@+id/icon_name"
-            app:layout_constraintTop_toTopOf="@+id/surname_label" />
+                <ImageView
+                    android:id="@+id/profile_photo"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_profile_picture"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_goneMarginTop="0dp" />
 
-        <TextView
-            android:id="@+id/surname_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/surname_label"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toStartOf="@+id/name_label"
-            app:layout_constraintTop_toBottomOf="@+id/name_textview" />
+                <ProgressBar
+                    android:id="@+id/photo_progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorPrimary"
+                    android:indeterminateTintMode="src_atop"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/profile_photo"
+                    app:layout_constraintEnd_toEndOf="@+id/profile_photo"
+                    app:layout_constraintStart_toStartOf="@+id/profile_photo"
+                    app:layout_constraintTop_toTopOf="@+id/profile_photo" />
 
-        <TextView
-            android:id="@+id/surname_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toStartOf="@+id/name_label"
-            app:layout_constraintTop_toBottomOf="@+id/surname_label" />
+                <View
+                    android:id="@+id/divider_top"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@color/colorPrimaryDark"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/profile_photo" />
 
-        <ImageView
-            android:id="@+id/icon_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_send_email"
-            app:layout_constraintBottom_toBottomOf="@+id/email_textview"
-            app:layout_constraintStart_toStartOf="@+id/icon_name"
-            app:layout_constraintTop_toTopOf="@+id/textview_email_label" />
+                <ImageView
+                    android:id="@+id/edit_profile_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_update"
+                    android:visibility="gone"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/name_label" />
 
-        <TextView
-            android:id="@+id/textview_email_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/email_label"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@+id/name_label"
-            app:layout_constraintTop_toBottomOf="@id/surname_textview" />
+                <ImageView
+                    android:id="@+id/icon_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_identity"
+                    app:layout_constraintBottom_toBottomOf="@+id/name_textview"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/name_label" />
 
-        <ImageView
-            android:id="@+id/verified_icon"
-            android:layout_width="0dp"
-            android:layout_height="15dp"
-            android:layout_marginStart="2dp"
-            android:scaleType="fitStart"
-            android:src="@drawable/ic_send_email"
-            android:tooltipText="Verify email"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/textview_email_label"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toEndOf="@id/textview_email_label"
-            app:layout_constraintTop_toTopOf="@+id/textview_email_label" />
+                <TextView
+                    android:id="@+id/name_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/name_label"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/edit_profile_button"
+                    app:layout_constraintStart_toEndOf="@id/icon_name"
+                    app:layout_constraintTop_toBottomOf="@+id/divider_top" />
 
-        <TextView
-            android:id="@+id/email_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toStartOf="@+id/name_label"
-            app:layout_constraintTop_toBottomOf="@+id/textview_email_label" />
+                <TextView
+                    android:id="@+id/name_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toStartOf="@+id/name_label"
+                    app:layout_constraintTop_toBottomOf="@+id/name_label" />
 
-        <ImageView
-            android:id="@+id/icon_age"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_age"
-            app:layout_constraintBottom_toBottomOf="@+id/age_textview"
-            app:layout_constraintStart_toStartOf="@+id/icon_name"
-            app:layout_constraintTop_toTopOf="@+id/age_label" />
+                <ImageView
+                    android:id="@+id/icon_surname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_identity"
+                    app:layout_constraintBottom_toBottomOf="@+id/surname_textview"
+                    app:layout_constraintStart_toStartOf="@+id/icon_name"
+                    app:layout_constraintTop_toTopOf="@+id/surname_label" />
 
-        <TextView
-            android:id="@+id/age_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/age_label"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toStartOf="@+id/name_label"
-            app:layout_constraintTop_toBottomOf="@id/email_textview" />
+                <TextView
+                    android:id="@+id/surname_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/surname_label"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toStartOf="@+id/name_label"
+                    app:layout_constraintTop_toBottomOf="@+id/name_textview" />
 
-        <TextView
-            android:id="@+id/age_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toStartOf="@+id/name_label"
-            app:layout_constraintTop_toBottomOf="@+id/age_label" />
+                <TextView
+                    android:id="@+id/surname_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toStartOf="@+id/name_label"
+                    app:layout_constraintTop_toBottomOf="@+id/surname_label" />
 
-        <ImageView
-            android:id="@+id/icon_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_phone"
-            app:layout_constraintBottom_toBottomOf="@+id/phone_textview"
-            app:layout_constraintStart_toStartOf="@+id/icon_name"
-            app:layout_constraintTop_toTopOf="@id/phone_label" />
+                <ImageView
+                    android:id="@+id/icon_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_send_email"
+                    app:layout_constraintBottom_toBottomOf="@+id/email_textview"
+                    app:layout_constraintStart_toStartOf="@+id/icon_name"
+                    app:layout_constraintTop_toTopOf="@+id/textview_email_label" />
 
-        <TextView
-            android:id="@+id/phone_label"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/phone_label"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toStartOf="@id/name_label"
-            app:layout_constraintTop_toBottomOf="@id/age_textview" />
+                <TextView
+                    android:id="@+id/textview_email_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/email_label"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/name_label"
+                    app:layout_constraintTop_toBottomOf="@id/surname_textview" />
 
-        <TextView
-            android:id="@+id/phone_textview"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/name_label"
-            app:layout_constraintStart_toStartOf="@+id/name_label"
-            app:layout_constraintTop_toBottomOf="@+id/phone_label" />
+                <ImageView
+                    android:id="@+id/verified_icon"
+                    android:layout_width="0dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="2dp"
+                    android:scaleType="fitStart"
+                    android:src="@drawable/ic_send_email"
+                    android:tooltipText="Verify email"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@+id/textview_email_label"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toEndOf="@id/textview_email_label"
+                    app:layout_constraintTop_toTopOf="@+id/textview_email_label" />
+
+                <TextView
+                    android:id="@+id/email_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toStartOf="@+id/name_label"
+                    app:layout_constraintTop_toBottomOf="@+id/textview_email_label" />
+
+                <ImageView
+                    android:id="@+id/icon_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_age"
+                    app:layout_constraintBottom_toBottomOf="@+id/age_textview"
+                    app:layout_constraintStart_toStartOf="@+id/icon_name"
+                    app:layout_constraintTop_toTopOf="@+id/age_label" />
+
+                <TextView
+                    android:id="@+id/age_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/age_label"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toStartOf="@+id/name_label"
+                    app:layout_constraintTop_toBottomOf="@id/email_textview" />
+
+                <TextView
+                    android:id="@+id/age_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toStartOf="@+id/name_label"
+                    app:layout_constraintTop_toBottomOf="@+id/age_label" />
+
+                <ImageView
+                    android:id="@+id/icon_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_phone"
+                    app:layout_constraintBottom_toBottomOf="@+id/phone_textview"
+                    app:layout_constraintStart_toStartOf="@+id/icon_name"
+                    app:layout_constraintTop_toTopOf="@id/phone_label" />
+
+                <TextView
+                    android:id="@+id/phone_label"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/phone_label"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toStartOf="@id/name_label"
+                    app:layout_constraintTop_toBottomOf="@id/age_textview" />
+
+                <TextView
+                    android:id="@+id/phone_textview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/name_label"
+                    app:layout_constraintStart_toStartOf="@+id/name_label"
+                    app:layout_constraintTop_toBottomOf="@+id/phone_label" />
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorPrimary"
+                    android:indeterminateTintMode="src_atop"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
         <Button
             android:id="@+id/register_appointment_button"
             style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
             android:padding="8dp"
@@ -231,19 +305,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/colorPrimary"
-            android:indeterminateTintMode="src_atop"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
