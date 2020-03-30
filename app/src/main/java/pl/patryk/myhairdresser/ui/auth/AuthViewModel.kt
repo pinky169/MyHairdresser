@@ -73,8 +73,8 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        //sending a success callback
-                        authListener?.onSuccess(CODE_OK)
+                        // Do sth that depends on the access lvl
+                        getUserPermissionLevel(userId!!)
                     }, {
                         //sending a failure callback
                         authListener?.onFailure(it.message!!)
@@ -111,7 +111,8 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        authListener?.onSuccess(CODE_OK)
+                        // Do sth that depends on the access lvl
+                        getUserPermissionLevel(userId!!)
                     }, {
                         authListener?.onFailure(it.message!!)
                     })

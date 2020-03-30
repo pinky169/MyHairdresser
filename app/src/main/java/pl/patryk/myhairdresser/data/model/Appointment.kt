@@ -13,7 +13,7 @@ data class Appointment(var userID: String = "",
     fun toMap(): Map<String, Any>? {
         val result: HashMap<String, Any> = HashMap()
         result["person"] = person
-        result["contactPhone"] = contact_phone
+        result["contact_phone"] = contact_phone
         return result
     }
 
@@ -23,4 +23,6 @@ data class Appointment(var userID: String = "",
         const val VERIFICATION_STATE_APPROVED = "STATE_APPROVED"
         const val VERIFICATION_STATE_REJECTED = "STATE_REJECTED"
     }
+
+
 }

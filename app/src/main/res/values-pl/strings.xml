@@ -56,19 +56,41 @@
     <string name="notification_appointment_approved">Hurra! Twoja wizyta została zatwierdzona!</string>
     <string name="notification_appointment_rejected">Twoja wizyta została odrzucona!\nUmów się ponownie na inny termin lub skontaktuj telefonicznie: 123 456 780</string>
     <string name="appointment_reject_button_text">Odrzuć</string>
-    <string name="appointment_phone_call_button_text">Zadzwoń</string>
+    <string name="appointment_phone_call_button_text">Zadzwoń do %1$s</string>
     <string name="notification_appointment_service">Zaplanowana usługa: %1$s</string>
+    <string name="appointment_rejected_toast">Odrzucono!</string>
+    <string name="appointment_approved_toast">Potwierdzono!</string>
 
     <string-array name="services">
-        <item>Strzyżenie</item>
+        <item>Strzyżenie damskie</item>
+        <item>Strzyżenie męskie</item>
+        <item>Strzyżenie dzieci</item>
         <item>Farbowanie</item>
-        <item>Stylizacja</item>
+        <item>Strzyżenie i stylizacja</item>
+        <item>Balejaż</item>
+        <item>Upięcie włosów</item>
+        <item>Zabieg pielęgnacyjno-regenerujący</item>
+        <item>Podcięcie grzywki</item>
+        <item>Ombre / Sombre</item>
+        <item>Trwała ondulacja</item>
+        <item>Loki</item>
+        <item>Upięcie ślubne</item>
     </string-array>
 
     <string-array name="services_prices">
-        <item>30 zł</item>
-        <item>100 zł</item>
-        <item>80 zł</item>
+        <item>50–80 zł</item>
+        <item>35–55 zł</item>
+        <item>30–50 zł</item>
+        <item>150–250 zł</item>
+        <item>55–120 zł</item>
+        <item>150–400 zł</item>
+        <item>90–150 zł</item>
+        <item>80–120 zł</item>
+        <item>15 zł</item>
+        <item>180–300 zł</item>
+        <item>100–130 zł</item>
+        <item>60–120 zł</item>
+        <item>100–200 zł</item>
     </string-array>
 
 </resources>

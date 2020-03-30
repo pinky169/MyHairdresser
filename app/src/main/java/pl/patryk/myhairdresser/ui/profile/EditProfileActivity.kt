@@ -53,7 +53,7 @@ class EditProfileActivity : AppCompatActivity(), KodeinAware {
 
     private fun saveData() {
 
-        val userId = viewModel.userId
+        val userId = viewModel.userId!!
         val newName = name_editext.text.toString().trim()
         val newSurname = surname_edittext.text.toString().trim()
         val newAge = age_editext.text.toString().trim()
@@ -63,7 +63,7 @@ class EditProfileActivity : AppCompatActivity(), KodeinAware {
         appointment.contact_phone = newPhone
 
         val updatedUser = User(newName, newSurname, newAge, newPhone)
-        viewModel.updateUser(userId!!, updatedUser)
+        viewModel.updateUser(userId, updatedUser)
         viewModel.updateAppointment(userId, appointment)
         setResult(Activity.RESULT_OK)
         finish()

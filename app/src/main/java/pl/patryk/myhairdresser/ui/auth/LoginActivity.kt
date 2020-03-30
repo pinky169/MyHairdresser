@@ -39,12 +39,6 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         progress_bar.visibility = View.VISIBLE
     }
 
-    override fun onSuccess(code: Int) {
-        when (code) {
-            AuthViewModel.CODE_OK -> viewModel.getUserPermissionLevel(viewModel.userId!!)
-        }
-    }
-
     override fun onFailure(message: String) {
         progress_bar.visibility = View.GONE
         Toasty.error(this, message, Toast.LENGTH_SHORT).show()
@@ -79,10 +73,10 @@ class LoginActivity : AppCompatActivity(), AuthListener, KodeinAware {
         }
     }
 
-    override fun onPermissionGranted(isAdmin: Boolean?) {
+    override fun onPermissionGranted(isAdmin: Boolean) {
         // If user is an admin
         // then start activity with admin panel
-        if (isAdmin!!) {
+        if (isAdmin) {
             progress_bar.visibility = View.GONE
             startAdminActivity()
         } else {

@@ -55,19 +55,41 @@
     <string name="notification_appointment_pending">Your appointment is pending approval.</string>
     <string name="notification_appointment_approved">Hurray! You appointment has been approved!</string>
     <string name="notification_appointment_rejected">Your appointment has been rejected.\nPlease make a new one for another date or hour.</string>
-    <string name="appointment_phone_call_button_text">Call</string>
+    <string name="appointment_phone_call_button_text">Call to %1$s</string>
     <string name="appointment_reject_button_text">Reject</string>
 
     <string-array name="services">
-        <item>Haircut</item>
-        <item>Hair dyeing</item>
-        <item>Hair styling</item>
+        <item>Women\'s haircut</item>
+        <item>Men\'s haircut</item>
+        <item>Children\'s haircut</item>
+        <item>Coloring</item>
+        <item>Haircut and styling</item>
+        <item>Balayage</item>
+        <item>Updo</item>
+        <item>Caring and regenerating treatment</item>
+        <item>Undercutting fringe</item>
+        <item>Ombre / Sombre</item>
+        <item>Perm</item>
+        <item>Curls</item>
+        <item>Wedding updo</item>
     </string-array>
 
     <string-array name="services_prices">
-        <item>6 €</item>
-        <item>20 €</item>
-        <item>18 €</item>
+        <item>10–17 €</item>
+        <item>7–12 €</item>
+        <item>6–11 €</item>
+        <item>32–54 €</item>
+        <item>12–26 €</item>
+        <item>32–86 €</item>
+        <item>20–32 €</item>
+        <item>17–26 €</item>
+        <item>3 €</item>
+        <item>40–65 €</item>
+        <item>22–28 €</item>
+        <item>13–26 €</item>
+        <item>22–43 €</item>
     </string-array>
+    <string name="appointment_rejected_toast">Rejected!</string>
+    <string name="appointment_approved_toast">Approved!</string>
 
 </resources>

@@ -8,35 +8,51 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import pl.patryk.myhairdresser.data.model.Appointment
+import pl.patryk.myhairdresser.data.model.AppointmentSection
 import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.data.repository.UserRepository
 
 class AdminViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private val usersReference: DatabaseReference by lazy {
-        repository.getUsersReference()
-    }
-
     val userId by lazy { repository.currentUserId() }
+    private val usersReference: DatabaseReference by lazy { repository.getUsersReference() }
+    private lateinit var pendingAppointments: ArrayList<Appointment>
+    private lateinit var approvedAppointments: ArrayList<Appointment>
+    private lateinit var rejectedAppointments: ArrayList<Appointment>
+    private lateinit var sections: ArrayList<AppointmentSection>
+    var liveAppointments: MutableLiveData<List<AppointmentSection>> = MutableLiveData()
 
-    private lateinit var appointments: ArrayList<Appointment>
-    var liveAppointments: MutableLiveData<List<Appointment>> = MutableLiveData()
-
-    fun getAppointments(): LiveData<List<Appointment>> {
+    fun getAppointments(): LiveData<List<AppointmentSection>> {
 
         if (liveAppointments.value == null) {
             usersReference.orderByChild("appointment/date").addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {}
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    appointments = arrayListOf()
+
+                    pendingAppointments = arrayListOf()
+                    approvedAppointments = arrayListOf()
+                    rejectedAppointments = arrayListOf()
+                    sections = arrayListOf()
+
                     if (dataSnapshot.exists()) {
                         for (userSnapshot in dataSnapshot.children) {
                             val currentUser = userSnapshot.getValue(User::class.java)
-                            if (currentUser?.appointment != null && currentUser.appointment!!.verification_state == Appointment.VERIFICATION_STATE_PENDING)
-                                appointments.add(currentUser.appointment!!)
+
+                            if (currentUser?.appointment != null) {
+                                when (currentUser.appointment!!.verification_state) {
+                                    Appointment.VERIFICATION_STATE_PENDING -> pendingAppointments.add(currentUser.appointment!!)
+                                    Appointment.VERIFICATION_STATE_APPROVED -> approvedAppointments.add(currentUser.appointment!!)
+                                    Appointment.VERIFICATION_STATE_REJECTED -> rejectedAppointments.add(currentUser.appointment!!)
+                                }
+                            }
                         }
-                        liveAppointments.postValue(appointments)
+
+                        sections.add(AppointmentSection("OCZEKUJĄCE", pendingAppointments))
+                        sections.add(AppointmentSection("ZATWIERDZONE", approvedAppointments))
+                        sections.add(AppointmentSection("ODRZUCONE", rejectedAppointments))
+
+                        liveAppointments.postValue(sections)
                     }
                 }
             })

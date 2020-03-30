@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_confirm"
+        android:orderInCategory="100"
+        android:title="@string/confirm_button" />
+    <item
+        android:id="@+id/menu_reject"
+        android:orderInCategory="101"
+        android:title="@string/appointment_reject_button_text" />
+
+    <item
+        android:id="@+id/menu_phone_call"
+        android:orderInCategory="102"
+        android:title="@string/appointment_phone_call_button_text" />
+
+</menu>
