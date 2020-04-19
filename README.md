@@ -1,5 +1,5 @@
 # My Hairdresser
-Android app that allows you to register an account, save your data and profile picture to cloud and register a visit to your hairdresser.
+Android app for a local hairdressing salon which allows you to register an account, save your personal data and profile picture to a cloud and register an appointment to a hairdresser.
 # Dependencies
 * [Firebase Authentication](https://firebase.google.com/docs/auth/android/start)
 * [Firebase Database](https://firebase.google.com/docs/database/android/start)

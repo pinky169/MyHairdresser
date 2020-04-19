@@ -112,7 +112,6 @@
 
     <Button
         android:id="@+id/button_save_data"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"

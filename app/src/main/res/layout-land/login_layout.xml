@@ -18,16 +18,13 @@
         android:padding="16dp"
         tools:context=".ui.auth.LoginActivity">
 
-        <TextView
-            android:id="@+id/login_welcome_label"
+        <ImageView
+            android:id="@+id/login_welcome_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:gravity="center"
-            android:text="@string/login_welcome_label"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toTopOf="@+id/button_sign_in"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/vertical_guideline"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +38,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/login_welcome_label" />
+            app:layout_constraintTop_toTopOf="@+id/login_welcome_image" />
 
         <EditText
             android:id="@+id/edittext_email_input"
@@ -49,8 +46,8 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:hint="@string/email_hint"
-            android:text="@={viewmodel.email}"
             android:inputType="textEmailAddress"
+            android:text="@={viewmodel.email}"
             app:layout_constraintEnd_toEndOf="@+id/textview_email_label"
             app:layout_constraintStart_toStartOf="@+id/textview_email_label"
             app:layout_constraintTop_toBottomOf="@+id/textview_email_label"
@@ -90,19 +87,21 @@
             app:layout_constraintBottom_toTopOf="@+id/textview_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
-            app:layout_constraintTop_toBottomOf="@+id/login_welcome_label" />
+            app:layout_constraintTop_toBottomOf="@+id/login_welcome_image" />
 
         <TextView
             android:id="@+id/textview_sign_up"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:onClick="@{(v) -> viewmodel.goToSignup(v)}"
             android:text="@string/create_new_account_label"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/vertical_guideline" />
+            app:layout_constraintStart_toStartOf="@+id/vertical_guideline"
+            app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
 
         <ProgressBar
             android:id="@+id/progress_bar"

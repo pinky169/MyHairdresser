@@ -4,4 +4,7 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="lightGreen">#00FF0A</color>
+    <color name="colorApproved">#4D00CA17</color>
+    <color name="colorRejected">#4DC80000</color>
+    <color name="colorPending">#4DFFEB3B</color>
 </resources>

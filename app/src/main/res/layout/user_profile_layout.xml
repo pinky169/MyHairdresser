@@ -73,13 +73,14 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="8dp"
                 tools:context=".ui.profile.UserProfileActivity">
 
                 <ImageView
                     android:id="@+id/profile_photo"
                     android:layout_width="0dp"
                     android:layout_height="200dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:src="@drawable/ic_profile_picture"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -103,7 +104,7 @@
                     android:id="@+id/divider_top"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:background="@color/colorPrimaryDark"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -298,7 +299,6 @@
 
         <Button
             android:id="@+id/register_appointment_button"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"

@@ -2,7 +2,6 @@ package pl.patryk.myhairdresser.ui.admin
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
@@ -38,13 +37,13 @@ class AdminActivity : AppCompatActivity(), AdminListener, KodeinAware {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.admin_layout)
+        title = getString(R.string.admin_activity_title)
 
         viewModel = ViewModelProvider(this, factory).get(AdminViewModel::class.java)
         userID = viewModel.userId!!
 
         setupRecycler()
         observeAppointments(viewModel)
-        setupBackgroundAnimation()
     }
 
     private fun observeAppointments(viewModel: AdminViewModel) {
@@ -83,15 +82,6 @@ class AdminActivity : AppCompatActivity(), AdminListener, KodeinAware {
             }
         }
         return true
-    }
-
-    private fun setupBackgroundAnimation() {
-        val animationDrawable = admin_layout.background as? AnimationDrawable
-        animationDrawable?.apply {
-            setEnterFadeDuration(2000)
-            setExitFadeDuration(4000)
-            start()
-        }
     }
 
     override fun createPopupMenu(context: Context, view: View, appointment: Appointment) {

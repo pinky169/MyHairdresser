@@ -9,6 +9,7 @@
     <string name="login_welcome_label">Hello!\nSign in please!</string>
     <string name="create_new_account_label">Don\'t have an account yet? Sign up here.</string>
     <string name="register_a_new_account_label">Register\na new account</string>
+    <string name="sign_up_title">Register</string>
     <string name="already_have_an_account_label">Do you have an account already? Login here.</string>
     <string name="this_user_already_exists_toast">This user already exists</string>
     <string name="log_out">Log out</string>
@@ -91,5 +92,6 @@
     </string-array>
     <string name="appointment_rejected_toast">Rejected!</string>
     <string name="appointment_approved_toast">Approved!</string>
+    <string name="admin_activity_title">Administrator panel</string>
 
 </resources>

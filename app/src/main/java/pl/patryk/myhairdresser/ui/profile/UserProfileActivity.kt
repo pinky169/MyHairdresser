@@ -130,28 +130,52 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
 
         // Appointment verified
         when (appointment.verification_state) {
+
+            // State approved
             Appointment.VERIFICATION_STATE_APPROVED -> {
+
                 notification_message.text = getString(R.string.notification_appointment_approved)
                 notification_date.text = getString(R.string.notification_appointment_date_accepted, appointment.date)
-                notification.setCardBackgroundColor(getColor(R.color.successColor))
-                notification.visibility = View.VISIBLE
-                notification_close.visibility = View.VISIBLE
-                notification_close.setOnClickListener { viewModel.setAppointmentState(viewModel.userId!!, Appointment.VERIFICATION_STATE_IDLE) }
+
+                notification.apply {
+                    setCardBackgroundColor(getColor(R.color.successColor))
+                    visibility = View.VISIBLE
+                }
+
+                notification_close.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener { viewModel.setAppointmentState(viewModel.userId!!, Appointment.VERIFICATION_STATE_IDLE) }
+                }
             }
+
+            // State pending
             Appointment.VERIFICATION_STATE_PENDING -> {
+
                 notification_message.text = getString(R.string.notification_appointment_pending)
                 notification_date.text = getString(R.string.notification_appointment_date, appointment.date)
-                notification.setCardBackgroundColor(getColor(R.color.warningColor))
-                notification.visibility = View.VISIBLE
                 notification_close.visibility = View.GONE
+
+                notification.apply {
+                    visibility = View.VISIBLE
+                    setCardBackgroundColor(getColor(R.color.warningColor))
+                }
             }
+
+            // State rejected
             Appointment.VERIFICATION_STATE_REJECTED -> {
+
                 notification_message.text = getString(R.string.notification_appointment_rejected)
                 notification_date.text = getString(R.string.notification_appointment_date, appointment.date)
-                notification.setCardBackgroundColor(getColor(R.color.errorColor))
-                notification.visibility = View.VISIBLE
-                notification_close.visibility = View.VISIBLE
-                notification_close.setOnClickListener { viewModel.setAppointmentState(viewModel.userId!!, Appointment.VERIFICATION_STATE_IDLE) }
+
+                notification.apply {
+                    setCardBackgroundColor(getColor(R.color.errorColor))
+                    visibility = View.VISIBLE
+                }
+
+                notification_close.apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener { viewModel.setAppointmentState(viewModel.userId!!, Appointment.VERIFICATION_STATE_IDLE) }
+                }
             }
             else -> notification.visibility = View.GONE
         }
@@ -196,8 +220,9 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
     }
 
     private fun showAppointmentDialog() {
+
         // DialogFragment.show() will take care of adding the fragment
-        // in a transaction.  We also want to remove any currently showing
+        // in a transaction. We also want to remove any currently showing
         // dialog, so make our own transaction and take care of that here.
         val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
         val prev: Fragment? = supportFragmentManager.findFragmentByTag("dialog")

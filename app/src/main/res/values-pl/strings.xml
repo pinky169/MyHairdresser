@@ -10,6 +10,7 @@
     <string name="login_welcome_label">Witaj!\nZaloguj się!</string>
     <string name="create_new_account_label">Nie masz jeszcze konta? Zarejestruj się <u>tutaj</u>.</string>
     <string name="register_a_new_account_label">Zarejestruj\nnowe konto</string>
+    <string name="sign_up_title">Zarejestruj się</string>
     <string name="already_have_an_account_label">Masz juz konto? Zaloguj się <u>tutaj</u>.</string>
     <string name="this_user_already_exists_toast">Konto dla podanego adresu już istnieje</string>
     <string name="log_out">Wyloguj się</string>
@@ -60,6 +61,7 @@
     <string name="notification_appointment_service">Zaplanowana usługa: %1$s</string>
     <string name="appointment_rejected_toast">Odrzucono!</string>
     <string name="appointment_approved_toast">Potwierdzono!</string>
+    <string name="admin_activity_title">Panel administratora</string>
 
     <string-array name="services">
         <item>Strzyżenie damskie</item>

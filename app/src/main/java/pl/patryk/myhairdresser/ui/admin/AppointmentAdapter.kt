@@ -3,6 +3,7 @@ package pl.patryk.myhairdresser.ui.admin
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,11 +18,13 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        private val itemContext = itemView.context
         private val person = itemView.person
         private val date = itemView.date
         private val service = itemView.service
         private val phone = itemView.phone
         private val popupMenu = itemView.popup_menu
+        private val cardView = itemView.card_view
 
         fun bind(appointment: Appointment) {
 
@@ -30,7 +33,17 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
             service.text = appointment.service
             phone.text = appointment.contact_phone
 
+            setCardBackground(appointment)
+
             popupMenu.setOnClickListener { adminListener?.createPopupMenu(itemView.context, itemView, appointment) }
+        }
+
+        private fun setCardBackground(appointment: Appointment) {
+            when {
+                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_APPROVED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorApproved)))
+                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_REJECTED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorRejected)))
+                else -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorPending)))
+            }
         }
     }
 

@@ -30,6 +30,7 @@ class SignUpActivity : AppCompatActivity(), AuthListener, KodeinAware {
         binding.viewmodel = viewModel
 
         viewModel.authListener = this
+        title = getString(R.string.sign_up_title)
     }
 
     override fun onStarted() {

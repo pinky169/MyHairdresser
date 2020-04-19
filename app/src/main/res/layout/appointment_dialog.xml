@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -7,43 +8,67 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
-        <TextView
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/hairdresser"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:labelFor="@id/spinner"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:text="@string/type_of_service_label"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:entries="@array/services"
-            android:spinnerMode="dropdown"
-            tools:listitem="@layout/support_simple_spinner_dropdown_item" />
+            <TextView
+                android:id="@+id/type_of_service_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:labelFor="@id/spinner"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:text="@string/type_of_service_label"
+                android:textAlignment="viewStart"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/service_price_label"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:labelFor="@id/service_price"
-            android:text="@string/estimated_price"
-            android:textAlignment="viewEnd"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:entries="@array/services"
+                android:spinnerMode="dropdown"
+                tools:listitem="@layout/support_simple_spinner_dropdown_item" />
 
-        <TextView
-            android:id="@+id/service_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAlignment="viewEnd" />
+            <TextView
+                android:id="@+id/service_price_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:labelFor="@id/service_price"
+                android:text="@string/estimated_price"
+                android:textAlignment="viewEnd"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/service_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="viewEnd" />
+
+        </LinearLayout>
 
     </LinearLayout>
 

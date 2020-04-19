@@ -18,15 +18,12 @@
         android:padding="16dp"
         tools:context=".ui.auth.LoginActivity">
 
-        <TextView
-            android:id="@+id/login_welcome_label"
+        <ImageView
+            android:id="@+id/login_welcome_image"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/login_welcome_label"
-            android:textAlignment="center"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:layout_height="0dp"
+            android:src="@drawable/logo"
+            app:layout_constraintBottom_toTopOf="@id/guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -42,6 +39,7 @@
             android:id="@+id/textview_email_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@string/email_label"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,10 +52,10 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
             android:text="@={viewmodel.email}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:inputType="textEmailAddress"
             app:layout_constraintTop_toBottomOf="@+id/textview_email_label"
             tools:ignore="Autofill" />
 
@@ -76,8 +74,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/password_hint"
-            android:inputType="textPassword"
             android:importantForAutofill=""
+            android:inputType="textPassword"
             android:text="@={viewmodel.password}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textview_password_label"
@@ -101,12 +99,12 @@
             android:id="@+id/textview_sign_up"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:onClick="@{(v) -> viewmodel.goToSignup(v)}"
             android:text="@string/create_new_account_label"
             android:textAlignment="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
 
