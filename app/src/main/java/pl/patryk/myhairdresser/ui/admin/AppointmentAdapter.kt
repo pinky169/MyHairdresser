@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_layout.view.*
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.Appointment
+import pl.patryk.myhairdresser.utils.changeDateFormatting
 
 
 class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolder>(diffCallback) {
@@ -29,7 +30,7 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
         fun bind(appointment: Appointment) {
 
             person.text = appointment.person
-            date.text = appointment.date
+            date.text = changeDateFormatting(appointment.date)
             service.text = appointment.service
             phone.text = appointment.contact_phone
 

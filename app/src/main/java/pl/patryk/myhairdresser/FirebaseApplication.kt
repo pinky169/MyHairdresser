@@ -15,8 +15,13 @@ import pl.patryk.myhairdresser.data.repository.UserRepository
 import pl.patryk.myhairdresser.ui.admin.AdminViewModelFactory
 import pl.patryk.myhairdresser.ui.auth.AuthViewModelFactory
 import pl.patryk.myhairdresser.ui.profile.UserProfileViewModelFactory
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FirebaseApplication : Application(), KodeinAware {
+
+    val databaseFormatter = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault())
+    val generalFormatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
     override val kodein = Kodein.lazy {
 

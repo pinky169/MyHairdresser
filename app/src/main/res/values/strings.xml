@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Hairdresser</string>
+    <string name="app_name">Hairdresser</string>
     <string name="email_label">Email</string>
     <string name="password_label">Password</string>
     <string name="email_hint">Enter an email</string>
@@ -40,7 +40,7 @@
     <string name="user_not_found">That account doesn\'t exist</string>
     <string name="user_disabled">This account has been disabled</string>
     <string name="no_internet_connection">There is no internet connection</string>
-    <string name="register">Book an appointment</string>
+    <string name="register">Book\nan appointment</string>
     <string name="estimated_price">Estimated price:</string>
     <string name="dialog_text_button_positive">Register</string>
     <string name="dialog_text_button_negative">Cancel</string>
@@ -58,6 +58,11 @@
     <string name="notification_appointment_rejected">Your appointment has been rejected.\nPlease make a new one for another date or hour.</string>
     <string name="appointment_phone_call_button_text">Call to %1$s</string>
     <string name="appointment_reject_button_text">Reject</string>
+    <string name="appointment_rejected_toast">Rejected!</string>
+    <string name="appointment_approved_toast">Approved!</string>
+    <string name="admin_activity_title">Administrator panel</string>
+    <string name="button_update_profile_txt">Update\nprofile</string>
+    <string name="toolbar_title_welcome_text">Welcome %1$s!</string>
 
     <string-array name="services">
         <item>Women\'s haircut</item>
@@ -90,8 +95,5 @@
         <item>13–26 €</item>
         <item>22–43 €</item>
     </string-array>
-    <string name="appointment_rejected_toast">Rejected!</string>
-    <string name="appointment_approved_toast">Approved!</string>
-    <string name="admin_activity_title">Administrator panel</string>
 
 </resources>

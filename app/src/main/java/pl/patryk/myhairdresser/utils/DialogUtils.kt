@@ -20,13 +20,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.appointment_dialog.view.*
+import pl.patryk.myhairdresser.FirebaseApplication
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.firebase.FirebaseAuthHelper
 import pl.patryk.myhairdresser.data.firebase.FirebaseDatabaseHelper
 import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.User
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class DialogUtils : DialogFragment() {
@@ -112,19 +111,23 @@ class DialogUtils : DialogFragment() {
     private fun registerAppointment() {
 
         val is24HoursView: Boolean = DateFormat.is24HourFormat(context)
-        val formatter = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
 
         MaterialDialog(context!!).show {
+
             dateTimePicker(requireFutureDateTime = true, show24HoursView = is24HoursView) { _, dateTime ->
                 message(R.string.appointment_dialog_message)
-                selectedDateTime = formatter.format(dateTime.time)
+                selectedDateTime = FirebaseApplication().databaseFormatter.format(dateTime.time)
             }.positiveButton(R.string.dialog_text_button_positive) {
                 if (name != null && selectedService != null && selectedDateTime != null) {
                     appointment = Appointment(userID!!, name!!, selectedService!!, selectedDateTime!!, phoneNumber!!, Appointment.VERIFICATION_STATE_PENDING)
                     dbHelper.registerAppointment(authHelper.currentUserId()!!, appointment)
-                    Toasty.success(it.context, it.context.getString(R.string.appointment_registered_successfully, appointment.service, appointment.date), Toast.LENGTH_LONG).show()
+                    Toasty.success(context, context.getString(
+                            R.string.appointment_registered_successfully,
+                            appointment.service,
+                            changeDateFormatting(appointment.date)
+                    ), Toast.LENGTH_LONG).show()
                 } else {
-                    Toasty.success(it.context, it.context.getString(R.string.sth_went_wrong_try_again), Toast.LENGTH_LONG).show()
+                    Toasty.success(context, context.getString(R.string.sth_went_wrong_try_again), Toast.LENGTH_LONG).show()
                 }
             }.negativeButton(R.string.dialog_text_button_negative)
             lifecycleOwner(activity)

@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import es.dmoral.toasty.Toasty
+import pl.patryk.myhairdresser.FirebaseApplication
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.ui.admin.AdminActivity
 import pl.patryk.myhairdresser.ui.auth.LoginActivity
@@ -33,3 +34,10 @@ fun Context.startSignUpActivity() =
         Intent(this, SignUpActivity::class.java).also {
             startActivity(it)
         }
+
+fun changeDateFormatting(dateToFormat: String): String {
+
+    val date = FirebaseApplication().databaseFormatter.parse(dateToFormat)
+
+    return FirebaseApplication().generalFormatter.format(date)
+}

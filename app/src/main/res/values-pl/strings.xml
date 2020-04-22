@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Mój fryzjer</string>
+    <string name="app_name">Salon Doris</string>
     <string name="email_label">Email</string>
     <string name="password_label">Hasło</string>
     <string name="email_hint">Podaj adres email</string>
@@ -41,7 +41,7 @@
     <string name="user_not_found">Podane konto nie istnieje</string>
     <string name="user_disabled">To konto zostało wyłączone</string>
     <string name="no_internet_connection">Brak połączenia z internetem</string>
-    <string name="register">Umów wizytę</string>
+    <string name="register">Umów\nwizytę</string>
     <string name="estimated_price">Szacowana cena:</string>
     <string name="dialog_text_button_positive">Umów</string>
     <string name="dialog_text_button_negative">Anuluj</string>
@@ -62,6 +62,8 @@
     <string name="appointment_rejected_toast">Odrzucono!</string>
     <string name="appointment_approved_toast">Potwierdzono!</string>
     <string name="admin_activity_title">Panel administratora</string>
+    <string name="button_update_profile_txt">Zmień\ndane</string>
+    <string name="toolbar_title_welcome_text">Witaj %1$s!</string>
 
     <string-array name="services">
         <item>Strzyżenie damskie</item>

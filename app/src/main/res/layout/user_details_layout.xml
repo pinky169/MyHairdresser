@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/notification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/notification_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|end"
+            android:layout_margin="4dp"
+            android:padding="2dp"
+            android:src="@drawable/ic_close"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/notification_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/notification_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/notification_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_goneMarginTop="0dp"
+        tools:context=".ui.profile.UserProfileActivity">
+
+        <ImageView
+            android:id="@+id/icon_name"
+            android:layout_width="32dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_identity"
+            app:layout_constraintBottom_toBottomOf="@+id/name_textview"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/name_label" />
+
+        <TextView
+            android:id="@+id/name_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/name_label"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/icon_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/name_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@+id/name_label" />
+
+        <ImageView
+            android:id="@+id/icon_surname"
+            android:layout_width="32dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_identity"
+            app:layout_constraintBottom_toBottomOf="@+id/surname_textview"
+            app:layout_constraintStart_toStartOf="@+id/icon_name"
+            app:layout_constraintTop_toTopOf="@+id/surname_label" />
+
+        <TextView
+            android:id="@+id/surname_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/surname_label"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@+id/name_textview" />
+
+        <TextView
+            android:id="@+id/surname_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@+id/surname_label" />
+
+        <ImageView
+            android:id="@+id/icon_email"
+            android:layout_width="32dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_send_email"
+            app:layout_constraintBottom_toBottomOf="@+id/email_textview"
+            app:layout_constraintStart_toStartOf="@+id/icon_name"
+            app:layout_constraintTop_toTopOf="@+id/textview_email_label" />
+
+        <TextView
+            android:id="@+id/textview_email_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/email_label"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@id/surname_textview" />
+
+        <ImageView
+            android:id="@+id/verified_icon"
+            android:layout_width="0dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="2dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_send_email"
+            android:tooltipText="Verify email"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/textview_email_label"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toEndOf="@id/textview_email_label"
+            app:layout_constraintTop_toTopOf="@+id/textview_email_label" />
+
+        <TextView
+            android:id="@+id/email_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@+id/textview_email_label" />
+
+        <ImageView
+            android:id="@+id/icon_age"
+            android:layout_width="32dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_age"
+            app:layout_constraintBottom_toBottomOf="@+id/age_textview"
+            app:layout_constraintStart_toStartOf="@+id/icon_name"
+            app:layout_constraintTop_toTopOf="@+id/age_label" />
+
+        <TextView
+            android:id="@+id/age_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/age_label"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@id/email_textview" />
+
+        <TextView
+            android:id="@+id/age_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@+id/age_label" />
+
+        <ImageView
+            android:id="@+id/icon_phone"
+            android:layout_width="32dp"
+            android:layout_height="0dp"
+            android:src="@drawable/ic_phone"
+            app:layout_constraintBottom_toBottomOf="@+id/phone_textview"
+            app:layout_constraintStart_toStartOf="@+id/icon_name"
+            app:layout_constraintTop_toTopOf="@id/phone_label" />
+
+        <TextView
+            android:id="@+id/phone_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/phone_label"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toStartOf="@id/name_label"
+            app:layout_constraintTop_toBottomOf="@id/age_textview" />
+
+        <TextView
+            android:id="@+id/phone_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/name_label"
+            app:layout_constraintStart_toStartOf="@+id/name_label"
+            app:layout_constraintTop_toBottomOf="@+id/phone_label" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/colorPrimary"
+            android:indeterminateTintMode="src_atop"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

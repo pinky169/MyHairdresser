@@ -7,10 +7,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import pl.patryk.myhairdresser.FirebaseApplication
 import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.AppointmentSection
 import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.data.repository.UserRepository
+import java.util.*
 
 class AdminViewModel(private val repository: UserRepository) : ViewModel() {
 
@@ -20,12 +22,13 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
     private lateinit var approvedAppointments: ArrayList<Appointment>
     private lateinit var rejectedAppointments: ArrayList<Appointment>
     private lateinit var sections: ArrayList<AppointmentSection>
-    var liveAppointments: MutableLiveData<List<AppointmentSection>> = MutableLiveData()
+    private var liveAppointments: MutableLiveData<List<AppointmentSection>> = MutableLiveData()
+    private var pendingAppointmentsLiveData: MutableLiveData<List<Appointment>> = MutableLiveData()
 
     fun getAppointments(): LiveData<List<AppointmentSection>> {
 
         if (liveAppointments.value == null) {
-            usersReference.orderByChild("appointment/date").addValueEventListener(object : ValueEventListener {
+            usersReference.orderByChild("appointment/date").startAt(getDaysAgo(7)).addValueEventListener(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {}
 
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -63,4 +66,15 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
     fun setAppointmentState(uid: String, verificationState: String) = repository.setAppointmentState(uid, verificationState)
 
     fun logout() = repository.logout()
+
+    @Suppress("SameParameterValue")
+    private fun getDaysAgo(daysAgo: Int): String {
+
+        val calendar = Calendar.getInstance()
+
+        calendar.time = Date()
+        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
+
+        return FirebaseApplication().databaseFormatter.format(calendar.time)
+    }
 }

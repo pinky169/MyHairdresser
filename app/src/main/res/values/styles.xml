@@ -9,4 +9,20 @@
         <item name="android:windowBackground">@drawable/gradient_1</item>
     </style>
 
+    <style name="NoActionBar" parent="Theme.AppCompat.Light">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/gradient_1</item>
+    </style>
+
+    <style name="TextAppearance.Design.CollapsingToolbar.Expanded.Shadow">
+        <item name="android:shadowDy">0</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowRadius">8</item>
+        <item name="android:shadowColor">@android:color/black</item>
+    </style>
+
 </resources>

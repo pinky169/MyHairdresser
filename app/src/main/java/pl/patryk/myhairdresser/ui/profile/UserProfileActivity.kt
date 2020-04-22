@@ -24,7 +24,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
+import com.google.android.material.appbar.AppBarLayout
 import es.dmoral.toasty.Toasty
+import kotlinx.android.synthetic.main.user_details_layout.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -34,7 +36,9 @@ import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.databinding.UserProfileLayoutBinding
 import pl.patryk.myhairdresser.utils.DialogUtils
+import pl.patryk.myhairdresser.utils.changeDateFormatting
 import pl.patryk.myhairdresser.utils.startLoginActivity
+import kotlin.math.abs
 
 
 class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
@@ -52,10 +56,12 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         binding.viewmodel = viewModel
         viewModel.userListener = this
 
+        setSupportActionBar(toolbar)
         observeUser(viewModel)
         observeAppointmentState(viewModel)
         setupListeners()
         setupBackgroundAnimation()
+        setAppBarLayoutOffsetListener()
     }
 
     // Loads user realtime data from firebase database into views
@@ -84,7 +90,7 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
 
         Glide.with(applicationContext)
                 .load(photoUrl)
-                .circleCrop()
+                .centerCrop()
                 .placeholder(R.drawable.ic_profile_picture)
                 .listener(object : RequestListener<Drawable> {
                     override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -118,15 +124,19 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         }
 
         verified_icon.visibility = View.VISIBLE
-        edit_profile_button.visibility = View.VISIBLE
         name_textview.text = user.name
         surname_textview.text = user.surname
         email_textview.text = user.email
         age_textview.text = user.age
         phone_textview.text = user.phone
+        buttons.visibility = View.VISIBLE
+
+        collapsing_toolbar_layout.title = getString(R.string.toolbar_title_welcome_text, user.name)
     }
 
     private fun setupNotification(appointment: Appointment) {
+
+        val formattedDate = changeDateFormatting(appointment.date)
 
         // Appointment verified
         when (appointment.verification_state) {
@@ -135,7 +145,7 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
             Appointment.VERIFICATION_STATE_APPROVED -> {
 
                 notification_message.text = getString(R.string.notification_appointment_approved)
-                notification_date.text = getString(R.string.notification_appointment_date_accepted, appointment.date)
+                notification_date.text = getString(R.string.notification_appointment_date_accepted, formattedDate)
 
                 notification.apply {
                     setCardBackgroundColor(getColor(R.color.successColor))
@@ -152,7 +162,7 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
             Appointment.VERIFICATION_STATE_PENDING -> {
 
                 notification_message.text = getString(R.string.notification_appointment_pending)
-                notification_date.text = getString(R.string.notification_appointment_date, appointment.date)
+                notification_date.text = getString(R.string.notification_appointment_date, formattedDate)
                 notification_close.visibility = View.GONE
 
                 notification.apply {
@@ -165,7 +175,7 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
             Appointment.VERIFICATION_STATE_REJECTED -> {
 
                 notification_message.text = getString(R.string.notification_appointment_rejected)
-                notification_date.text = getString(R.string.notification_appointment_date, appointment.date)
+                notification_date.text = getString(R.string.notification_appointment_date, formattedDate)
 
                 notification.apply {
                     setCardBackgroundColor(getColor(R.color.errorColor))
@@ -188,6 +198,18 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         profile_photo.setOnClickListener { openFileChooser() }
         edit_profile_button.setOnClickListener { startEditProfileActivity() }
         register_appointment_button.setOnClickListener { showAppointmentDialog() }
+    }
+
+    private fun setAppBarLayoutOffsetListener() {
+        app_bar_layout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (abs(verticalOffset) - appBarLayout!!.totalScrollRange == 0) {
+                // Collapsed
+                buttons.animate().alpha(0.0f)
+            } else {
+                //Expanded
+                buttons.animate().alpha(1.0f)
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
