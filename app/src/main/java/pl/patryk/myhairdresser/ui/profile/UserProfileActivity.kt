@@ -66,19 +66,19 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
 
     // Loads user realtime data from firebase database into views
     private fun observeUser(viewModel: UserProfileViewModel) {
-        viewModel.loadUser().observe(this, Observer { data ->
+        viewModel.getUser().observe(this, Observer { data ->
 
             // Kotlin creates copy() function
             // for every data class
             user = data.copy()
 
             // Load user data into views
-            setupContent(user!!)
+            setupContent(data)
         })
     }
 
     private fun observeAppointmentState(viewModel: UserProfileViewModel) {
-        viewModel.appointmentObserver().observe(this, Observer { appointment ->
+        viewModel.getUserAppointment().observe(this, Observer { appointment ->
             setupNotification(appointment)
         })
     }
