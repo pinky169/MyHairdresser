@@ -7,6 +7,7 @@ import es.dmoral.toasty.Toasty
 import pl.patryk.myhairdresser.FirebaseApplication
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.ui.admin.AdminActivity
+import pl.patryk.myhairdresser.ui.appointments.UserAppointmentsActivity
 import pl.patryk.myhairdresser.ui.auth.LoginActivity
 import pl.patryk.myhairdresser.ui.auth.SignUpActivity
 import pl.patryk.myhairdresser.ui.profile.UserProfileActivity
@@ -32,6 +33,11 @@ fun Context.startLoginActivity() =
 
 fun Context.startSignUpActivity() =
         Intent(this, SignUpActivity::class.java).also {
+            startActivity(it)
+        }
+
+fun Context.startUserAppointmentsActivity() =
+        Intent(this, UserAppointmentsActivity::class.java).also {
             startActivity(it)
         }
 

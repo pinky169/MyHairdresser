@@ -10,12 +10,15 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_layout.view.*
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.Appointment
+import pl.patryk.myhairdresser.data.model.User
+import pl.patryk.myhairdresser.utils.PopupMenuListener
 import pl.patryk.myhairdresser.utils.changeDateFormatting
 
 
 class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolder>(diffCallback) {
 
-    var adminListener: AdminListener? = null
+    var popupMenuListener: PopupMenuListener? = null
+    private lateinit var userAndAppointment: HashMap<User, List<Appointment>>
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -29,21 +32,21 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
 
         fun bind(appointment: Appointment) {
 
-            person.text = appointment.person
+            person.text = appointment.name
             date.text = changeDateFormatting(appointment.date)
             service.text = appointment.service
-            phone.text = appointment.contact_phone
+            phone.text = appointment.phone
 
             setCardBackground(appointment)
 
-            popupMenu.setOnClickListener { adminListener?.createPopupMenu(itemView.context, itemView, appointment) }
+            popupMenu.setOnClickListener { popupMenuListener?.createPopupMenu(popupMenu, appointment) }
         }
 
         private fun setCardBackground(appointment: Appointment) {
             when {
-                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_APPROVED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorApproved)))
-                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_REJECTED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorRejected)))
-                else -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorPending)))
+                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_APPROVED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorApprovedWith30Transparency)))
+                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_REJECTED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorRejectedWith30Transparency)))
+                else -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorPendingWith30Transparency)))
             }
         }
     }
@@ -57,18 +60,19 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
 
     companion object {
 
-        private val diffCallback: DiffUtil.ItemCallback<Appointment> = object : DiffUtil.ItemCallback<Appointment>() {
+        val diffCallback: DiffUtil.ItemCallback<Appointment> = object : DiffUtil.ItemCallback<Appointment>() {
 
             override fun areItemsTheSame(oldItem: Appointment, newItem: Appointment): Boolean {
-                return oldItem.userID.equals(newItem.userID)
+                return oldItem.appointmentID.equals(newItem.appointmentID)
             }
 
             override fun areContentsTheSame(oldItem: Appointment, newItem: Appointment): Boolean {
-                return oldItem.person.equals(newItem.person) &&
-                        oldItem.date.equals(newItem.date) &&
-                        oldItem.contact_phone.equals(newItem.contact_phone) &&
+                return oldItem.userID.equals(newItem.userID) &&
                         oldItem.service.equals(newItem.service) &&
-                        oldItem.verification_state.equals(newItem.verification_state)
+                        oldItem.date.equals(newItem.date) &&
+                        oldItem.verification_state.equals(newItem.verification_state) &&
+                        oldItem.name.equals(newItem.name) &&
+                        oldItem.phone.equals(newItem.phone)
             }
         }
     }

@@ -21,7 +21,7 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
     val userId by lazy { repository.currentUserId() }
     private val userReference by lazy { repository.getUserReference(userId!!) }
     private val storageReference by lazy { repository.getStorageReference() }
-    private val appointmentReference by lazy { repository.getAppointmentReference(userId!!) }
+    private val appointmentReference by lazy { repository.getUserAppointmentsReference(userId!!) }
 
     /**
      * Contains information about User.
@@ -50,7 +50,7 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
         userReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    val user = dataSnapshot.getValue(User::class.java)
+                    val user: User = dataSnapshot.getValue(User::class.java)!!
                     userLiveData.postValue(user)
                     userListener?.onSuccess()
                 }
@@ -105,20 +105,9 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
     }
 
     /**
-     * Use to set a state for an appointment.
+     * Use to update an appointment.
      * @param uid firebase ID of the current user
-     * @param verificationState one of three available states of the appointments
-     * VERIFICATION_STATE_IDLE,
-     * VERIFICATION_STATE_PENDING,
-     * VERIFICATION_STATE_APPROVED,
-     * VERIFICATION_STATE_REJECTED
-     */
-    fun setAppointmentState(uid: String, verificationState: String) = repository.setAppointmentState(uid, verificationState)
-
-    /**
-     * Updates user's appointment data in firebase database
-     * @param uid firebase ID of the current user
-     * @param appointment Appointment object
+     * @param appointment Appointment to update.
      */
     fun updateAppointment(uid: String, appointment: Appointment) = repository.updateAppointment(uid, appointment)
 

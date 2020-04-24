@@ -25,19 +25,21 @@ class FirebaseDatabaseHelper {
         return databaseReference.child(uid).child("admin")
     }
 
-    fun getAppointmentReference(uid: String): DatabaseReference {
-        return databaseReference.child(uid).child("appointment")
+    fun getUserAppointmentsReference(uid: String): DatabaseReference {
+        return databaseReference.child(uid).child("appointments")
     }
 
-    fun setAppointmentState(uid: String, verificationState: String) = databaseReference.child(uid).child("appointment").child("verification_state").setValue(verificationState)
+    fun getSpecificAppointment(uid: String, appointment_id: String): DatabaseReference {
+        return databaseReference.child(uid).child("appointments").child(appointment_id)
+    }
 
     fun insertUser(uid: String, user: User) = databaseReference.child(uid).setValue(user)
 
     fun insertPhoto(uid: String, photo: Photo) = databaseReference.child(uid).child("photo").setValue(photo)
 
-    fun updateUser(uid: String, user: User) = databaseReference.child(uid).updateChildren(user.toMap()!!)
+    fun updateUser(uid: String, user: User) = databaseReference.child(uid).updateChildren(user.toMap())
 
-    fun updateAppointment(uid: String, appointment: Appointment) = databaseReference.child(uid).child("appointment").updateChildren(appointment.toMap()!!)
+    fun updateAppointment(uid: String, appointment: Appointment) = databaseReference.child(uid).child("appointments").child(appointment.appointmentID).updateChildren(appointment.toMap())
 
-    fun registerAppointment(uid: String, appointment: Appointment) = databaseReference.child(uid).child("appointment").setValue(appointment)
+    fun deleteAppointment(uid: String, appointment: Appointment) = databaseReference.child(uid).child("appointments").child(appointment.appointmentID).removeValue()
 }

@@ -28,6 +28,9 @@
             android:name=".ui.profile.UserProfileActivity"
             android:theme="@style/NoActionBar" />
         <activity
+            android:name=".ui.appointments.UserAppointmentsActivity"
+            android:parentActivityName=".ui.profile.UserProfileActivity" />
+        <activity
             android:name=".ui.profile.EditProfileActivity"
             android:parentActivityName=".ui.profile.UserProfileActivity" />
         <activity android:name=".ui.admin.AdminActivity" />

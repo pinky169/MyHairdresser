@@ -7,7 +7,6 @@
     <string name="password_hint">Podaj hasło</string>
     <string name="sign_in">Zaloguj się</string>
     <string name="sign_up">Zarejestruj się</string>
-    <string name="login_welcome_label">Witaj!\nZaloguj się!</string>
     <string name="create_new_account_label">Nie masz jeszcze konta? Zarejestruj się <u>tutaj</u>.</string>
     <string name="register_a_new_account_label">Zarejestruj\nnowe konto</string>
     <string name="sign_up_title">Zarejestruj się</string>
@@ -52,18 +51,22 @@
     <string name="sth_went_wrong_try_again">Coś poszło nie tak. Spróbuj ponownie.</string>
     <string name="confirm_button">Zatwierdź</string>
     <string name="notification_appointment_date_accepted">Do zobaczenia w dniu: %1$s! &#128522;</string>
-    <string name="notification_appointment_date">Termin wizyty: %1$s</string>
-    <string name="notification_appointment_pending">Twoja wizyta oczekuje na zatwierdzenie.</string>
-    <string name="notification_appointment_approved">Hurra! Twoja wizyta została zatwierdzona!</string>
-    <string name="notification_appointment_rejected">Twoja wizyta została odrzucona!\nUmów się ponownie na inny termin lub skontaktuj telefonicznie: 123 456 780</string>
     <string name="appointment_reject_button_text">Odrzuć</string>
     <string name="appointment_phone_call_button_text">Zadzwoń do %1$s</string>
-    <string name="notification_appointment_service">Zaplanowana usługa: %1$s</string>
     <string name="appointment_rejected_toast">Odrzucono!</string>
     <string name="appointment_approved_toast">Potwierdzono!</string>
+    <string name="appointment_deleted_toast">%1$s zostało pomyślnie usunięte!</string>
     <string name="admin_activity_title">Panel administratora</string>
     <string name="button_update_profile_txt">Zmień\ndane</string>
     <string name="toolbar_title_welcome_text">Witaj %1$s!</string>
+    <string name="appointment_state_pending">Ta wizyta oczekuje na zatwierdzenie</string>
+    <string name="appointment_state_approved">Ta wizyta została zaakceptowana</string>
+    <string name="appointment_state_rejected">Ta wizyta została odrzucona.\nUmów się ponownie na inny termin lub skontaktuj telefonicznie pod numerem: 123 456 780</string>
+    <string name="appointment_remove_txt">Usuń</string>
+    <string name="user_appointment_activity_title">Twoje wizyty</string>
+    <string name="button_appointments_txt">Wizyty</string>
+    <string name="no_appointments_textview_message">Brak umówionych wizyt</string>
+    <string name="menu_phone_call">Zadzwoń</string>
 
     <string-array name="services">
         <item>Strzyżenie damskie</item>

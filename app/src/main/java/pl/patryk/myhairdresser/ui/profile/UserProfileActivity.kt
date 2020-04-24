@@ -32,12 +32,11 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
-import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.databinding.UserProfileLayoutBinding
 import pl.patryk.myhairdresser.utils.DialogUtils
-import pl.patryk.myhairdresser.utils.changeDateFormatting
 import pl.patryk.myhairdresser.utils.startLoginActivity
+import pl.patryk.myhairdresser.utils.startUserAppointmentsActivity
 import kotlin.math.abs
 
 
@@ -58,7 +57,6 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
 
         setSupportActionBar(toolbar)
         observeUser(viewModel)
-        observeAppointmentState(viewModel)
         setupListeners()
         setupBackgroundAnimation()
         setAppBarLayoutOffsetListener()
@@ -74,12 +72,6 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
 
             // Load user data into views
             setupContent(data)
-        })
-    }
-
-    private fun observeAppointmentState(viewModel: UserProfileViewModel) {
-        viewModel.getUserAppointment().observe(this, Observer { appointment ->
-            setupNotification(appointment)
         })
     }
 
@@ -134,70 +126,11 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         collapsing_toolbar_layout.title = getString(R.string.toolbar_title_welcome_text, user.name)
     }
 
-    private fun setupNotification(appointment: Appointment) {
-
-        val formattedDate = changeDateFormatting(appointment.date)
-
-        // Appointment verified
-        when (appointment.verification_state) {
-
-            // State approved
-            Appointment.VERIFICATION_STATE_APPROVED -> {
-
-                notification_message.text = getString(R.string.notification_appointment_approved)
-                notification_date.text = getString(R.string.notification_appointment_date_accepted, formattedDate)
-
-                notification.apply {
-                    setCardBackgroundColor(getColor(R.color.successColor))
-                    visibility = View.VISIBLE
-                }
-
-                notification_close.apply {
-                    visibility = View.VISIBLE
-                    setOnClickListener { viewModel.setAppointmentState(viewModel.userId!!, Appointment.VERIFICATION_STATE_IDLE) }
-                }
-            }
-
-            // State pending
-            Appointment.VERIFICATION_STATE_PENDING -> {
-
-                notification_message.text = getString(R.string.notification_appointment_pending)
-                notification_date.text = getString(R.string.notification_appointment_date, formattedDate)
-                notification_close.visibility = View.GONE
-
-                notification.apply {
-                    visibility = View.VISIBLE
-                    setCardBackgroundColor(getColor(R.color.warningColor))
-                }
-            }
-
-            // State rejected
-            Appointment.VERIFICATION_STATE_REJECTED -> {
-
-                notification_message.text = getString(R.string.notification_appointment_rejected)
-                notification_date.text = getString(R.string.notification_appointment_date, formattedDate)
-
-                notification.apply {
-                    setCardBackgroundColor(getColor(R.color.errorColor))
-                    visibility = View.VISIBLE
-                }
-
-                notification_close.apply {
-                    visibility = View.VISIBLE
-                    setOnClickListener { viewModel.setAppointmentState(viewModel.userId!!, Appointment.VERIFICATION_STATE_IDLE) }
-                }
-            }
-            else -> notification.visibility = View.GONE
-        }
-
-        notification_service.text = getString(R.string.notification_appointment_service, appointment.service)
-    }
-
-
     private fun setupListeners() {
         profile_photo.setOnClickListener { openFileChooser() }
         edit_profile_button.setOnClickListener { startEditProfileActivity() }
         register_appointment_button.setOnClickListener { showAppointmentDialog() }
+        button_open_appointments.setOnClickListener { startUserAppointmentsActivity() }
     }
 
     private fun setAppBarLayoutOffsetListener() {

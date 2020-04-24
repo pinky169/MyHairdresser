@@ -10,7 +10,6 @@ import com.google.firebase.database.ValueEventListener
 import pl.patryk.myhairdresser.FirebaseApplication
 import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.AppointmentSection
-import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.data.repository.UserRepository
 import java.util.*
 
@@ -43,7 +42,7 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
      */
     private fun loadAppointments() {
 
-        usersReference.orderByChild("appointment/date").startAt(getDaysAgo(7)).addValueEventListener(object : ValueEventListener {
+        usersReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -55,14 +54,21 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
                     val rejectedAppointments: ArrayList<Appointment> = arrayListOf()
                     val sections: ArrayList<AppointmentSection> = arrayListOf()
 
+                    // users
                     for (userSnapshot in dataSnapshot.children) {
-                        val currentUser = userSnapshot.getValue(User::class.java)
 
-                        if (currentUser?.appointment != null) {
-                            when (currentUser.appointment!!.verification_state) {
-                                Appointment.VERIFICATION_STATE_PENDING -> pendingAppointments.add(currentUser.appointment!!)
-                                Appointment.VERIFICATION_STATE_APPROVED -> approvedAppointments.add(currentUser.appointment!!)
-                                Appointment.VERIFICATION_STATE_REJECTED -> rejectedAppointments.add(currentUser.appointment!!)
+                        //val user: User = userSnapshot.getValue(User::class.java)!!
+                        // users/appointments/
+                        for (appointmentSnapshot in userSnapshot.child("appointments").children) {
+
+                            // users/appointments/{current-appointment}
+                            val appointment: Appointment = appointmentSnapshot.getValue(Appointment::class.java)!!
+
+                            when (appointment.verification_state) {
+                                Appointment.VERIFICATION_STATE_PENDING -> pendingAppointments.add(appointment)
+                                Appointment.VERIFICATION_STATE_APPROVED -> approvedAppointments.add(appointment)
+                                Appointment.VERIFICATION_STATE_REJECTED -> rejectedAppointments.add(appointment)
+
                             }
                         }
                     }
@@ -78,15 +84,15 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
     }
 
     /**
-     * Use to set a state for an appointment.
+     * Use to update an appointment.
      * @param uid firebase ID of the current user
-     * @param verificationState one of three available states of the appointments:
+     * @param appointment Appointment to update. There are three available states of the appointments:
      * VERIFICATION_STATE_IDLE,
      * VERIFICATION_STATE_PENDING,
      * VERIFICATION_STATE_APPROVED,
      * VERIFICATION_STATE_REJECTED
      */
-    fun setAppointmentState(uid: String, verificationState: String) = repository.setAppointmentState(uid, verificationState)
+    fun updateAppointment(uid: String, appointment: Appointment) = repository.updateAppointment(uid, appointment)
 
     /**
      * Use to log out the user

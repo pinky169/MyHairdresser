@@ -1,10 +1,8 @@
 package pl.patryk.myhairdresser.ui.admin
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -22,10 +20,11 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.Appointment
+import pl.patryk.myhairdresser.utils.PopupMenuListener
 import pl.patryk.myhairdresser.utils.startLoginActivity
 
 
-class AdminActivity : AppCompatActivity(), AdminListener, KodeinAware {
+class AdminActivity : AppCompatActivity(), PopupMenuListener, KodeinAware {
 
     override val kodein by kodein()
     private val factory: AdminViewModelFactory by instance()
@@ -84,30 +83,30 @@ class AdminActivity : AppCompatActivity(), AdminListener, KodeinAware {
         return true
     }
 
-    override fun createPopupMenu(context: Context, view: View, appointment: Appointment) {
+    override fun createPopupMenu(view: View, appointment: Appointment) {
 
         //creating a popup menu
-        val popup = PopupMenu(context, view, Gravity.NO_GRAVITY, R.attr.actionOverflowMenuStyle, 0)
+        val popup = PopupMenu(this, view)
 
         //inflating menu from xml resource
-        popup.inflate(R.menu.popup_menu)
-        popup.menu.getItem(2).title = getString(R.string.appointment_phone_call_button_text, appointment.person)
+        popup.inflate(R.menu.admin_popup_menu)
+        popup.menu.getItem(2).title = getString(R.string.appointment_phone_call_button_text, appointment.name)
 
         //adding click listener
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_confirm -> {
-                    viewModel.setAppointmentState(appointment.userID, Appointment.VERIFICATION_STATE_APPROVED)
+                    viewModel.updateAppointment(appointment.userID, appointment.copy(verification_state = Appointment.VERIFICATION_STATE_APPROVED))
                     Toasty.success(this, getString(R.string.appointment_approved_toast), Toast.LENGTH_LONG).show()
                     true
                 }
                 R.id.menu_reject -> {
-                    viewModel.setAppointmentState(appointment.userID, Appointment.VERIFICATION_STATE_REJECTED)
+                    viewModel.updateAppointment(appointment.userID, appointment.copy(verification_state = Appointment.VERIFICATION_STATE_REJECTED))
                     Toasty.error(this, getString(R.string.appointment_rejected_toast), Toast.LENGTH_LONG).show()
                     true
                 }
                 R.id.menu_phone_call -> {
-                    val callIntent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", appointment.contact_phone, null))
+                    val callIntent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", appointment.phone, null))
                     startActivity(callIntent)
                     true
                 }

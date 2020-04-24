@@ -3,8 +3,10 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="lightGreen">#00FF0A</color>
-    <color name="colorApproved">#4D00CA17</color>
-    <color name="colorRejected">#4DC80000</color>
-    <color name="colorPending">#4DFFEB3B</color>
+    <color name="colorApprovedWith30Transparency">#4D00CA17</color>
+    <color name="colorRejectedWith30Transparency">#4DC80000</color>
+    <color name="colorPendingWith30Transparency">#4DFFEB3B</color>
+    <color name="colorApprovedWith50Transparency">#8000CA17</color>
+    <color name="colorRejectedWith50Transparency">#80C80000</color>
+    <color name="colorPendingWith50Transparency">#80FFEB3B</color>
 </resources>

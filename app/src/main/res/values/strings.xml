@@ -6,7 +6,6 @@
     <string name="password_hint">Enter a password</string>
     <string name="sign_in">Sign in</string>
     <string name="sign_up">Sign up</string>
-    <string name="login_welcome_label">Hello!\nSign in please!</string>
     <string name="create_new_account_label">Don\'t have an account yet? Sign up here.</string>
     <string name="register_a_new_account_label">Register\na new account</string>
     <string name="sign_up_title">Register</string>
@@ -51,18 +50,22 @@
     <string name="sth_went_wrong_try_again">Something went wrong. Try again.</string>
     <string name="confirm_button">Confirm</string>
     <string name="notification_appointment_date_accepted">See you on: %1$s! &#128522;</string>
-    <string name="notification_appointment_date">Appointment date: %1$s</string>
-    <string name="notification_appointment_service">Service: %1$s</string>
-    <string name="notification_appointment_pending">Your appointment is pending approval.</string>
-    <string name="notification_appointment_approved">Hurray! You appointment has been approved!</string>
-    <string name="notification_appointment_rejected">Your appointment has been rejected.\nPlease make a new one for another date or hour.</string>
     <string name="appointment_phone_call_button_text">Call to %1$s</string>
     <string name="appointment_reject_button_text">Reject</string>
     <string name="appointment_rejected_toast">Rejected!</string>
     <string name="appointment_approved_toast">Approved!</string>
+    <string name="appointment_deleted_toast">%1$s has been successfully removed!</string>
     <string name="admin_activity_title">Administrator panel</string>
     <string name="button_update_profile_txt">Update\nprofile</string>
     <string name="toolbar_title_welcome_text">Welcome %1$s!</string>
+    <string name="appointment_state_pending">This appointment is pending approval</string>
+    <string name="appointment_state_approved">This appointment has been accepted</string>
+    <string name="appointment_state_rejected">This appointment has been rejected.\nPlease make a new one for another date or hour or contact by phone: 123 456 780</string>
+    <string name="appointment_remove_txt">Delete</string>
+    <string name="user_appointment_activity_title">Appointments</string>
+    <string name="button_appointments_txt">Appointments</string>
+    <string name="no_appointments_textview_message">No appointments to show</string>
+    <string name="menu_phone_call">Call</string>
 
     <string-array name="services">
         <item>Women\'s haircut</item>

@@ -6,7 +6,7 @@ data class User(var name: String = "",
                 var age: String = "",
                 var phone: String = "",
                 var photo: Photo? = null,
-                var appointment: Appointment? = null,
+                var appointments: HashMap<String, Appointment>? = null,
                 var admin: Boolean = false) {
 
     // Constructor for updating a User's data in database
@@ -26,7 +26,7 @@ data class User(var name: String = "",
     // Used when calling updateChildren
     // which requires Map<String, Any> argument
     // Updates only mentioned fields
-    fun toMap(): Map<String, Any>? {
+    fun toMap(): Map<String, Any> {
         val result: HashMap<String, Any> = HashMap()
         result["name"] = name
         result["surname"] = surname

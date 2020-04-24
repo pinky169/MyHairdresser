@@ -8,14 +8,12 @@
     android:padding="16dp">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/notification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:visibility="gone">
 
         <ImageView
-            android:id="@+id/notification_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|end"
@@ -31,18 +29,15 @@
             android:padding="8dp">
 
             <TextView
-                android:id="@+id/notification_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/notification_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/notification_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -89,7 +84,6 @@
             app:layout_constraintTop_toBottomOf="@+id/name_label" />
 
         <ImageView
-            android:id="@+id/icon_surname"
             android:layout_width="32dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_identity"
@@ -118,7 +112,6 @@
             app:layout_constraintTop_toBottomOf="@+id/surname_label" />
 
         <ImageView
-            android:id="@+id/icon_email"
             android:layout_width="32dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_send_email"
@@ -160,7 +153,6 @@
             app:layout_constraintTop_toBottomOf="@+id/textview_email_label" />
 
         <ImageView
-            android:id="@+id/icon_age"
             android:layout_width="32dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_age"
@@ -189,7 +181,6 @@
             app:layout_constraintTop_toBottomOf="@+id/age_label" />
 
         <ImageView
-            android:id="@+id/icon_phone"
             android:layout_width="32dp"
             android:layout_height="0dp"
             android:src="@drawable/ic_phone"

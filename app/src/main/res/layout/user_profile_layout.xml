@@ -108,6 +108,15 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/button_open_appointments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="16dp"
+            android:background="@drawable/rounded_button"
+            android:text="@string/button_appointments_txt" />
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>

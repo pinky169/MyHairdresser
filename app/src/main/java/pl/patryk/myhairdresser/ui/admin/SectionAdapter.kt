@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.section_layout.view.*
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.AppointmentSection
+import pl.patryk.myhairdresser.utils.PopupMenuListener
 
 
 class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder>(diffCallback) {
@@ -18,7 +19,7 @@ class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder
     private val viewPool = RecyclerView.RecycledViewPool()
 
     // Listener for buttons click events
-    var listener: AdminListener? = null
+    var listener: PopupMenuListener? = null
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -32,7 +33,7 @@ class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder
             header.text = section.header
 
             // Setup onClick listener
-            appointmentAdapter.adminListener = listener
+            appointmentAdapter.popupMenuListener = listener
 
             // Decide if we want to show section
             // if its empty or not
@@ -42,7 +43,7 @@ class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder
             setupRecyclerForSection()
 
             // Submit section data to show
-            appointmentAdapter.submitList(section.appointments)
+            appointmentAdapter.submitList(section.data)
         }
 
         private fun setupRecyclerForSection() {
@@ -55,7 +56,7 @@ class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder
 
         private fun showOrHideSection(section: AppointmentSection) {
             // Check if we have any data to populate views
-            if (section.appointments.isNullOrEmpty()) {
+            if (section.data.isNullOrEmpty()) {
                 header.visibility = View.GONE
                 recyclerView.visibility = View.GONE
             } else {
@@ -81,7 +82,7 @@ class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder
             }
 
             override fun areContentsTheSame(oldItem: AppointmentSection, newItem: AppointmentSection): Boolean {
-                return oldItem.header.equals(newItem.header) && oldItem.appointments.equals(newItem.appointments)
+                return oldItem.header.equals(newItem.header) && oldItem.data.equals(newItem.data)
             }
         }
     }

@@ -30,7 +30,6 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/type_of_service_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:labelFor="@id/spinner"
@@ -52,7 +51,6 @@
                 tools:listitem="@layout/support_simple_spinner_dropdown_item" />
 
             <TextView
-                android:id="@+id/service_price_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"

@@ -9,7 +9,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
-import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.User
 
 class EditProfileActivity : AppCompatActivity(), KodeinAware {
@@ -58,13 +57,9 @@ class EditProfileActivity : AppCompatActivity(), KodeinAware {
         val newSurname = surname_edittext.text.toString().trim()
         val newAge = age_editext.text.toString().trim()
         val newPhone = phone_editext.text.toString().trim()
-        val appointment = Appointment()
-        appointment.person = "$newName $newSurname"
-        appointment.contact_phone = newPhone
 
         val updatedUser = User(newName, newSurname, newAge, newPhone)
         viewModel.updateUser(userId, updatedUser)
-        viewModel.updateAppointment(userId, appointment)
         setResult(Activity.RESULT_OK)
         finish()
     }
