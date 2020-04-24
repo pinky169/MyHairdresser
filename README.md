@@ -11,6 +11,6 @@ Android app for a local hairdressing salon which allows you to register an accou
 * [Glide](https://github.com/bumptech/glide)
 * [Toasty](https://github.com/GrenderG/Toasty)
 # Preview
-<img src="https://github.com/pinky169/MyHairdresser/blob/master/login-and-appointment.gif" width="200"> <img src="https://github.com/pinky169/MyHairdresser/blob/master/edit-profile.gif" width="200"> <img src="https://github.com/pinky169/MyHairdresser/blob/master/admin.gif" width="200">
+<img src="https://github.com/pinky169/MyHairdresser/blob/master/login.gif" width="200"> <img src="https://github.com/pinky169/MyHairdresser/blob/master/appointment.gif" width="200"> <img src="https://github.com/pinky169/MyHairdresser/blob/master/edit-profile.gif" width="200"> <img src="https://github.com/pinky169/MyHairdresser/blob/master/user-appointment-list.gif" width="200"> <img src="https://github.com/pinky169/MyHairdresser/blob/master/admin.gif" width="200">
 # License
 See the [LICENSE](https://github.com/pinky169/MyHairdresser/blob/master/LICENSE.md) file for license rights and limitations (Apache license 2.0).

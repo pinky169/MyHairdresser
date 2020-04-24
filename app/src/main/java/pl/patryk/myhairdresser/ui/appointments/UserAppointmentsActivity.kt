@@ -88,7 +88,7 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
             when (item.itemId) {
                 R.id.menu_remove -> {
                     viewModel.deleteAppointment(appointment.userID, appointment)
-                    Toasty.success(this, getString(R.string.appointment_deleted_toast, appointment.service.decapitalize(Locale.getDefault())), Toast.LENGTH_LONG).show()
+                    Toasty.success(this, getString(R.string.appointment_deleted_toast, appointment.service), Toast.LENGTH_LONG).show()
                     true
                 }
                 R.id.menu_call -> {
