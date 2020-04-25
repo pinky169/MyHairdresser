@@ -16,27 +16,27 @@ class UserAppointmentViewModel(private val repository: UserRepository) : ViewMod
     private val appointmentReference by lazy { repository.getUserAppointmentsReference(userId!!) }
 
     /**
-     * Contains information about User's appointment.
+     * Contains information about User's appointments.
      * Initialization is done once thanks to lazy initialization.
      */
     private val appointmentLiveData: MutableLiveData<List<Appointment>> by lazy {
         MutableLiveData<List<Appointment>>().also {
-            loadUserAppointment()
+            loadUserAppointments()
         }
     }
 
     /**
      * Returns user's LiveData data holder which contains
-     * information about user's appointment from firebase database.
+     * information about user's appointments from firebase database.
      */
-    fun getUserAppointment(): LiveData<List<Appointment>> {
+    fun getUserAppointments(): LiveData<List<Appointment>> {
         return appointmentLiveData
     }
 
     /**
-     * Loads user's appointment data from firebase database into LivaData data holder.
+     * Loads user's appointments data from firebase database into LivaData data holder.
      */
-    fun loadUserAppointment() {
+    fun loadUserAppointments() {
 
         appointmentReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}

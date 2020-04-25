@@ -43,9 +43,9 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
         }
 
         private fun setCardBackground(appointment: Appointment) {
-            when {
-                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_APPROVED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorApprovedWith30Transparency)))
-                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_REJECTED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorRejectedWith30Transparency)))
+            when (appointment.verification_state) {
+                Appointment.VERIFICATION_STATE_APPROVED -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorApprovedWith30Transparency)))
+                Appointment.VERIFICATION_STATE_REJECTED -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorRejectedWith30Transparency)))
                 else -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorPendingWith30Transparency)))
             }
         }
@@ -63,16 +63,16 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
         val diffCallback: DiffUtil.ItemCallback<Appointment> = object : DiffUtil.ItemCallback<Appointment>() {
 
             override fun areItemsTheSame(oldItem: Appointment, newItem: Appointment): Boolean {
-                return oldItem.appointmentID.equals(newItem.appointmentID)
+                return oldItem.appointmentID == newItem.appointmentID
             }
 
             override fun areContentsTheSame(oldItem: Appointment, newItem: Appointment): Boolean {
-                return oldItem.userID.equals(newItem.userID) &&
-                        oldItem.service.equals(newItem.service) &&
-                        oldItem.date.equals(newItem.date) &&
-                        oldItem.verification_state.equals(newItem.verification_state) &&
-                        oldItem.name.equals(newItem.name) &&
-                        oldItem.phone.equals(newItem.phone)
+                return oldItem.userID == newItem.userID &&
+                        oldItem.service == newItem.service &&
+                        oldItem.date == newItem.date &&
+                        oldItem.verification_state == newItem.verification_state &&
+                        oldItem.name == newItem.name &&
+                        oldItem.phone == newItem.phone
             }
         }
     }

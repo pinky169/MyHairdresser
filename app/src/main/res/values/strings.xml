@@ -61,11 +61,16 @@
     <string name="appointment_state_pending">This appointment is pending approval</string>
     <string name="appointment_state_approved">This appointment has been accepted</string>
     <string name="appointment_state_rejected">This appointment has been rejected.\nPlease make a new one for another date or hour or contact by phone: 123 456 780</string>
-    <string name="appointment_remove_txt">Delete</string>
     <string name="user_appointment_activity_title">Appointments</string>
     <string name="button_appointments_txt">Appointments</string>
-    <string name="no_appointments_textview_message">No appointments to show</string>
+    <string name="no_appointments_textview_message">No appointments</string>
     <string name="menu_phone_call">Call</string>
+    <string name="menu_appointment_remove_txt">Delete %1$s</string>
+    <string name="section_header_pending">PENDING</string>
+    <string name="section_header_approved">APPROVED</string>
+    <string name="section_header_rejected">REJECTED</string>
+
+    <string name="hairdresser_phone_number">123 456 780</string>
 
     <string-array name="services">
         <item>Women\'s haircut</item>

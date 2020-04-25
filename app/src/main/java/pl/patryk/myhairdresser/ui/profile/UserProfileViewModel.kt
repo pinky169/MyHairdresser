@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.Photo
 import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.data.repository.UserRepository
@@ -21,7 +20,6 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
     val userId by lazy { repository.currentUserId() }
     private val userReference by lazy { repository.getUserReference(userId!!) }
     private val storageReference by lazy { repository.getStorageReference() }
-    private val appointmentReference by lazy { repository.getUserAppointmentsReference(userId!!) }
 
     /**
      * Contains information about User.
@@ -68,48 +66,6 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
      * @param user User object
      */
     fun updateUser(uid: String, user: User) = repository.updateUser(uid, user)
-
-    /**
-     * Contains information about User's appointment.
-     * Initialization is done once thanks to lazy initialization.
-     */
-    private val appointmentLiveData: MutableLiveData<Appointment> by lazy {
-        MutableLiveData<Appointment>().also {
-            loadUserAppointment()
-        }
-    }
-
-    /**
-     * Returns user's LiveData data holder which contains
-     * information about user's appointment from firebase database.
-     */
-    fun getUserAppointment(): LiveData<Appointment> {
-        return appointmentLiveData
-    }
-
-    /**
-     * Loads user's appointment data from firebase database into LivaData data holder.
-     */
-    fun loadUserAppointment() {
-
-        appointmentReference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {}
-
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists() && dataSnapshot.hasChild("userID")) {
-                    val appointment = dataSnapshot.getValue(Appointment::class.java)
-                    appointmentLiveData.postValue(appointment)
-                }
-            }
-        })
-    }
-
-    /**
-     * Use to update an appointment.
-     * @param uid firebase ID of the current user
-     * @param appointment Appointment to update.
-     */
-    fun updateAppointment(uid: String, appointment: Appointment) = repository.updateAppointment(uid, appointment)
 
     /**
      * Use to log out the user

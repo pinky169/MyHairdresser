@@ -62,11 +62,16 @@
     <string name="appointment_state_pending">Ta wizyta oczekuje na zatwierdzenie</string>
     <string name="appointment_state_approved">Ta wizyta została zaakceptowana</string>
     <string name="appointment_state_rejected">Ta wizyta została odrzucona.\nUmów się ponownie na inny termin lub skontaktuj telefonicznie pod numerem: 123 456 780</string>
-    <string name="appointment_remove_txt">Usuń</string>
     <string name="user_appointment_activity_title">Twoje wizyty</string>
     <string name="button_appointments_txt">Wizyty</string>
     <string name="no_appointments_textview_message">Brak umówionych wizyt</string>
     <string name="menu_phone_call">Zadzwoń</string>
+    <string name="menu_appointment_remove_txt">Usuń %1$s</string>
+    <string name="section_header_pending">OCZEKUJĄCE</string>
+    <string name="section_header_approved">ZATWIERDZONE</string>
+    <string name="section_header_rejected">ODRZUCONE</string>
+
+    <string name="hairdresser_phone_number">123 456 780</string>
 
     <string-array name="services">
         <item>Strzyżenie damskie</item>

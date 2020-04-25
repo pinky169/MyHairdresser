@@ -23,19 +23,21 @@ class UserRepository(private val firebase: FirebaseAuthHelper, private val fireb
 
     fun updateUser(uid: String, user: User) = firebaseDB.updateUser(uid, user)
 
-    fun updateAppointment(uid: String, appointment: Appointment) = firebaseDB.updateAppointment(uid, appointment)
-
-    fun deleteAppointment(uid: String, appointment: Appointment) = firebaseDB.deleteAppointment(uid, appointment)
-
     fun insertPhoto(uid: String, photo: Photo) = firebaseDB.insertPhoto(uid, photo)
 
     fun getUserReference(uid: String) = firebaseDB.getUserReference(uid)
 
-    fun getUsersReference() = firebaseDB.databaseReference
+    fun getUsersReference() = firebaseDB.usersReference
 
     fun getPermissionsReference(uid: String) = firebaseDB.getPermissionReference(uid)
 
     fun getStorageReference() = storage.storageReference
 
+    fun getAppointmentsReference() = firebaseDB.appointmentsReference
+
     fun getUserAppointmentsReference(uid: String) = firebaseDB.getUserAppointmentsReference(uid)
+
+    fun updateAppointment(uid: String, appointment: Appointment) = firebaseDB.updateAppointment(uid, appointment)
+
+    fun deleteAppointment(uid: String, appointment: Appointment) = firebaseDB.deleteAppointment(uid, appointment)
 }

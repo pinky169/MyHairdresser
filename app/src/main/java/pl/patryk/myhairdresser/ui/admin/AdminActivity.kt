@@ -46,8 +46,8 @@ class AdminActivity : AppCompatActivity(), PopupMenuListener, KodeinAware {
     }
 
     private fun observeAppointments(viewModel: AdminViewModel) {
-        viewModel.getAppointments().observe(this, Observer { appointments ->
-            recyclerAdapter.submitList(appointments)
+        viewModel.getAppointments().observe(this, Observer { sections ->
+            recyclerAdapter.submitList(sections)
         })
     }
 
@@ -86,7 +86,7 @@ class AdminActivity : AppCompatActivity(), PopupMenuListener, KodeinAware {
     override fun createPopupMenu(view: View, appointment: Appointment) {
 
         //creating a popup menu
-        val popup = PopupMenu(this, view)
+        val popup = PopupMenu(view.context, view)
 
         //inflating menu from xml resource
         popup.inflate(R.menu.admin_popup_menu)

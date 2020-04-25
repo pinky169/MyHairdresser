@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.section_layout.view.*
 import pl.patryk.myhairdresser.R
+import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.AppointmentSection
 import pl.patryk.myhairdresser.utils.PopupMenuListener
 
@@ -23,27 +24,46 @@ class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        private val itemContext = itemView.context
         private var appointmentAdapter = AppointmentAdapter()
         private val header = itemView.header
         private val recyclerView = itemView.section_recycler_view
 
         fun bind(section: AppointmentSection) {
 
-            // Set section header
-            header.text = section.header
-
-            // Setup onClick listener
-            appointmentAdapter.popupMenuListener = listener
-
             // Decide if we want to show section
-            // if its empty or not
+            // whether its empty or not
             showOrHideSection(section)
+        }
 
-            // Setup recycler view
-            setupRecyclerForSection()
+        private fun showOrHideSection(section: AppointmentSection) {
 
-            // Submit section data to show
-            appointmentAdapter.submitList(section.data)
+            // Check if we have any data to populate views
+            if (section.sectionData.isNullOrEmpty()) {
+
+                header.visibility = View.GONE
+                recyclerView.visibility = View.GONE
+
+            }
+
+            // Setup views if we any section to show
+            else {
+
+                header.visibility = View.VISIBLE
+                recyclerView.visibility = View.VISIBLE
+
+                // Set section header
+                setSectionTitle(section)
+
+                // Setup recycler view
+                setupRecyclerForSection()
+
+                // Setup onClick listener
+                appointmentAdapter.popupMenuListener = listener
+
+                // Submit section data to show
+                appointmentAdapter.submitList(section.sectionData)
+            }
         }
 
         private fun setupRecyclerForSection() {
@@ -54,14 +74,11 @@ class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder
             }
         }
 
-        private fun showOrHideSection(section: AppointmentSection) {
-            // Check if we have any data to populate views
-            if (section.data.isNullOrEmpty()) {
-                header.visibility = View.GONE
-                recyclerView.visibility = View.GONE
-            } else {
-                header.visibility = View.VISIBLE
-                recyclerView.visibility = View.VISIBLE
+        private fun setSectionTitle(section: AppointmentSection) {
+            when (section.sectionType) {
+                Appointment.VERIFICATION_STATE_PENDING -> header.text = itemContext.getString(R.string.section_header_pending)
+                Appointment.VERIFICATION_STATE_APPROVED -> header.text = itemContext.getString(R.string.section_header_approved)
+                Appointment.VERIFICATION_STATE_REJECTED -> header.text = itemContext.getString(R.string.section_header_rejected)
             }
         }
     }
@@ -78,11 +95,11 @@ class SectionAdapter : ListAdapter<AppointmentSection, SectionAdapter.ViewHolder
         private val diffCallback: DiffUtil.ItemCallback<AppointmentSection> = object : DiffUtil.ItemCallback<AppointmentSection>() {
 
             override fun areItemsTheSame(oldItem: AppointmentSection, newItem: AppointmentSection): Boolean {
-                return oldItem.header.equals(newItem.header)
+                return oldItem.sectionType == newItem.sectionType
             }
 
             override fun areContentsTheSame(oldItem: AppointmentSection, newItem: AppointmentSection): Boolean {
-                return oldItem.header.equals(newItem.header) && oldItem.data.equals(newItem.data)
+                return oldItem.sectionType == newItem.sectionType && oldItem.sectionData == newItem.sectionData
             }
         }
     }

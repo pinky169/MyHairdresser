@@ -3,7 +3,6 @@ package pl.patryk.myhairdresser.ui.appointments
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -40,15 +39,9 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
     }
 
     private fun observeUserAppointments(viewmodel: UserAppointmentViewModel) {
-        viewmodel.getUserAppointment().observe(this, Observer { appointments ->
-            if (appointments.isNullOrEmpty()) {
-                empty_view.visibility = View.VISIBLE
-                appointment_recycler_view.visibility = View.GONE
-            } else {
-                empty_view.visibility = View.GONE
-                appointment_recycler_view.visibility = View.VISIBLE
-                recyclerAdapter.submitList(appointments)
-            }
+        viewmodel.getUserAppointments().observe(this, Observer { appointments ->
+            recyclerAdapter.submitList(appointments)
+            showOrHideEmptyView(appointments)
         })
     }
 
@@ -70,13 +63,13 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
     override fun createPopupMenu(view: View, appointment: Appointment) {
 
         // Creating a popup menu
-        val popup = PopupMenu(this, view, Gravity.END)
+        val popup = PopupMenu(view.context, view)
 
         // Inflating menu from xml resource
         popup.inflate(R.menu.user_popup_menu)
 
         // Setting title for a 2nd item in menu
-        popup.menu.getItem(1).title = "Usuń ${appointment.service.decapitalize(Locale.ROOT)}"
+        popup.menu.getItem(1).title = getString(R.string.menu_appointment_remove_txt, appointment.service.decapitalize(Locale.getDefault()))
 
         // Showing call button when the appointment has been rejected
         if (appointment.verification_state == Appointment.VERIFICATION_STATE_REJECTED) {
@@ -92,7 +85,7 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
                     true
                 }
                 R.id.menu_call -> {
-                    val callIntent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", "123 456 780", null))
+                    val callIntent = Intent(Intent.ACTION_DIAL, Uri.fromParts("tel", getString(R.string.hairdresser_phone_number), null))
                     startActivity(callIntent)
                     true
                 }
@@ -102,5 +95,13 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
 
         //displaying the popup
         popup.show()
+    }
+
+    private fun showOrHideEmptyView(appointments: List<Appointment>) {
+        if (appointments.isNullOrEmpty()) {
+            empty_view.visibility = View.VISIBLE
+        } else {
+            empty_view.visibility = View.GONE
+        }
     }
 }

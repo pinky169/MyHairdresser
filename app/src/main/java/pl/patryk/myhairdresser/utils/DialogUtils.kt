@@ -75,7 +75,7 @@ class DialogUtils : DialogFragment() {
         userID = authHelper.currentUserId()
 
         // If any value in db for the user changes, load new content
-        dbHelper.databaseReference.child(authHelper.currentUserId()!!).addValueEventListener(object : ValueEventListener {
+        dbHelper.usersReference.child(authHelper.currentUserId()!!).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
                 if (dataSnapshot.exists()) {

@@ -9,37 +9,50 @@ import pl.patryk.myhairdresser.data.model.User
 
 class FirebaseDatabaseHelper {
 
+    /* ****************************************************
+    *               Firebase Database                    *
+    **************************************************** */
     val database: FirebaseDatabase by lazy {
         FirebaseDatabase.getInstance()
     }
 
-    val databaseReference: DatabaseReference by lazy {
+    /* ****************************************************
+    *               Database users                *
+    **************************************************** */
+    val usersReference: DatabaseReference by lazy {
         database.getReference("users")
     }
 
     fun getUserReference(uid: String): DatabaseReference {
-        return databaseReference.child(uid)
+        return usersReference.child(uid)
     }
 
     fun getPermissionReference(uid: String): DatabaseReference {
-        return databaseReference.child(uid).child("admin")
+        return usersReference.child(uid).child("admin")
+    }
+
+    fun insertUser(uid: String, user: User) = usersReference.child(uid).setValue(user)
+
+    fun insertPhoto(uid: String, photo: Photo) = usersReference.child(uid).child("photo").setValue(photo)
+
+    fun updateUser(uid: String, user: User) = usersReference.child(uid).updateChildren(user.toMap())
+
+    /* ****************************************************
+    *               Database appointments                *
+    **************************************************** */
+    val appointmentsReference: DatabaseReference by lazy {
+        database.getReference("appointments")
     }
 
     fun getUserAppointmentsReference(uid: String): DatabaseReference {
-        return databaseReference.child(uid).child("appointments")
+        return appointmentsReference.child(uid)
     }
 
     fun getSpecificAppointment(uid: String, appointment_id: String): DatabaseReference {
-        return databaseReference.child(uid).child("appointments").child(appointment_id)
+        return appointmentsReference.child(uid).child(appointment_id)
     }
 
-    fun insertUser(uid: String, user: User) = databaseReference.child(uid).setValue(user)
+    fun updateAppointment(uid: String, appointment: Appointment) = appointmentsReference.child(uid).child(appointment.appointmentID).updateChildren(appointment.toMap())
 
-    fun insertPhoto(uid: String, photo: Photo) = databaseReference.child(uid).child("photo").setValue(photo)
-
-    fun updateUser(uid: String, user: User) = databaseReference.child(uid).updateChildren(user.toMap())
-
-    fun updateAppointment(uid: String, appointment: Appointment) = databaseReference.child(uid).child("appointments").child(appointment.appointmentID).updateChildren(appointment.toMap())
-
-    fun deleteAppointment(uid: String, appointment: Appointment) = databaseReference.child(uid).child("appointments").child(appointment.appointmentID).removeValue()
+    fun deleteAppointment(uid: String, appointment: Appointment) = appointmentsReference.child(uid).child(appointment.appointmentID).removeValue()
 }

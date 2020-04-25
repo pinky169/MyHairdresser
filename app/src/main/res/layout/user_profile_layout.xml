@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:orientation="horizontal"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_anchor="@id/app_bar_layout"
             app:layout_anchorGravity="bottom|end">
 
@@ -97,6 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:background="@drawable/rounded_button"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:text="@string/register" />
 
             <Button
@@ -104,6 +106,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/rounded_button"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
                 android:text="@string/button_update_profile_txt" />
 
         </LinearLayout>

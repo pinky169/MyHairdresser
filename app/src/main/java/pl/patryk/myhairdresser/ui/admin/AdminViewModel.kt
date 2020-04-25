@@ -16,7 +16,7 @@ import java.util.*
 class AdminViewModel(private val repository: UserRepository) : ViewModel() {
 
     val userId by lazy { repository.currentUserId() }
-    private val usersReference: DatabaseReference by lazy { repository.getUsersReference() }
+    private val appointmentsReference: DatabaseReference by lazy { repository.getAppointmentsReference() }
 
 
     /**
@@ -42,11 +42,12 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
      */
     private fun loadAppointments() {
 
-        usersReference.addValueEventListener(object : ValueEventListener {
+        appointmentsReference.addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
+                // dataSnapshot -> root/appointments -> List of appointments
                 if (dataSnapshot.exists()) {
 
                     val pendingAppointments: ArrayList<Appointment> = arrayListOf()
@@ -54,12 +55,11 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
                     val rejectedAppointments: ArrayList<Appointment> = arrayListOf()
                     val sections: ArrayList<AppointmentSection> = arrayListOf()
 
-                    // users
+                    // userSnapshot -> root/appointments/user_id -> User node with multiple list of appointments
                     for (userSnapshot in dataSnapshot.children) {
 
-                        //val user: User = userSnapshot.getValue(User::class.java)!!
-                        // users/appointments/
-                        for (appointmentSnapshot in userSnapshot.child("appointments").children) {
+                        // appointmentSnapshot -> root/appointments/user_id/appointment_id -> Appointment object
+                        for (appointmentSnapshot in userSnapshot.children) {
 
                             // users/appointments/{current-appointment}
                             val appointment: Appointment = appointmentSnapshot.getValue(Appointment::class.java)!!
@@ -73,9 +73,9 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
                         }
                     }
 
-                    sections.add(AppointmentSection("OCZEKUJĄCE", pendingAppointments))
-                    sections.add(AppointmentSection("ZATWIERDZONE", approvedAppointments))
-                    sections.add(AppointmentSection("ODRZUCONE", rejectedAppointments))
+                    sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_PENDING, pendingAppointments))
+                    sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_APPROVED, approvedAppointments))
+                    sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_REJECTED, rejectedAppointments))
 
                     liveAppointments.postValue(sections)
                 }

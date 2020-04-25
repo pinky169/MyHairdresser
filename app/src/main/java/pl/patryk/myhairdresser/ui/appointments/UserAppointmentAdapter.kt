@@ -1,6 +1,5 @@
 package pl.patryk.myhairdresser.ui.appointments
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,7 @@ class UserAppointmentAdapter : ListAdapter<Appointment, UserAppointmentAdapter.V
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val itemContext = itemView.context
-        private val state = itemView.appointment_state
+        private var state = itemView.appointment_state
         private val date = itemView.appointment_date
         private val service = itemView.appointment_service
         private val popupMenu = itemView.popup_menu
@@ -28,20 +27,37 @@ class UserAppointmentAdapter : ListAdapter<Appointment, UserAppointmentAdapter.V
 
         fun bind(appointment: Appointment) {
 
-            state.text = getAppointmentState(itemContext, appointment)
-            date.text = getAppointmentDate(itemContext, appointment)
             service.text = appointment.service
-
+            setAppointmentState(appointment)
+            setAppointmentDate(appointment)
             setCardBackground(appointment)
 
             popupMenu.setOnClickListener { popupMenuListener?.createPopupMenu(popupMenu, appointment) }
         }
 
         private fun setCardBackground(appointment: Appointment) {
-            when {
-                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_APPROVED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorApprovedWith50Transparency)))
-                appointment.verification_state.equals(Appointment.VERIFICATION_STATE_REJECTED) -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorRejectedWith50Transparency)))
+            when (appointment.verification_state) {
+                Appointment.VERIFICATION_STATE_APPROVED -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorApprovedWith50Transparency)))
+                Appointment.VERIFICATION_STATE_REJECTED -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorRejectedWith50Transparency)))
                 else -> cardView.setCardBackgroundColor((ContextCompat.getColor(itemContext, R.color.colorPendingWith50Transparency)))
+            }
+        }
+
+        private fun setAppointmentState(appointment: Appointment) {
+
+            when (appointment.verification_state) {
+                Appointment.VERIFICATION_STATE_PENDING -> state.text = itemContext.getString(R.string.appointment_state_pending)
+                Appointment.VERIFICATION_STATE_APPROVED -> state.text = itemContext.getString(R.string.appointment_state_approved)
+                Appointment.VERIFICATION_STATE_REJECTED -> state.text = itemContext.getString(R.string.appointment_state_rejected)
+            }
+        }
+
+        private fun setAppointmentDate(appointment: Appointment) {
+
+            when (appointment.verification_state) {
+                Appointment.VERIFICATION_STATE_PENDING -> date.text = appointment.date
+                Appointment.VERIFICATION_STATE_APPROVED -> date.text = itemContext.getString(R.string.notification_appointment_date_accepted, appointment.date)
+                Appointment.VERIFICATION_STATE_REJECTED -> date.text = appointment.date
             }
         }
     }
@@ -52,29 +68,4 @@ class UserAppointmentAdapter : ListAdapter<Appointment, UserAppointmentAdapter.V
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(getItem(position))
-
-    fun getAppointmentState(context: Context, appointment: Appointment): String? {
-
-        var state: String? = ""
-
-        when (appointment.verification_state) {
-            Appointment.VERIFICATION_STATE_PENDING -> state = context.getString(R.string.appointment_state_pending)
-            Appointment.VERIFICATION_STATE_APPROVED -> state = context.getString(R.string.appointment_state_approved)
-            Appointment.VERIFICATION_STATE_REJECTED -> state = context.getString(R.string.appointment_state_rejected)
-        }
-
-        return state
-    }
-
-    fun getAppointmentDate(context: Context, appointment: Appointment): String? {
-        var date: String? = ""
-
-        when (appointment.verification_state) {
-            Appointment.VERIFICATION_STATE_PENDING -> date = appointment.date
-            Appointment.VERIFICATION_STATE_APPROVED -> date = context.getString(R.string.notification_appointment_date_accepted, appointment.date)
-            Appointment.VERIFICATION_STATE_REJECTED -> date = appointment.date
-        }
-
-        return date
-    }
 }
