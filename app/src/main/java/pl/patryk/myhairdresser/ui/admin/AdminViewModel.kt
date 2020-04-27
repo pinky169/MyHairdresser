@@ -15,9 +15,7 @@ import java.util.*
 
 class AdminViewModel(private val repository: UserRepository) : ViewModel() {
 
-    val userId by lazy { repository.currentUserId() }
     private val appointmentsReference: DatabaseReference by lazy { repository.getAppointmentsReference() }
-
 
     /**
      * Contains information about all appointments split into sections.

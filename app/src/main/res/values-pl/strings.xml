@@ -67,9 +67,12 @@
     <string name="no_appointments_textview_message">Brak umówionych wizyt</string>
     <string name="menu_phone_call">Zadzwoń</string>
     <string name="menu_appointment_remove_txt">Usuń %1$s</string>
+    <string name="menu_appointment_cancel_txt">Anuluj %1$s</string>
     <string name="section_header_pending">OCZEKUJĄCE</string>
     <string name="section_header_approved">ZATWIERDZONE</string>
     <string name="section_header_rejected">ODRZUCONE</string>
+    <string name="snack_bar_warning_txt">Uzupełnij swoje dane, aby móc zarejestrowac wizytę!</string>
+    <string name="appointment_notifications_channel_id">appointments_channel_id</string>
 
     <string name="hairdresser_phone_number">123 456 780</string>
 

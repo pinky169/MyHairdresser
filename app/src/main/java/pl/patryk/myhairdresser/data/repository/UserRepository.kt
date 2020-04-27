@@ -40,4 +40,6 @@ class UserRepository(private val firebase: FirebaseAuthHelper, private val fireb
     fun updateAppointment(uid: String, appointment: Appointment) = firebaseDB.updateAppointment(uid, appointment)
 
     fun deleteAppointment(uid: String, appointment: Appointment) = firebaseDB.deleteAppointment(uid, appointment)
+
+    fun insertToken(uid: String, token: String) = firebaseDB.insertToken(uid, token)
 }

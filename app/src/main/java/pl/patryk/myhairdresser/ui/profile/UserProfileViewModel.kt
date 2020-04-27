@@ -113,4 +113,9 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
             userListener?.onUploadFailed()
         }
     }
+
+    /**
+     * Use to insert user's device token into database.
+     */
+    fun insertToken(uid: String, token: String) = repository.insertToken(uid, token)
 }

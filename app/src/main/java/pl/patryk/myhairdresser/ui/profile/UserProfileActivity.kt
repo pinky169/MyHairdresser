@@ -6,10 +6,12 @@ import android.graphics.drawable.AnimationDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.MimeTypeMap
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -25,6 +27,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.user_details_layout.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
@@ -45,7 +48,7 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
     override val kodein by kodein()
     private val factory: UserProfileViewModelFactory by instance()
     private lateinit var viewModel: UserProfileViewModel
-    private var user: User? = null
+    private lateinit var user: User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +75,10 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
 
             // Load user data into views
             setupContent(data)
+
+            // Store user device token into database
+            // used to handle push notifications
+            getDeviceTokenAndUpload()
         })
     }
 
@@ -97,6 +104,15 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
                 })
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(profile_photo)
+    }
+
+    private fun getDeviceTokenAndUpload() {
+
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val deviceToken = sharedPreferences.getString("device_token", null)!!
+        val userId = viewModel.userId!!
+
+        viewModel.insertToken(userId, deviceToken)
     }
 
     private fun setupContent(user: User) {
@@ -163,32 +179,40 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
     }
 
     private fun startEditProfileActivity() {
-        if (user != null) {
-            val intent = Intent(this, EditProfileActivity::class.java)
-            intent.putExtra(TAG_USER_NAME, user?.name)
-            intent.putExtra(TAG_USER_SURNAME, user?.surname)
-            intent.putExtra(TAG_USER_EMAIL, user?.email)
-            intent.putExtra(TAG_USER_AGE, user?.age)
-            intent.putExtra(TAG_USER_PHONE, user?.phone)
-            startActivityForResult(intent, UPDATE_PROFILE_REQUEST)
-        }
+        val intent = Intent(this, EditProfileActivity::class.java)
+        intent.putExtra(TAG_USER_NAME, user.name)
+        intent.putExtra(TAG_USER_SURNAME, user.surname)
+        intent.putExtra(TAG_USER_EMAIL, user.email)
+        intent.putExtra(TAG_USER_AGE, user.age)
+        intent.putExtra(TAG_USER_PHONE, user.phone)
+        startActivityForResult(intent, UPDATE_PROFILE_REQUEST)
     }
 
     private fun showAppointmentDialog() {
 
-        // DialogFragment.show() will take care of adding the fragment
-        // in a transaction. We also want to remove any currently showing
-        // dialog, so make our own transaction and take care of that here.
-        val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-        val prev: Fragment? = supportFragmentManager.findFragmentByTag("dialog")
-        if (prev != null) {
-            ft.remove(prev)
-        }
-        ft.addToBackStack(null)
+        if (user.name.isBlank() or user.surname.isBlank() or user.phone.isBlank()) {
+            val snackBar = Snackbar.make(profile_layout, getString(R.string.snack_bar_warning_txt), Snackbar.LENGTH_LONG)
+            val snackBarView = snackBar.view
+            snackBarView.setBackgroundColor(getColor(R.color.warningColor))
+            val textView = snackBarView.findViewById(R.id.snackbar_text) as TextView
+            textView.setTextColor(getColor(android.R.color.black))
+            snackBar.show()
+        } else {
 
-        // Create and show the dialog.
-        val newFragment: DialogFragment = DialogUtils().newInstance()!!
-        newFragment.show(ft, "dialog")
+            // DialogFragment.show() will take care of adding the fragment
+            // in a transaction. We also want to remove any currently showing
+            // dialog, so make our own transaction and take care of that here.
+            val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+            val prev: Fragment? = supportFragmentManager.findFragmentByTag("dialog")
+            if (prev != null) {
+                ft.remove(prev)
+            }
+            ft.addToBackStack(null)
+
+            // Create and show the dialog.
+            val newFragment: DialogFragment = DialogUtils().newInstance()!!
+            newFragment.show(ft, "dialog")
+        }
     }
 
     private fun openFileChooser() {

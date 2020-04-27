@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_layout.view.*
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.Appointment
-import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.utils.PopupMenuListener
 import pl.patryk.myhairdresser.utils.changeDateFormatting
 
@@ -18,7 +17,6 @@ import pl.patryk.myhairdresser.utils.changeDateFormatting
 class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolder>(diffCallback) {
 
     var popupMenuListener: PopupMenuListener? = null
-    private lateinit var userAndAppointment: HashMap<User, List<Appointment>>
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

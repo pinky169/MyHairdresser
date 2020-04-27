@@ -6,7 +6,6 @@ data class User(var name: String = "",
                 var age: String = "",
                 var phone: String = "",
                 var photo: Photo? = null,
-                var appointments: HashMap<String, Appointment>? = null,
                 var admin: Boolean = false) {
 
     // Constructor for updating a User's data in database

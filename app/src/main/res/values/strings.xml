@@ -66,9 +66,12 @@
     <string name="no_appointments_textview_message">No appointments</string>
     <string name="menu_phone_call">Call</string>
     <string name="menu_appointment_remove_txt">Delete %1$s</string>
+    <string name="menu_appointment_cancel_txt">Cancel %1$s</string>
     <string name="section_header_pending">PENDING</string>
     <string name="section_header_approved">APPROVED</string>
     <string name="section_header_rejected">REJECTED</string>
+    <string name="snack_bar_warning_txt">Please complete your personal details to be able to make an appointment!</string>
+    <string name="appointment_notifications_channel_id">appointments_channel_id</string>
 
     <string name="hairdresser_phone_number">123 456 780</string>
 

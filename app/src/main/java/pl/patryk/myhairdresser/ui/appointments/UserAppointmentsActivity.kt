@@ -23,22 +23,22 @@ import java.util.*
 class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinAware {
 
     override val kodein by kodein()
-    private val factory: UserAppointmentViewModelFactory by instance()
-    private lateinit var viewModel: UserAppointmentViewModel
-    private lateinit var recyclerAdapter: UserAppointmentAdapter
+    private val factory: UserAppointmentsViewModelFactory by instance()
+    private lateinit var viewModel: UserAppointmentsViewModel
+    private lateinit var recyclerAdapter: UserAppointmentsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_appointments_layout)
         title = getString(R.string.user_appointment_activity_title)
 
-        viewModel = ViewModelProvider(this, factory).get(UserAppointmentViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(UserAppointmentsViewModel::class.java)
 
         setupRecyclerView()
         observeUserAppointments(viewModel)
     }
 
-    private fun observeUserAppointments(viewmodel: UserAppointmentViewModel) {
+    private fun observeUserAppointments(viewmodel: UserAppointmentsViewModel) {
         viewmodel.getUserAppointments().observe(this, Observer { appointments ->
             recyclerAdapter.submitList(appointments)
             showOrHideEmptyView(appointments)
@@ -47,7 +47,7 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
 
     private fun setupRecyclerView() {
 
-        recyclerAdapter = UserAppointmentAdapter()
+        recyclerAdapter = UserAppointmentsAdapter()
         recyclerAdapter.popupMenuListener = this
 
         val recyclerLayoutManager = LinearLayoutManager(this)
@@ -69,7 +69,10 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
         popup.inflate(R.menu.user_popup_menu)
 
         // Setting title for a 2nd item in menu
-        popup.menu.getItem(1).title = getString(R.string.menu_appointment_remove_txt, appointment.service.decapitalize(Locale.getDefault()))
+        if (appointment.verification_state == Appointment.VERIFICATION_STATE_PENDING)
+            popup.menu.getItem(1).title = getString(R.string.menu_appointment_cancel_txt, appointment.service.decapitalize(Locale.getDefault()))
+        else
+            popup.menu.getItem(1).title = getString(R.string.menu_appointment_remove_txt, appointment.service.decapitalize(Locale.getDefault()))
 
         // Showing call button when the appointment has been rejected
         if (appointment.verification_state == Appointment.VERIFICATION_STATE_REJECTED) {

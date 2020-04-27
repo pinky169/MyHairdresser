@@ -13,7 +13,7 @@ import pl.patryk.myhairdresser.data.firebase.FirebaseDatabaseHelper
 import pl.patryk.myhairdresser.data.firebase.FirebaseStorageHelper
 import pl.patryk.myhairdresser.data.repository.UserRepository
 import pl.patryk.myhairdresser.ui.admin.AdminViewModelFactory
-import pl.patryk.myhairdresser.ui.appointments.UserAppointmentViewModelFactory
+import pl.patryk.myhairdresser.ui.appointments.UserAppointmentsViewModelFactory
 import pl.patryk.myhairdresser.ui.auth.AuthViewModelFactory
 import pl.patryk.myhairdresser.ui.profile.UserProfileViewModelFactory
 import java.text.SimpleDateFormat
@@ -37,7 +37,7 @@ class FirebaseApplication : Application(), KodeinAware {
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { AdminViewModelFactory(instance()) }
         bind() from provider { UserProfileViewModelFactory(instance()) }
-        bind() from provider { UserAppointmentViewModelFactory(instance()) }
+        bind() from provider { UserAppointmentsViewModelFactory(instance()) }
 
     }
 }

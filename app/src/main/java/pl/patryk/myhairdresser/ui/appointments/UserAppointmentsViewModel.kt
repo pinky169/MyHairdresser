@@ -10,7 +10,7 @@ import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.repository.UserRepository
 import java.util.*
 
-class UserAppointmentViewModel(private val repository: UserRepository) : ViewModel() {
+class UserAppointmentsViewModel(private val repository: UserRepository) : ViewModel() {
 
     private val userId by lazy { repository.currentUserId() }
     private val appointmentReference by lazy { repository.getUserAppointmentsReference(userId!!) }

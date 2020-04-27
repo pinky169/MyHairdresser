@@ -28,10 +28,8 @@ class AdminActivity : AppCompatActivity(), PopupMenuListener, KodeinAware {
 
     override val kodein by kodein()
     private val factory: AdminViewModelFactory by instance()
-    private lateinit var recyclerAdapter: SectionAdapter
-    private lateinit var userID: String
-
     private lateinit var viewModel: AdminViewModel
+    private lateinit var recyclerAdapter: SectionAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +37,6 @@ class AdminActivity : AppCompatActivity(), PopupMenuListener, KodeinAware {
         title = getString(R.string.admin_activity_title)
 
         viewModel = ViewModelProvider(this, factory).get(AdminViewModel::class.java)
-        userID = viewModel.userId!!
 
         setupRecycler()
         observeAppointments(viewModel)

@@ -12,7 +12,7 @@ import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.ui.admin.AppointmentAdapter
 import pl.patryk.myhairdresser.utils.PopupMenuListener
 
-class UserAppointmentAdapter : ListAdapter<Appointment, UserAppointmentAdapter.ViewHolder>(AppointmentAdapter.diffCallback) {
+class UserAppointmentsAdapter : ListAdapter<Appointment, UserAppointmentsAdapter.ViewHolder>(AppointmentAdapter.diffCallback) {
 
     var popupMenuListener: PopupMenuListener? = null
 

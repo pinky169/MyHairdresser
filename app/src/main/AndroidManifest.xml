@@ -34,6 +34,18 @@
             android:name=".ui.profile.EditProfileActivity"
             android:parentActivityName=".ui.profile.UserProfileActivity" />
         <activity android:name=".ui.admin.AdminActivity" />
+
+        <service
+            android:name=".data.firebase.notifications.CloudMessagingService"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+            <meta-data
+                android:name="com.google.firebase.messaging.default_notification_channel_id"
+                android:value="@string/appointment_notifications_channel_id" />
+        </service>
+
     </application>
 
 </manifest>

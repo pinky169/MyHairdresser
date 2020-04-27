@@ -9,15 +9,15 @@ import pl.patryk.myhairdresser.data.model.User
 
 class FirebaseDatabaseHelper {
 
-    /* ****************************************************
-    *               Firebase Database                    *
+    /* ***************************************************
+    *                   Firebase Database                *
     **************************************************** */
     val database: FirebaseDatabase by lazy {
         FirebaseDatabase.getInstance()
     }
 
-    /* ****************************************************
-    *               Database users                *
+    /* ***************************************************
+    *                   Database users                   *
     **************************************************** */
     val usersReference: DatabaseReference by lazy {
         database.getReference("users")
@@ -37,8 +37,8 @@ class FirebaseDatabaseHelper {
 
     fun updateUser(uid: String, user: User) = usersReference.child(uid).updateChildren(user.toMap())
 
-    /* ****************************************************
-    *               Database appointments                *
+    /* ***************************************************
+    *                   Database appointments            *
     **************************************************** */
     val appointmentsReference: DatabaseReference by lazy {
         database.getReference("appointments")
@@ -55,4 +55,13 @@ class FirebaseDatabaseHelper {
     fun updateAppointment(uid: String, appointment: Appointment) = appointmentsReference.child(uid).child(appointment.appointmentID).updateChildren(appointment.toMap())
 
     fun deleteAppointment(uid: String, appointment: Appointment) = appointmentsReference.child(uid).child(appointment.appointmentID).removeValue()
+
+    /* ***************************************************
+    *                   Database tokens                  *
+    **************************************************** */
+    val tokensReference: DatabaseReference by lazy {
+        database.getReference("tokens")
+    }
+
+    fun insertToken(uid: String, token: String) = tokensReference.child(uid).child("deviceToken").setValue(token)
 }

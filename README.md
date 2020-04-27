@@ -4,6 +4,8 @@ Android app for a local hairdressing salon which allows you to register an accou
 * [Firebase Authentication](https://firebase.google.com/docs/auth/android/start)
 * [Firebase Database](https://firebase.google.com/docs/database/android/start)
 * [Firebase Storage](https://firebase.google.com/docs/storage/android/start)
+* [Firebase Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/android/client)
+* [Cloud Functions for Firebase](https://firebase.google.com/docs/functions)
 * [LiveData](https://developer.android.com/topic/libraries/architecture/livedata)
 * [MVVM pattern](https://developer.android.com/jetpack/docs/guide)
 * [Kodein](https://github.com/Kodein-Framework/Kodein-DI)
