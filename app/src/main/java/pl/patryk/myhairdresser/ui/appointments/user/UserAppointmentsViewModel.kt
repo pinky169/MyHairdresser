@@ -1,4 +1,4 @@
-package pl.patryk.myhairdresser.ui.appointments
+package pl.patryk.myhairdresser.ui.appointments.user
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.repository.UserRepository
+import java.text.SimpleDateFormat
 import java.util.*
 
 class UserAppointmentsViewModel(private val repository: UserRepository) : ViewModel() {
@@ -35,10 +36,11 @@ class UserAppointmentsViewModel(private val repository: UserRepository) : ViewMo
 
     /**
      * Loads user's appointments data from firebase database into LivaData data holder.
+     * Data is ordered by date of an appointment. Takes only the last 30 days.
      */
     fun loadUserAppointments() {
 
-        appointmentReference.addValueEventListener(object : ValueEventListener {
+        appointmentReference.orderByChild("date").startAt(getDaysAgo(30)).addValueEventListener(object : ValueEventListener {
             override fun onCancelled(error: DatabaseError) {}
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -71,4 +73,20 @@ class UserAppointmentsViewModel(private val repository: UserRepository) : ViewMo
      * @param appointment Appointment object to remove
      */
     fun deleteAppointment(uid: String, appointment: Appointment) = repository.deleteAppointment(uid, appointment)
+
+    /**
+     * Use to return formatted String created from the current date minus selected amount of days passed as an argument.
+     * Format pattern: yyyy.MM.dd HH:mm. Allows to orderBy this string in firebase database.
+     * @param daysAgo Number of days that we subtract from the current date.
+     */
+    @Suppress("SameParameterValue")
+    private fun getDaysAgo(daysAgo: Int): String {
+
+        val calendar = Calendar.getInstance()
+
+        calendar.time = Date()
+        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
+
+        return SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).format(calendar.time)
+    }
 }

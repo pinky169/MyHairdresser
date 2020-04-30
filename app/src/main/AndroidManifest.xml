@@ -28,12 +28,17 @@
             android:name=".ui.profile.UserProfileActivity"
             android:theme="@style/NoActionBar" />
         <activity
-            android:name=".ui.appointments.UserAppointmentsActivity"
+            android:name=".ui.appointments.user.UserAppointmentsActivity"
             android:parentActivityName=".ui.profile.UserProfileActivity" />
         <activity
             android:name=".ui.profile.EditProfileActivity"
             android:parentActivityName=".ui.profile.UserProfileActivity" />
         <activity android:name=".ui.admin.AdminActivity" />
+        <activity
+            android:name=".ui.appointments.registration.AppointmentRegistrationActivity"
+            android:parentActivityName=".ui.profile.UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/MaterialAppTheme" />
 
         <service
             android:name=".data.firebase.notifications.CloudMessagingService"

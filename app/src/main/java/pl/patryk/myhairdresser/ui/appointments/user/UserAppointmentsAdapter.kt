@@ -1,4 +1,4 @@
-package pl.patryk.myhairdresser.ui.appointments
+package pl.patryk.myhairdresser.ui.appointments.user
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +11,7 @@ import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.ui.admin.AppointmentAdapter
 import pl.patryk.myhairdresser.utils.PopupMenuListener
+import pl.patryk.myhairdresser.utils.changeToUserReadableFormatting
 
 class UserAppointmentsAdapter : ListAdapter<Appointment, UserAppointmentsAdapter.ViewHolder>(AppointmentAdapter.diffCallback) {
 
@@ -54,10 +55,12 @@ class UserAppointmentsAdapter : ListAdapter<Appointment, UserAppointmentsAdapter
 
         private fun setAppointmentDate(appointment: Appointment) {
 
+            val dateTimeToDisplay = changeToUserReadableFormatting(appointment.date)
+
             when (appointment.verification_state) {
-                Appointment.VERIFICATION_STATE_PENDING -> date.text = appointment.date
-                Appointment.VERIFICATION_STATE_APPROVED -> date.text = itemContext.getString(R.string.notification_appointment_date_accepted, appointment.date)
-                Appointment.VERIFICATION_STATE_REJECTED -> date.text = appointment.date
+                Appointment.VERIFICATION_STATE_PENDING -> date.text = dateTimeToDisplay
+                Appointment.VERIFICATION_STATE_APPROVED -> date.text = itemContext.getString(R.string.notification_appointment_date_accepted, dateTimeToDisplay)
+                Appointment.VERIFICATION_STATE_REJECTED -> date.text = dateTimeToDisplay
             }
         }
     }

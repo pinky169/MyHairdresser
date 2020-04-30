@@ -1,4 +1,4 @@
-package pl.patryk.myhairdresser.ui.appointments
+package pl.patryk.myhairdresser.ui.appointments.user
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

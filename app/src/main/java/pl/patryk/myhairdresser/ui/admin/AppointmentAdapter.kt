@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.item_layout.view.*
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.utils.PopupMenuListener
-import pl.patryk.myhairdresser.utils.changeDateFormatting
+import pl.patryk.myhairdresser.utils.changeToUserReadableFormatting
 
 
 class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolder>(diffCallback) {
@@ -31,7 +31,7 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
         fun bind(appointment: Appointment) {
 
             person.text = appointment.name
-            date.text = changeDateFormatting(appointment.date)
+            date.text = changeToUserReadableFormatting(appointment.date)
             service.text = appointment.service
             phone.text = appointment.phone
 

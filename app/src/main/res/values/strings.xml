@@ -1,4 +1,39 @@
 <resources>
+
+    <string name="hairdresser_phone_number">123 456 780</string>
+
+    <string-array name="services">
+        <item>Women\'s haircut</item>
+        <item>Men\'s haircut</item>
+        <item>Children\'s haircut</item>
+        <item>Coloring</item>
+        <item>Haircut and styling</item>
+        <item>Balayage</item>
+        <item>Updo</item>
+        <item>Caring and regenerating treatment</item>
+        <item>Undercutting fringe</item>
+        <item>Ombre / Sombre</item>
+        <item>Perm</item>
+        <item>Curls</item>
+        <item>Wedding updo</item>
+    </string-array>
+
+    <string-array name="services_prices">
+        <item>10–17 €</item>
+        <item>7–12 €</item>
+        <item>6–11 €</item>
+        <item>32–54 €</item>
+        <item>12–26 €</item>
+        <item>32–86 €</item>
+        <item>20–32 €</item>
+        <item>17–26 €</item>
+        <item>3 €</item>
+        <item>40–65 €</item>
+        <item>22–28 €</item>
+        <item>13–26 €</item>
+        <item>22–43 €</item>
+    </string-array>
+
     <string name="app_name">Hairdresser</string>
     <string name="email_label">Email</string>
     <string name="password_label">Password</string>
@@ -41,7 +76,7 @@
     <string name="no_internet_connection">There is no internet connection</string>
     <string name="register">Book\nan appointment</string>
     <string name="estimated_price">Estimated price:</string>
-    <string name="dialog_text_button_positive">Register</string>
+    <string name="dialog_text_button_positive">Select</string>
     <string name="dialog_text_button_negative">Cancel</string>
     <string name="appointment_registered_successfully">You have been appointed for %1$s at %2$s</string>
     <string name="appointment_dialog_message">Please select type of a service. In the next step you will be asked for the date of your appointment.</string>
@@ -72,39 +107,14 @@
     <string name="section_header_rejected">REJECTED</string>
     <string name="snack_bar_warning_txt">Please complete your personal details to be able to make an appointment!</string>
     <string name="appointment_notifications_channel_id">appointments_channel_id</string>
-
-    <string name="hairdresser_phone_number">123 456 780</string>
-
-    <string-array name="services">
-        <item>Women\'s haircut</item>
-        <item>Men\'s haircut</item>
-        <item>Children\'s haircut</item>
-        <item>Coloring</item>
-        <item>Haircut and styling</item>
-        <item>Balayage</item>
-        <item>Updo</item>
-        <item>Caring and regenerating treatment</item>
-        <item>Undercutting fringe</item>
-        <item>Ombre / Sombre</item>
-        <item>Perm</item>
-        <item>Curls</item>
-        <item>Wedding updo</item>
-    </string-array>
-
-    <string-array name="services_prices">
-        <item>10–17 €</item>
-        <item>7–12 €</item>
-        <item>6–11 €</item>
-        <item>32–54 €</item>
-        <item>12–26 €</item>
-        <item>32–86 €</item>
-        <item>20–32 €</item>
-        <item>17–26 €</item>
-        <item>3 €</item>
-        <item>40–65 €</item>
-        <item>22–28 €</item>
-        <item>13–26 €</item>
-        <item>22–43 €</item>
-    </string-array>
+    <string name="step_hour_title">Select available hour</string>
+    <string name="stepper_last_step_cancel_button_text">CANCEL</string>
+    <string name="stepper_form_last_step_next_button_text">REGISTER</string>
+    <string name="step_service_title">Select a service</string>
+    <string name="step_date_title">Select a date</string>
+    <string name="stepper_form_button_next_text">NEXT</string>
+    <string name="stepper_form_confirmation_button_text">Confirm</string>
+    <string name="step_hour_available_label_text">Available</string>
+    <string name="step_hour_not_available_label_text">Not available</string>
 
 </resources>

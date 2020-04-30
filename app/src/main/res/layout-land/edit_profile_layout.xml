@@ -117,7 +117,7 @@
         android:id="@+id/button_save_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/rounded_button"
         android:padding="8dp"
         android:text="@string/save_data"
         app:layout_constraintBottom_toBottomOf="parent"

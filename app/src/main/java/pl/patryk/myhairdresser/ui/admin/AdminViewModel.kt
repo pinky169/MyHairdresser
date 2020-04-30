@@ -7,7 +7,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import pl.patryk.myhairdresser.FirebaseApplication
 import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.AppointmentSection
 import pl.patryk.myhairdresser.data.repository.UserRepository
@@ -53,7 +52,7 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
                     val rejectedAppointments: ArrayList<Appointment> = arrayListOf()
                     val sections: ArrayList<AppointmentSection> = arrayListOf()
 
-                    // userSnapshot -> root/appointments/user_id -> User node with multiple list of appointments
+                    // userSnapshot -> root/appointments/user_id -> User node with list of appointments
                     for (userSnapshot in dataSnapshot.children) {
 
                         // appointmentSnapshot -> root/appointments/user_id/appointment_id -> Appointment object
@@ -96,20 +95,4 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
      * Use to log out the user
      */
     fun logout() = repository.logout()
-
-    /**
-     * Use to return formatted String created from the current date minus selected amount of days passed as an argument.
-     * Format pattern: yyyy.MM.dd HH:mm. Allows to orderBy this string in firebase database.
-     * @param daysAgo Number of days that we subtract from the current date.
-     */
-    @Suppress("SameParameterValue")
-    private fun getDaysAgo(daysAgo: Int): String {
-
-        val calendar = Calendar.getInstance()
-
-        calendar.time = Date()
-        calendar.add(Calendar.DAY_OF_YEAR, -daysAgo)
-
-        return FirebaseApplication().databaseFormatter.format(calendar.time)
-    }
 }

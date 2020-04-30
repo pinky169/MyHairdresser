@@ -4,6 +4,7 @@ import pl.patryk.myhairdresser.data.firebase.FirebaseAuthHelper
 import pl.patryk.myhairdresser.data.firebase.FirebaseDatabaseHelper
 import pl.patryk.myhairdresser.data.firebase.FirebaseStorageHelper
 import pl.patryk.myhairdresser.data.model.Appointment
+import pl.patryk.myhairdresser.data.model.AppointmentDate
 import pl.patryk.myhairdresser.data.model.Photo
 import pl.patryk.myhairdresser.data.model.User
 
@@ -42,4 +43,8 @@ class UserRepository(private val firebase: FirebaseAuthHelper, private val fireb
     fun deleteAppointment(uid: String, appointment: Appointment) = firebaseDB.deleteAppointment(uid, appointment)
 
     fun insertToken(uid: String, token: String) = firebaseDB.insertToken(uid, token)
+
+    fun getAvailableHoursFromDayReference(date: String) = firebaseDB.getAvailableHoursFromDayReference(date)
+
+    fun bookADate(date: String, key: String, appointmentDate: AppointmentDate) = firebaseDB.bookADate(date, key, appointmentDate)
 }

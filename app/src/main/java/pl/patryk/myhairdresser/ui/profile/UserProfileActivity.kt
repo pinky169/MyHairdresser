@@ -11,13 +11,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.webkit.MimeTypeMap
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
@@ -27,7 +23,6 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.snackbar.Snackbar
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.user_details_layout.*
 import kotlinx.android.synthetic.main.user_profile_layout.*
@@ -37,7 +32,7 @@ import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.databinding.UserProfileLayoutBinding
-import pl.patryk.myhairdresser.utils.DialogUtils
+import pl.patryk.myhairdresser.utils.startAppointmentRegistrationActivity
 import pl.patryk.myhairdresser.utils.startLoginActivity
 import pl.patryk.myhairdresser.utils.startUserAppointmentsActivity
 import kotlin.math.abs
@@ -145,7 +140,7 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
     private fun setupListeners() {
         profile_photo.setOnClickListener { openFileChooser() }
         edit_profile_button.setOnClickListener { startEditProfileActivity() }
-        register_appointment_button.setOnClickListener { showAppointmentDialog() }
+        register_appointment_button.setOnClickListener { startAppointmentRegistrationActivity() }
         button_open_appointments.setOnClickListener { startUserAppointmentsActivity() }
     }
 
@@ -186,33 +181,6 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         intent.putExtra(TAG_USER_AGE, user.age)
         intent.putExtra(TAG_USER_PHONE, user.phone)
         startActivityForResult(intent, UPDATE_PROFILE_REQUEST)
-    }
-
-    private fun showAppointmentDialog() {
-
-        if (user.name.isBlank() or user.surname.isBlank() or user.phone.isBlank()) {
-            val snackBar = Snackbar.make(profile_layout, getString(R.string.snack_bar_warning_txt), Snackbar.LENGTH_LONG)
-            val snackBarView = snackBar.view
-            snackBarView.setBackgroundColor(getColor(R.color.warningColor))
-            val textView = snackBarView.findViewById(R.id.snackbar_text) as TextView
-            textView.setTextColor(getColor(android.R.color.black))
-            snackBar.show()
-        } else {
-
-            // DialogFragment.show() will take care of adding the fragment
-            // in a transaction. We also want to remove any currently showing
-            // dialog, so make our own transaction and take care of that here.
-            val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
-            val prev: Fragment? = supportFragmentManager.findFragmentByTag("dialog")
-            if (prev != null) {
-                ft.remove(prev)
-            }
-            ft.addToBackStack(null)
-
-            // Create and show the dialog.
-            val newFragment: DialogFragment = DialogUtils().newInstance()!!
-            newFragment.show(ft, "dialog")
-        }
     }
 
     private fun openFileChooser() {

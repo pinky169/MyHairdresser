@@ -71,7 +71,7 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
             authListener?.onStarted()
 
             //calling login from repository to perform the actual authentication
-            val disposable = repository.login(email!!, password!!)
+            val disposable = repository.login(email!!.trim(), password!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -109,7 +109,7 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
             }
 
             authListener?.onStarted()
-            val disposable = repository.register(email!!, password!!)
+            val disposable = repository.register(email!!.trim(), password!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({

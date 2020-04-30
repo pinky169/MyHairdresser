@@ -4,13 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.widget.Toast
 import es.dmoral.toasty.Toasty
-import pl.patryk.myhairdresser.FirebaseApplication
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.ui.admin.AdminActivity
-import pl.patryk.myhairdresser.ui.appointments.UserAppointmentsActivity
+import pl.patryk.myhairdresser.ui.appointments.registration.AppointmentRegistrationActivity
+import pl.patryk.myhairdresser.ui.appointments.user.UserAppointmentsActivity
 import pl.patryk.myhairdresser.ui.auth.LoginActivity
 import pl.patryk.myhairdresser.ui.auth.SignUpActivity
 import pl.patryk.myhairdresser.ui.profile.UserProfileActivity
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun Context.startUserProfileActivity() =
         Intent(this, UserProfileActivity::class.java).also {
@@ -41,9 +43,28 @@ fun Context.startUserAppointmentsActivity() =
             startActivity(it)
         }
 
-fun changeDateFormatting(dateToFormat: String): String {
+fun Context.startAppointmentRegistrationActivity() =
+        Intent(this, AppointmentRegistrationActivity::class.java).also {
+            startActivity(it)
+        }
 
-    val date = FirebaseApplication().databaseFormatter.parse(dateToFormat)
+fun changeToUserReadableFormatting(dateToFormat: String): String {
 
-    return FirebaseApplication().generalFormatter.format(date)
+    val date = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).parse(dateToFormat)
+
+    return SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault()).format(date)
+}
+
+fun changeToDatabaseFormatting(dateToFormat: String): String {
+
+    val date = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault()).parse(dateToFormat)
+
+    return SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).format(date)
+}
+
+fun changeFormatting(dateToFormat: String): String {
+
+    val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dateToFormat)
+
+    return SimpleDateFormat("yyyy.MM.dd", Locale.getDefault()).format(date)
 }

@@ -1,5 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <string name="hairdresser_phone_number">123 456 780</string>
+
+    <string-array name="services">
+        <item>Strzyżenie damskie</item>
+        <item>Strzyżenie męskie</item>
+        <item>Strzyżenie dzieci</item>
+        <item>Farbowanie</item>
+        <item>Strzyżenie i stylizacja</item>
+        <item>Balejaż</item>
+        <item>Upięcie włosów</item>
+        <item>Zabieg pielęgnacyjno-regenerujący</item>
+        <item>Podcięcie grzywki</item>
+        <item>Ombre / Sombre</item>
+        <item>Trwała ondulacja</item>
+        <item>Loki</item>
+        <item>Upięcie ślubne</item>
+    </string-array>
+
+    <string-array name="services_prices">
+        <item>50–80 zł</item>
+        <item>35–55 zł</item>
+        <item>30–50 zł</item>
+        <item>150–250 zł</item>
+        <item>55–120 zł</item>
+        <item>150–400 zł</item>
+        <item>90–150 zł</item>
+        <item>80–120 zł</item>
+        <item>15 zł</item>
+        <item>180–300 zł</item>
+        <item>100–130 zł</item>
+        <item>60–120 zł</item>
+        <item>100–200 zł</item>
+    </string-array>
+
     <string name="app_name">Salon Doris</string>
     <string name="email_label">Email</string>
     <string name="password_label">Hasło</string>
@@ -42,7 +77,7 @@
     <string name="no_internet_connection">Brak połączenia z internetem</string>
     <string name="register">Umów\nwizytę</string>
     <string name="estimated_price">Szacowana cena:</string>
-    <string name="dialog_text_button_positive">Umów</string>
+    <string name="dialog_text_button_positive">Wybierz</string>
     <string name="dialog_text_button_negative">Anuluj</string>
     <string name="appointment_registered_successfully">Zostałeś umówiony na %1$s w dniu %2$s</string>
     <string name="appointment_dialog_message">Wybierz rodzaj usługi. W kolejnym kroku zostaniesz poproszony/a o podanie terminu planowanej wizyty.</string>
@@ -73,39 +108,14 @@
     <string name="section_header_rejected">ODRZUCONE</string>
     <string name="snack_bar_warning_txt">Uzupełnij swoje dane, aby móc zarejestrowac wizytę!</string>
     <string name="appointment_notifications_channel_id">appointments_channel_id</string>
-
-    <string name="hairdresser_phone_number">123 456 780</string>
-
-    <string-array name="services">
-        <item>Strzyżenie damskie</item>
-        <item>Strzyżenie męskie</item>
-        <item>Strzyżenie dzieci</item>
-        <item>Farbowanie</item>
-        <item>Strzyżenie i stylizacja</item>
-        <item>Balejaż</item>
-        <item>Upięcie włosów</item>
-        <item>Zabieg pielęgnacyjno-regenerujący</item>
-        <item>Podcięcie grzywki</item>
-        <item>Ombre / Sombre</item>
-        <item>Trwała ondulacja</item>
-        <item>Loki</item>
-        <item>Upięcie ślubne</item>
-    </string-array>
-
-    <string-array name="services_prices">
-        <item>50–80 zł</item>
-        <item>35–55 zł</item>
-        <item>30–50 zł</item>
-        <item>150–250 zł</item>
-        <item>55–120 zł</item>
-        <item>150–400 zł</item>
-        <item>90–150 zł</item>
-        <item>80–120 zł</item>
-        <item>15 zł</item>
-        <item>180–300 zł</item>
-        <item>100–130 zł</item>
-        <item>60–120 zł</item>
-        <item>100–200 zł</item>
-    </string-array>
+    <string name="step_service_title">Wybierz usługę</string>
+    <string name="step_date_title">Wybierz dzień wizyty</string>
+    <string name="stepper_form_button_next_text">DALEJ</string>
+    <string name="stepper_form_confirmation_button_text">Potwierdź</string>
+    <string name="stepper_last_step_cancel_button_text">ANULUJ</string>
+    <string name="stepper_form_last_step_next_button_text">UMÓW</string>
+    <string name="step_hour_title">Wybierz dostępną godzinę</string>
+    <string name="step_hour_available_label_text">Dostępna</string>
+    <string name="step_hour_not_available_label_text">Zajęta</string>
 
 </resources>
