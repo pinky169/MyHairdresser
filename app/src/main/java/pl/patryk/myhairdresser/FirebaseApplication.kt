@@ -24,6 +24,8 @@ class FirebaseApplication : Application(), KodeinAware {
 
         import(androidXModule(this@FirebaseApplication))
 
+        FirebaseDatabaseHelper().database.setPersistenceEnabled(true)
+
         bind() from singleton { FirebaseAuthHelper() }
         bind() from singleton { FirebaseDatabaseHelper() }
         bind() from singleton { FirebaseStorageHelper() }

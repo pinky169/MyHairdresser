@@ -26,6 +26,7 @@
             android:parentActivityName=".ui.auth.LoginActivity" />
         <activity
             android:name=".ui.profile.UserProfileActivity"
+            android:launchMode="singleTop"
             android:theme="@style/NoActionBar" />
         <activity
             android:name=".ui.appointments.user.UserAppointmentsActivity"

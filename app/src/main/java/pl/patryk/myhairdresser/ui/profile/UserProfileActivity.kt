@@ -161,13 +161,18 @@ class UserProfileActivity : AppCompatActivity(), UserListener, KodeinAware {
         return true
     }
 
+    private fun stopListeningAndLogout() {
+        viewModel.userReference.removeEventListener(viewModel.valueEventListener)
+        viewModel.logout()
+        finish()
+        startLoginActivity()
+        Toasty.info(this, getString(R.string.log_out_confirmation), Toast.LENGTH_LONG).show()
+    }
+
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_logout -> {
-                viewModel.logout()
-                finish()
-                startLoginActivity()
-                Toasty.info(this, getString(R.string.log_out_confirmation), Toast.LENGTH_LONG).show()
+                stopListeningAndLogout()
             }
         }
         return true

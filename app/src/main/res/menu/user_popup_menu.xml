@@ -10,6 +10,6 @@
     <item
         android:id="@+id/menu_remove"
         android:orderInCategory="101"
-        android:title="@string/menu_appointment_remove_txt" />
+        android:title="@string/menu_appointment_cancel_txt" />
 
 </menu>

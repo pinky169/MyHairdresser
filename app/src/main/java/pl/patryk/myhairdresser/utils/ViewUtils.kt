@@ -50,19 +50,26 @@ fun Context.startAppointmentRegistrationActivity() =
 
 fun changeToUserReadableFormatting(dateToFormat: String): String {
 
-    val date = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).parse(dateToFormat)
+    val date = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault()).parse(dateToFormat)
 
-    return SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault()).format(date)
+    return SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(date)
 }
 
 fun changeToDatabaseFormatting(dateToFormat: String): String {
 
-    val date = SimpleDateFormat("dd MMM yyyy HH:mm", Locale.getDefault()).parse(dateToFormat)
+    val date = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).parse(dateToFormat)
 
-    return SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.getDefault()).format(date)
+    return SimpleDateFormat("yyyy.MM.dd", Locale.getDefault()).format(date)
 }
 
-fun changeFormatting(dateToFormat: String): String {
+fun changeToQueryFormatting(dateToFormat: String): String {
+
+    val date = SimpleDateFormat("yyyy.MM.dd", Locale.getDefault()).parse(dateToFormat)
+
+    return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+}
+
+fun changeBackFromQueryFormatting(dateToFormat: String): String {
 
     val date = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(dateToFormat)
 

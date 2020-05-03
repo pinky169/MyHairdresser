@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,11 +18,10 @@ import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.Appointment
 import pl.patryk.myhairdresser.data.model.AppointmentDate
-import pl.patryk.myhairdresser.data.model.User
 import pl.patryk.myhairdresser.ui.appointments.registration.steps.StepDate
 import pl.patryk.myhairdresser.ui.appointments.registration.steps.StepHour
 import pl.patryk.myhairdresser.ui.appointments.registration.steps.StepService
-import pl.patryk.myhairdresser.utils.changeFormatting
+import pl.patryk.myhairdresser.utils.changeBackFromQueryFormatting
 import pl.patryk.myhairdresser.utils.changeToUserReadableFormatting
 
 class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener, KodeinAware {
@@ -30,6 +30,9 @@ class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener
     private val factory: AppointmentRegistrationViewModelFactory by instance()
     private lateinit var viewModel: AppointmentRegistrationViewModel
     private lateinit var appointment: Appointment
+    private lateinit var serviceStep: StepService
+    private lateinit var dateStep: StepDate
+    private lateinit var hourStep: StepHour
     private var selectedDate: String? = null
     private var selectedService: String? = null
     private var selectedHour: String? = null
@@ -44,17 +47,18 @@ class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener
         viewModel = ViewModelProvider(this, factory).get(AppointmentRegistrationViewModel::class.java)
 
         initViews()
-        loadUser()
+        observeUser(viewModel)
     }
 
     private fun initViews() {
 
-        val serviceStep = StepService(getString(R.string.step_service_title))
-        val dateStep = StepDate(getString(R.string.step_date_title))
-        val hourStep = StepHour(getString(R.string.step_hour_title))
+        serviceStep = StepService(getString(R.string.step_service_title))
+        dateStep = StepDate(getString(R.string.step_date_title))
+        hourStep = StepHour(getString(R.string.step_hour_title))
 
         stepper_form
                 .setup(this, serviceStep, dateStep, hourStep)
+                .allowNonLinearNavigation(false)
                 .displayBottomNavigation(false)
                 .stepNextButtonText(getString(R.string.stepper_form_button_next_text))
                 .displayCancelButtonInLastStep(true)
@@ -66,29 +70,18 @@ class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener
 
     override fun onCompletedForm() {
         registerAppointment()
-        finish()
     }
 
     override fun onCancelledForm() {
         finish()
     }
 
-    // Load current user details needed for appointment
-    private fun loadUser() {
-
-        userID = viewModel.userId
-
-        viewModel.userReference.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                if (dataSnapshot.exists()) {
-                    val user = dataSnapshot.getValue(User::class.java)!!
-                    name = getString(R.string.name_and_surname, user.name, user.surname)
-                    phone = user.phone
-                }
-            }
-
-            override fun onCancelled(databaseError: DatabaseError) {}
+    // Loads user realtime data from firebase database into views
+    private fun observeUser(viewModel: AppointmentRegistrationViewModel) {
+        viewModel.getUser().observe(this, Observer { user ->
+            userID = viewModel.userId
+            name = getString(R.string.name_and_surname, user.name, user.surname)
+            phone = user.phone
         })
     }
 
@@ -99,22 +92,20 @@ class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener
         selectedDate = sharedPreferences.getString("selectedDate", null)
         selectedHour = sharedPreferences.getString("selectedHour", null)
 
-        val date = "${changeFormatting(selectedDate!!)} $selectedHour"
-
-        bookNewAppointment(userID!!, selectedService!!, date)
+        bookADate(selectedDate!!, selectedHour!!)
     }
 
-    private fun bookNewAppointment(user_id: String, service: String, date: String) {
+    private fun bookNewAppointment() {
 
-        val newAppointmentReference = viewModel.getUserAppointmentsReference(user_id).push()
+        val newAppointmentReference = viewModel.getUserAppointmentsReference(userID!!).push()
         val appointmentID = newAppointmentReference.key!!
 
-        appointment = Appointment(user_id, name, phone, appointmentID, service, date, Appointment.VERIFICATION_STATE_PENDING)
+        val formattedDate = changeBackFromQueryFormatting(selectedDate!!)
+
+        appointment = Appointment(userID!!, name, phone, appointmentID, selectedService!!, formattedDate, selectedHour!!, Appointment.VERIFICATION_STATE_PENDING)
         newAppointmentReference.setValue(appointment)
 
-        bookADate(selectedDate!!, selectedHour!!)
-
-        Toasty.success(this, getString(R.string.appointment_registered_successfully, service, changeToUserReadableFormatting(date)), Toast.LENGTH_LONG).show()
+        Toasty.success(this, getString(R.string.appointment_registered_successfully, selectedService, changeToUserReadableFormatting(formattedDate), selectedHour), Toast.LENGTH_LONG).show()
     }
 
     private fun bookADate(date: String, time: String) {
@@ -123,15 +114,35 @@ class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener
 
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (childSnapshot in snapshot.children) {
+
                     val appointmentDate = childSnapshot.getValue(AppointmentDate::class.java)!!
 
                     if (appointmentDate.time == time) {
-                        val appointmentDateKey = childSnapshot.key!!
-                        val updatedAppointmentDate = AppointmentDate(date, time, false)
-                        viewModel.bookADate(date, appointmentDateKey, updatedAppointmentDate)
+                        if (appointmentDate.availability) {
+                            val appointmentDateKey = childSnapshot.key!!
+                            val updatedAppointmentDate = AppointmentDate(date, time, false)
+                            viewModel.bookADate(date, appointmentDateKey, updatedAppointmentDate)
+                            bookNewAppointment()
+                            finish()
+                        } else {
+                            Toasty.warning(applicationContext, getString(R.string.book_appointment_date_not_available_message), Toast.LENGTH_LONG).show()
+                            stepper_form.cancelFormCompletionOrCancellationAttempt()
+                        }
                     }
                 }
             }
         })
+    }
+
+    private fun cleanListeners() {
+        if (hourStep.dateReference != null) {
+            hourStep.dateReference!!.keepSynced(false)
+            hourStep.dateReference!!.removeEventListener(hourStep.childEventListener)
+        }
+    }
+
+    override fun onDestroy() {
+        cleanListeners()
+        super.onDestroy()
     }
 }

@@ -136,8 +136,8 @@ class AuthViewModel(private val repository: UserRepository) : ViewModel() {
 
     //disposing the disposables
     override fun onCleared() {
-        super.onCleared()
         disposables.dispose()
+        super.onCleared()
     }
 
 }

@@ -80,4 +80,6 @@ class FirebaseDatabaseHelper {
     fun insertAppointmentDate(date: String, appointmentDate: AppointmentDate) = appointmentDates.child(date).push().setValue(appointmentDate)
 
     fun bookADate(date: String, key: String, appointmentDate: AppointmentDate) = appointmentDates.child(date).child(key).updateChildren(appointmentDate.toMap())
+
+    fun cancelBooking(date: String, key: String, appointmentDate: AppointmentDate) = appointmentDates.child(date).child(key).updateChildren(appointmentDate.toMap())
 }

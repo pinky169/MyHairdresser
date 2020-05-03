@@ -18,7 +18,7 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
     var userListener: UserListener? = null
     val user by lazy { repository.currentUser() }
     val userId by lazy { repository.currentUserId() }
-    private val userReference by lazy { repository.getUserReference(userId!!) }
+    val userReference by lazy { repository.getUserReference(userId!!) }
     private val storageReference by lazy { repository.getStorageReference() }
 
     /**
@@ -39,25 +39,28 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
         return userLiveData
     }
 
+    val valueEventListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            if (dataSnapshot.exists()) {
+                val user: User = dataSnapshot.getValue(User::class.java)!!
+                userLiveData.postValue(user)
+                userListener?.onSuccess()
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            userListener?.onCanceled()
+        }
+    }
+
     /**
      * Loads user's data from firebase database into LivaData data holder.
      */
     private fun loadUser() {
         userListener?.onStarted()
-        // If any value in db for the user changes, load new content
-        userReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    val user: User = dataSnapshot.getValue(User::class.java)!!
-                    userLiveData.postValue(user)
-                    userListener?.onSuccess()
-                }
-            }
 
-            override fun onCancelled(databaseError: DatabaseError) {
-                userListener?.onCanceled()
-            }
-        })
+        // If any value in db for the user changes, load new content
+        userReference.addValueEventListener(valueEventListener)
     }
 
     /**
@@ -118,4 +121,9 @@ class UserProfileViewModel(private val repository: UserRepository) : ViewModel()
      * Use to insert user's device token into database.
      */
     fun insertToken(uid: String, token: String) = repository.insertToken(uid, token)
+
+    override fun onCleared() {
+        userReference.removeEventListener(valueEventListener)
+        super.onCleared()
+    }
 }

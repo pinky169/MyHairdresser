@@ -21,11 +21,10 @@ class StepHour(stepTitle: String) : Step<String>(stepTitle), OnHourClickedListen
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var recyclerAdapter: StepDateAdapter
     private lateinit var allDates: ArrayList<AppointmentDate>
-    private lateinit var dateReference: DatabaseReference
-    private lateinit var childEventListener: ChildEventListener
     private val dbHelper: FirebaseDatabaseHelper = FirebaseDatabaseHelper()
     private var selectedHour: String = ""
     private var selectedDate: String? = null
+    var dateReference: DatabaseReference? = null
 
     override fun restoreStepData(data: String?) {
         selectedHour = data!!
@@ -40,6 +39,7 @@ class StepHour(stepTitle: String) : Step<String>(stepTitle), OnHourClickedListen
     }
 
     override fun onStepMarkedAsCompleted(animated: Boolean) {
+        dateReference!!.removeEventListener(childEventListener)
     }
 
     override fun getStepDataAsHumanReadableString(): String {
@@ -64,9 +64,16 @@ class StepHour(stepTitle: String) : Step<String>(stepTitle), OnHourClickedListen
 
     private fun getAppointmentDatesFromDatabase(selectedDate: String) {
 
+        // Reference to selected date
         dateReference = dbHelper.getAvailableHoursFromDayReference(selectedDate)
 
-        dateReference.addListenerForSingleValueEvent(object : ValueEventListener {
+        // Keep it synced to make sure that users see
+        // fresh list of available hours for that date
+        dateReference!!.keepSynced(true)
+
+        // Listen once to check if specific date node exists, if it doesn't exist
+        // the node is being created with all available hours
+        dateReference!!.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onCancelled(snapshot: DatabaseError) {}
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -76,25 +83,34 @@ class StepHour(stepTitle: String) : Step<String>(stepTitle), OnHourClickedListen
             }
         })
 
-        childEventListener = dateReference.addChildEventListener(object : ChildEventListener {
-            override fun onCancelled(snapshot: DatabaseError) {}
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                if (snapshot.exists()) {
-                    val appointmentHour = snapshot.getValue(AppointmentDate::class.java)!!
-                    allDates.add(appointmentHour)
-                }
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {}
-        })
+        // Listen for new children in a specific date node.
+        // All the children are stored into allDates arrayList
+        // and then submitted to adapter
+        dateReference!!.addChildEventListener(childEventListener)
 
         recyclerAdapter.submitList(allDates)
+
+        // Marks the step as completed or uncompleted depending
+        // on whether the step data is valid or not.
+        // It should be called every time the step data changes.
         markAsCompletedOrUncompleted(true)
+    }
+
+    val childEventListener: ChildEventListener = object : ChildEventListener {
+        override fun onCancelled(snapshot: DatabaseError) {}
+
+        override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+
+        override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+
+        override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+            if (snapshot.exists()) {
+                val appointmentHour = snapshot.getValue(AppointmentDate::class.java)!!
+                allDates.add(appointmentHour)
+            }
+        }
+
+        override fun onChildRemoved(snapshot: DataSnapshot) {}
     }
 
     private fun generateDateData(date: String): List<AppointmentDate> {
@@ -123,7 +139,8 @@ class StepHour(stepTitle: String) : Step<String>(stepTitle), OnHourClickedListen
     override fun onStepMarkedAsUncompleted(animated: Boolean) {}
 
     override fun onStepClosed(animated: Boolean) {
-        dateReference.removeEventListener(childEventListener)
+        dateReference!!.keepSynced(false)
+        dateReference!!.removeEventListener(childEventListener)
     }
 
     override fun onItemClicked(appointmentDate: AppointmentDate) {
@@ -131,5 +148,4 @@ class StepHour(stepTitle: String) : Step<String>(stepTitle), OnHourClickedListen
         sharedPreferences.edit().putString("selectedHour", selectedHour).commit()
         markAsCompleted(true)
     }
-
 }

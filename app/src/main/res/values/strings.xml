@@ -78,7 +78,7 @@
     <string name="estimated_price">Estimated price:</string>
     <string name="dialog_text_button_positive">Select</string>
     <string name="dialog_text_button_negative">Cancel</string>
-    <string name="appointment_registered_successfully">You have been appointed for %1$s at %2$s</string>
+    <string name="appointment_registered_successfully">You have been appointed for %1$s on %2$s at %3$s</string>
     <string name="appointment_dialog_message">Please select type of a service. In the next step you will be asked for the date of your appointment.</string>
     <string name="type_of_service_label">Type of service:</string>
     <string name="name_and_surname">%1$s %2$s</string>
@@ -100,7 +100,6 @@
     <string name="button_appointments_txt">Appointments</string>
     <string name="no_appointments_textview_message">No appointments</string>
     <string name="menu_phone_call">Call</string>
-    <string name="menu_appointment_remove_txt">Delete %1$s</string>
     <string name="menu_appointment_cancel_txt">Cancel %1$s</string>
     <string name="section_header_pending">PENDING</string>
     <string name="section_header_approved">APPROVED</string>
@@ -116,5 +115,6 @@
     <string name="stepper_form_confirmation_button_text">Confirm</string>
     <string name="step_hour_available_label_text">Available</string>
     <string name="step_hour_not_available_label_text">Not available</string>
+    <string name="book_appointment_date_not_available_message">This date is already booked by someone else. Please choose another day or time.</string>
 
 </resources>

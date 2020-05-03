@@ -31,7 +31,7 @@ class AppointmentAdapter : ListAdapter<Appointment, AppointmentAdapter.ViewHolde
         fun bind(appointment: Appointment) {
 
             person.text = appointment.name
-            date.text = changeToUserReadableFormatting(appointment.date)
+            date.text = "${changeToUserReadableFormatting(appointment.date)} ${appointment.time}"
             service.text = appointment.service
             phone.text = appointment.phone
 

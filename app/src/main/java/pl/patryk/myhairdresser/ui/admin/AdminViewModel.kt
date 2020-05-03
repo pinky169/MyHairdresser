@@ -14,7 +14,7 @@ import java.util.*
 
 class AdminViewModel(private val repository: UserRepository) : ViewModel() {
 
-    private val appointmentsReference: DatabaseReference by lazy { repository.getAppointmentsReference() }
+    val appointmentsReference: DatabaseReference by lazy { repository.getAppointmentsReference() }
 
     /**
      * Contains information about all appointments split into sections.
@@ -38,46 +38,50 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
      * Loads all appointments data from firebase database into LivaData data holder.
      */
     private fun loadAppointments() {
+        appointmentsReference.addValueEventListener(valueEventListener)
+    }
 
-        appointmentsReference.addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(error: DatabaseError) {}
+    /**
+     * Listener set at appointments location
+     */
+    val valueEventListener = object : ValueEventListener {
+        override fun onCancelled(error: DatabaseError) {}
 
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                // dataSnapshot -> root/appointments -> List of appointments
-                if (dataSnapshot.exists()) {
+            // dataSnapshot -> root/appointments -> List of appointments
+            if (dataSnapshot.exists()) {
 
-                    val pendingAppointments: ArrayList<Appointment> = arrayListOf()
-                    val approvedAppointments: ArrayList<Appointment> = arrayListOf()
-                    val rejectedAppointments: ArrayList<Appointment> = arrayListOf()
-                    val sections: ArrayList<AppointmentSection> = arrayListOf()
+                val pendingAppointments: ArrayList<Appointment> = arrayListOf()
+                val approvedAppointments: ArrayList<Appointment> = arrayListOf()
+                val rejectedAppointments: ArrayList<Appointment> = arrayListOf()
+                val sections: ArrayList<AppointmentSection> = arrayListOf()
 
-                    // userSnapshot -> root/appointments/user_id -> User node with list of appointments
-                    for (userSnapshot in dataSnapshot.children) {
+                // userSnapshot -> root/appointments/user_id -> User node with list of appointments
+                for (userSnapshot in dataSnapshot.children) {
 
-                        // appointmentSnapshot -> root/appointments/user_id/appointment_id -> Appointment object
-                        for (appointmentSnapshot in userSnapshot.children) {
+                    // appointmentSnapshot -> root/appointments/user_id/appointment_id -> Appointment object
+                    for (appointmentSnapshot in userSnapshot.children) {
 
-                            // users/appointments/{current-appointment}
-                            val appointment: Appointment = appointmentSnapshot.getValue(Appointment::class.java)!!
+                        // users/appointments/{current-appointment}
+                        val appointment: Appointment = appointmentSnapshot.getValue(Appointment::class.java)!!
 
-                            when (appointment.verification_state) {
-                                Appointment.VERIFICATION_STATE_PENDING -> pendingAppointments.add(appointment)
-                                Appointment.VERIFICATION_STATE_APPROVED -> approvedAppointments.add(appointment)
-                                Appointment.VERIFICATION_STATE_REJECTED -> rejectedAppointments.add(appointment)
+                        when (appointment.verification_state) {
+                            Appointment.VERIFICATION_STATE_PENDING -> pendingAppointments.add(appointment)
+                            Appointment.VERIFICATION_STATE_APPROVED -> approvedAppointments.add(appointment)
+                            Appointment.VERIFICATION_STATE_REJECTED -> rejectedAppointments.add(appointment)
 
-                            }
                         }
                     }
-
-                    sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_PENDING, pendingAppointments))
-                    sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_APPROVED, approvedAppointments))
-                    sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_REJECTED, rejectedAppointments))
-
-                    liveAppointments.postValue(sections)
                 }
+
+                sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_PENDING, pendingAppointments))
+                sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_APPROVED, approvedAppointments))
+                sections.add(AppointmentSection(Appointment.VERIFICATION_STATE_REJECTED, rejectedAppointments))
+
+                liveAppointments.postValue(sections)
             }
-        })
+        }
     }
 
     /**
@@ -95,4 +99,9 @@ class AdminViewModel(private val repository: UserRepository) : ViewModel() {
      * Use to log out the user
      */
     fun logout() = repository.logout()
+
+    override fun onCleared() {
+        appointmentsReference.removeEventListener(valueEventListener)
+        super.onCleared()
+    }
 }

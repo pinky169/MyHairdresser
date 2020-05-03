@@ -6,6 +6,7 @@ data class Appointment(var userID: String = "",
                        var appointmentID: String = "",
                        var service: String = "",
                        var date: String = "",
+                       var time: String = "",
                        var verification_state: String = VERIFICATION_STATE_IDLE) {
 
     companion object {
@@ -26,6 +27,7 @@ data class Appointment(var userID: String = "",
         result["appointmentID"] = appointmentID
         result["service"] = service
         result["date"] = date
+        result["time"] = time
         result["verification_state"] = verification_state
         return result
     }

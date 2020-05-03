@@ -79,7 +79,7 @@
     <string name="estimated_price">Szacowana cena:</string>
     <string name="dialog_text_button_positive">Wybierz</string>
     <string name="dialog_text_button_negative">Anuluj</string>
-    <string name="appointment_registered_successfully">Zostałeś umówiony na %1$s w dniu %2$s</string>
+    <string name="appointment_registered_successfully">Zostałeś umówiony na %1$s w dniu %2$s o godzinie %3$s</string>
     <string name="appointment_dialog_message">Wybierz rodzaj usługi. W kolejnym kroku zostaniesz poproszony/a o podanie terminu planowanej wizyty.</string>
     <string name="type_of_service_label">Rodzaj planowanej usługi:</string>
     <string name="name_and_surname">%1$s %2$s</string>
@@ -101,7 +101,6 @@
     <string name="button_appointments_txt">Wizyty</string>
     <string name="no_appointments_textview_message">Brak umówionych wizyt</string>
     <string name="menu_phone_call">Zadzwoń</string>
-    <string name="menu_appointment_remove_txt">Usuń %1$s</string>
     <string name="menu_appointment_cancel_txt">Anuluj %1$s</string>
     <string name="section_header_pending">OCZEKUJĄCE</string>
     <string name="section_header_approved">ZATWIERDZONE</string>
@@ -117,5 +116,6 @@
     <string name="step_hour_title">Wybierz dostępną godzinę</string>
     <string name="step_hour_available_label_text">Dostępna</string>
     <string name="step_hour_not_available_label_text">Zajęta</string>
+    <string name="book_appointment_date_not_available_message">Ten termin jest już zarezerwowany. Wybierz inny dzień lub godzinę.</string>
 
 </resources>

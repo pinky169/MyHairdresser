@@ -10,6 +10,9 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.user_appointments_layout.*
 import org.kodein.di.KodeinAware
@@ -17,7 +20,9 @@ import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import pl.patryk.myhairdresser.R
 import pl.patryk.myhairdresser.data.model.Appointment
+import pl.patryk.myhairdresser.data.model.AppointmentDate
 import pl.patryk.myhairdresser.utils.PopupMenuListener
+import pl.patryk.myhairdresser.utils.changeToQueryFormatting
 import java.util.*
 
 class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinAware {
@@ -69,10 +74,7 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
         popup.inflate(R.menu.user_popup_menu)
 
         // Setting title for a 2nd item in menu
-        if (appointment.verification_state == Appointment.VERIFICATION_STATE_PENDING)
-            popup.menu.getItem(1).title = getString(R.string.menu_appointment_cancel_txt, appointment.service.decapitalize(Locale.getDefault()))
-        else
-            popup.menu.getItem(1).title = getString(R.string.menu_appointment_remove_txt, appointment.service.decapitalize(Locale.getDefault()))
+        popup.menu.getItem(1).title = getString(R.string.menu_appointment_cancel_txt, appointment.service.decapitalize(Locale.getDefault()))
 
         // Showing call button when the appointment has been rejected
         if (appointment.verification_state == Appointment.VERIFICATION_STATE_REJECTED) {
@@ -83,6 +85,7 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.menu_remove -> {
+                    cancelBooking(changeToQueryFormatting(appointment.date), appointment.time)
                     viewModel.deleteAppointment(appointment.userID, appointment)
                     Toasty.success(this, getString(R.string.appointment_deleted_toast, appointment.service), Toast.LENGTH_LONG).show()
                     true
@@ -106,5 +109,24 @@ class UserAppointmentsActivity : AppCompatActivity(), PopupMenuListener, KodeinA
         } else {
             empty_view.visibility = View.GONE
         }
+    }
+
+    private fun cancelBooking(date: String, time: String) {
+        viewModel.getAvailableHoursFromDayReference(date).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {}
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (childSnapshot in snapshot.children) {
+                    val appointmentDate = childSnapshot.getValue(AppointmentDate::class.java)!!
+
+                    if (appointmentDate.time == time && !appointmentDate.availability) {
+                        val appointmentDateKey = childSnapshot.key!!
+                        val updatedAppointmentDate = AppointmentDate(date, time, true)
+
+                        viewModel.cancelBooking(date, appointmentDateKey, updatedAppointmentDate)
+                    }
+                }
+            }
+        })
     }
 }

@@ -55,7 +55,7 @@ class UserAppointmentsAdapter : ListAdapter<Appointment, UserAppointmentsAdapter
 
         private fun setAppointmentDate(appointment: Appointment) {
 
-            val dateTimeToDisplay = changeToUserReadableFormatting(appointment.date)
+            val dateTimeToDisplay = "${changeToUserReadableFormatting(appointment.date)} ${appointment.time}"
 
             when (appointment.verification_state) {
                 Appointment.VERIFICATION_STATE_PENDING -> date.text = dateTimeToDisplay

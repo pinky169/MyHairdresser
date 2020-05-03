@@ -47,4 +47,6 @@ class UserRepository(private val firebase: FirebaseAuthHelper, private val fireb
     fun getAvailableHoursFromDayReference(date: String) = firebaseDB.getAvailableHoursFromDayReference(date)
 
     fun bookADate(date: String, key: String, appointmentDate: AppointmentDate) = firebaseDB.bookADate(date, key, appointmentDate)
+
+    fun cancelBooking(date: String, key: String, appointmentDate: AppointmentDate) = firebaseDB.cancelBooking(date, key, appointmentDate)
 }
