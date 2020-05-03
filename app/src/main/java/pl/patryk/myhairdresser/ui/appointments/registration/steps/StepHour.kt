@@ -39,7 +39,10 @@ class StepHour(stepTitle: String) : Step<String>(stepTitle), OnHourClickedListen
     }
 
     override fun onStepMarkedAsCompleted(animated: Boolean) {
-        dateReference!!.removeEventListener(childEventListener)
+        if (dateReference != null) {
+            dateReference!!.keepSynced(false)
+            dateReference!!.removeEventListener(childEventListener)
+        }
     }
 
     override fun getStepDataAsHumanReadableString(): String {
@@ -139,8 +142,10 @@ class StepHour(stepTitle: String) : Step<String>(stepTitle), OnHourClickedListen
     override fun onStepMarkedAsUncompleted(animated: Boolean) {}
 
     override fun onStepClosed(animated: Boolean) {
-        dateReference!!.keepSynced(false)
-        dateReference!!.removeEventListener(childEventListener)
+        if (dateReference != null) {
+            dateReference!!.keepSynced(false)
+            dateReference!!.removeEventListener(childEventListener)
+        }
     }
 
     override fun onItemClicked(appointmentDate: AppointmentDate) {

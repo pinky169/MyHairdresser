@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hairdresser_phone_number">123 456 780</string>
+    <string name="hairdresser_phone_number">601 685 806</string>
 
     <string-array name="services">
         <item>Strzyżenie damskie</item>
@@ -96,7 +96,7 @@
     <string name="toolbar_title_welcome_text">Witaj %1$s!</string>
     <string name="appointment_state_pending">Ta wizyta oczekuje na zatwierdzenie</string>
     <string name="appointment_state_approved">Ta wizyta została zaakceptowana</string>
-    <string name="appointment_state_rejected">Ta wizyta została odrzucona.\nUmów się ponownie na inny termin lub skontaktuj telefonicznie pod numerem: 123 456 780</string>
+    <string name="appointment_state_rejected">Ta wizyta została odrzucona.\nUmów się ponownie na inny termin lub skontaktuj telefonicznie pod numerem: 601 685 806</string>
     <string name="user_appointment_activity_title">Twoje wizyty</string>
     <string name="button_appointments_txt">Wizyty</string>
     <string name="no_appointments_textview_message">Brak umówionych wizyt</string>
@@ -105,7 +105,7 @@
     <string name="section_header_pending">OCZEKUJĄCE</string>
     <string name="section_header_approved">ZATWIERDZONE</string>
     <string name="section_header_rejected">ODRZUCONE</string>
-    <string name="snack_bar_warning_txt">Uzupełnij swoje dane, aby móc zarejestrowac wizytę!</string>
+    <string name="insufficient_registration_data_toast_warning_txt">Uzupełnij swoje dane, aby móc zarejestrowac wizytę!</string>
     <string name="appointment_notifications_channel_id">appointments_channel_id</string>
     <string name="step_service_title">Wybierz usługę</string>
     <string name="step_date_title">Wybierz dzień wizyty</string>

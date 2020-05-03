@@ -37,6 +37,8 @@ class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener
     private var selectedService: String? = null
     private var selectedHour: String? = null
     private var name: String = ""
+    private var surname: String = ""
+    private var fullName: String = ""
     private var phone: String = ""
     private var userID: String? = null
 
@@ -80,19 +82,29 @@ class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener
     private fun observeUser(viewModel: AppointmentRegistrationViewModel) {
         viewModel.getUser().observe(this, Observer { user ->
             userID = viewModel.userId
-            name = getString(R.string.name_and_surname, user.name, user.surname)
+            name = user.name
+            surname = user.surname
+            fullName = getString(R.string.name_and_surname, name, surname)
             phone = user.phone
         })
     }
 
     private fun registerAppointment() {
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        selectedService = sharedPreferences.getString("selectedService", null)
-        selectedDate = sharedPreferences.getString("selectedDate", null)
-        selectedHour = sharedPreferences.getString("selectedHour", null)
+        if (name.isNotBlank() && surname.isNotBlank() && phone.isNotBlank()) {
 
-        bookADate(selectedDate!!, selectedHour!!)
+            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+            selectedService = sharedPreferences.getString("selectedService", null)
+            selectedDate = sharedPreferences.getString("selectedDate", null)
+            selectedHour = sharedPreferences.getString("selectedHour", null)
+
+            bookADate(selectedDate!!, selectedHour!!)
+
+        } else {
+
+            Toasty.warning(this, getString(R.string.insufficient_registration_data_toast_warning_txt), Toast.LENGTH_LONG).show()
+            stepper_form.cancelFormCompletionOrCancellationAttempt()
+        }
     }
 
     private fun bookNewAppointment() {
@@ -102,7 +114,7 @@ class AppointmentRegistrationActivity : AppCompatActivity(), StepperFormListener
 
         val formattedDate = changeBackFromQueryFormatting(selectedDate!!)
 
-        appointment = Appointment(userID!!, name, phone, appointmentID, selectedService!!, formattedDate, selectedHour!!, Appointment.VERIFICATION_STATE_PENDING)
+        appointment = Appointment(userID!!, fullName, phone, appointmentID, selectedService!!, formattedDate, selectedHour!!, Appointment.VERIFICATION_STATE_PENDING)
         newAppointmentReference.setValue(appointment)
 
         Toasty.success(this, getString(R.string.appointment_registered_successfully, selectedService, changeToUserReadableFormatting(formattedDate), selectedHour), Toast.LENGTH_LONG).show()

@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="hairdresser_phone_number">123 456 780</string>
+    <string name="hairdresser_phone_number">601 685 806</string>
 
     <string-array name="services">
         <item>Women\'s haircut</item>
@@ -95,7 +95,7 @@
     <string name="toolbar_title_welcome_text">Welcome %1$s!</string>
     <string name="appointment_state_pending">This appointment is pending approval</string>
     <string name="appointment_state_approved">This appointment has been accepted</string>
-    <string name="appointment_state_rejected">This appointment has been rejected.\nPlease make a new one for another date or hour or contact by phone: 123 456 780</string>
+    <string name="appointment_state_rejected">This appointment has been rejected.\nPlease make a new one for another date or hour or contact by phone: 601 685 806</string>
     <string name="user_appointment_activity_title">Appointments</string>
     <string name="button_appointments_txt">Appointments</string>
     <string name="no_appointments_textview_message">No appointments</string>
@@ -104,7 +104,7 @@
     <string name="section_header_pending">PENDING</string>
     <string name="section_header_approved">APPROVED</string>
     <string name="section_header_rejected">REJECTED</string>
-    <string name="snack_bar_warning_txt">Please complete your personal details to be able to make an appointment!</string>
+    <string name="insufficient_registration_data_toast_warning_txt">Please complete your personal details to be able to make an appointment!</string>
     <string name="appointment_notifications_channel_id">appointments_channel_id</string>
     <string name="step_hour_title">Select available hour</string>
     <string name="stepper_last_step_cancel_button_text">CANCEL</string>
